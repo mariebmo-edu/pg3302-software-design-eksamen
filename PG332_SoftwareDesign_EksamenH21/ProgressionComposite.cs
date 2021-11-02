@@ -31,12 +31,12 @@ namespace PG332_SoftwareDesign_EksamenH21
                 }
             }
 
-            return returnValue / Total;
+            return Math.Round(returnValue/Total, 2, MidpointRounding.ToZero);
         }
 
         public ProgressionComposite(int TotalChildren)
         {
-            if (TotalChildren < 1)
+            if (TotalChildren <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(TotalChildren));
             }
