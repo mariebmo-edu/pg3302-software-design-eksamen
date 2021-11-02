@@ -1,9 +1,9 @@
-//using NUnit.Framework;
+using NUnit.Framework;
 
-namespace Test
+namespace Test2
 {
     public class Tests
-    {/*
+    {
         [SetUp]
         public void Setup()
         {
@@ -14,5 +14,5 @@ namespace Test
         {
             Assert.Pass();
         }
-    */}
+    }
 }

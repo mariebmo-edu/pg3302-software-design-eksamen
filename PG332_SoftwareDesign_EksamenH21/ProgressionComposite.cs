@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {
@@ -7,9 +8,9 @@ namespace PG332_SoftwareDesign_EksamenH21
         public double Total { get; set; }
         public bool Published { get; set; }
         public double Finished { get; set; }
-        public Array<IProgression> Children { get; set; }
+        public List<IProgression> Children { get; set; }
 
-        public Array<IProgression> ListChildren()
+        public List<IProgression> ListChildren()
         {
             return null;
         }
@@ -18,15 +19,15 @@ namespace PG332_SoftwareDesign_EksamenH21
         {
             double returnValue = 0.00;
 
-            if (published)
+            if (Published)
             {
-                for (IProgression Child :
-                Children)
+                foreach (var Child in Children)
                 {
                     if (Child.Published)
                     {
                         returnValue = returnValue + Child.GetProgression();
                     }
+                    
                 }
             }
 
@@ -37,12 +38,12 @@ namespace PG332_SoftwareDesign_EksamenH21
         {
             if (TotalChildren < 1)
             {
-                throw new ArgumentOutOfRangeException("TotalChildren must be over 0");
+                throw new ArgumentOutOfRangeException(nameof(TotalChildren));
             }
             Total = TotalChildren;
             Published = false;
             Finished = 0.00;
-            Children = new IProgression[TotalChildren];
+            Children = new List<IProgression>();
         }
     }
 }

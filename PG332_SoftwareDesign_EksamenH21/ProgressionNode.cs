@@ -7,7 +7,7 @@
 
         public double GetProgression()
         {
-            if (published && finished) // Tror vi må ha (published && finished) her for å få det riktig, men det kan kanskje diskuteres
+            if (Published && Finished)  // Tror vi må ha (published && finished) her for å få det riktig, men det kan kanskje diskuteres
             {
                 return 1.00;
             }
