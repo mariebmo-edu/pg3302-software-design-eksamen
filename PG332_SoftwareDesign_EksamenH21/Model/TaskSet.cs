@@ -6,6 +6,5 @@ namespace PG332_SoftwareDesign_EksamenH21
     {
         private List<Task> Tasks { get; set; }
         private IProgression Progression { get; set; }
-        
     }
 }
