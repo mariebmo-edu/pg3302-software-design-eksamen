@@ -10,7 +10,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
         public DbSet<Lecture> Lectures { get; set; }
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<Course> Courses { get; set; }
-
+        public DbSet<TaskSet> TaskSets { get; set; }
         public string DbPath { get; private set; }
 
         public TrackerContext()
