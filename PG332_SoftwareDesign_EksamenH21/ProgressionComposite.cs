@@ -2,7 +2,7 @@
 
 namespace PG332_SoftwareDesign_EksamenH21
 {
-    public class ProgressionComposite
+    public class ProgressionComposite : IProgression
     {
         public double Total { get; set; }
         public bool Published { get; set; }
@@ -14,5 +14,9 @@ namespace PG332_SoftwareDesign_EksamenH21
             return null;
         }
 
+        public double GetProgression()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
