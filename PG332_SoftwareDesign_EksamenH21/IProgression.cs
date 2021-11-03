@@ -3,5 +3,7 @@
     public interface IProgression
     {
         double GetProgression();
+
+        public bool Published { get; set; }
     }
 }
