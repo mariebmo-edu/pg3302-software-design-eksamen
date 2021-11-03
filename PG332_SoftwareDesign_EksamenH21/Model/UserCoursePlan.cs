@@ -1,6 +1,6 @@
 ﻿namespace PG332_SoftwareDesign_EksamenH21.Model
 {
-    public class OptionalCourses
+    public class UserCoursePlan
     {
         public long Id { get; set; }
         public long UserId { get; set; }

@@ -12,5 +12,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
         public long SpecializationId { get; set; }
         public long CourseId { get; set; }
 
+        public bool mandatory { get; set; }
+
     }
 }
