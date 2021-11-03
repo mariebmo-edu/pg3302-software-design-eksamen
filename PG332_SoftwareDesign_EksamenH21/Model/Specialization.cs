@@ -11,6 +11,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
     {
         public long Id { get; set; }    
         public List<Semester> Semesters { get; set; } = new();
+        public SpecializationCourses SpecializationCourses { get; set; }
         [NotMapped]
         public IProgression Progression { get; set; }
     }

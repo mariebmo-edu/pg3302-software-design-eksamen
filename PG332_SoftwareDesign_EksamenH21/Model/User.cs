@@ -12,6 +12,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
         public string Email { get; set; }
         public Specialization Specialization { get; set; }
         public long SpecializationId { get; set; }
+        public UserCoursePlan UserCoursePlan { get; set; }
 
         public override bool Equals(object? obj)
         {

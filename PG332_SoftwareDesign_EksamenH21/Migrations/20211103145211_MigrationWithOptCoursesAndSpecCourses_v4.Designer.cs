@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PG332_SoftwareDesign_EksamenH21.Repository;
 
 namespace PG332_SoftwareDesign_EksamenH21.Migrations
 {
     [DbContext(typeof(TrackerContext))]
-    partial class TrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20211103145211_MigrationWithOptCoursesAndSpecCourses_v4")]
+    partial class MigrationWithOptCoursesAndSpecCourses_v4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,9 +39,14 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<long?>("SemesterId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<long?>("UserCoursePlanId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SemesterId");
+
+                    b.HasIndex("UserCoursePlanId");
 
                     b.ToTable("Courses");
                 });
@@ -118,9 +125,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<long>("SpecializationId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long?>("UserCoursePlanId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("mandatory")
                         .HasColumnType("INTEGER");
 
@@ -130,8 +134,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
 
                     b.HasIndex("SpecializationId")
                         .IsUnique();
-
-                    b.HasIndex("UserCoursePlanId");
 
                     b.ToTable("SpecializationCourses");
                 });
@@ -197,7 +199,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
 
                     b.HasIndex("SpecializationId");
 
-                    b.ToTable("Semester");
+                    b.ToTable("Semesters");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Task", b =>
@@ -241,6 +243,10 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.HasOne("PG332_SoftwareDesign_EksamenH21.Semester", null)
                         .WithMany("Courses")
                         .HasForeignKey("SemesterId");
+
+                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.UserCoursePlan", null)
+                        .WithMany("Courses")
+                        .HasForeignKey("UserCoursePlanId");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Lecture", b =>
@@ -272,10 +278,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .HasForeignKey("PG332_SoftwareDesign_EksamenH21.Model.SpecializationCourses", "SpecializationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.UserCoursePlan", null)
-                        .WithMany("SpecializationCourses")
-                        .HasForeignKey("UserCoursePlanId");
 
                     b.Navigation("Course");
                 });
@@ -349,7 +351,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.UserCoursePlan", b =>
                 {
-                    b.Navigation("SpecializationCourses");
+                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Semester", b =>
