@@ -9,13 +9,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
     {
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Lecture> Lectures { get; set; }
-        //public DbSet<Semester> Semesters { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<TaskSet> TaskSets { get; set; }
         public DbSet<Specialization> Specializations{ get; set; }
         public DbSet<User> Users{ get; set; }
-        public DbSet<SpecializationCourses> SpecializationCourses{ get; set; }
+        public DbSet<CoursesInSpecialization> CoursesInSpecializations{ get; set; }
         public DbSet<UserCoursePlan> UserCoursePlan{ get; set; }
+        public DbSet<CoursesInPlan> CourseInPlans { get; set; }
 
         public string DbPath { get; private set; }
 

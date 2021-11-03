@@ -1,4 +1,5 @@
-﻿using PG332_SoftwareDesign_EksamenH21.Model;
+﻿using System.Collections.Generic;
+using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21.Model
 {
@@ -12,7 +13,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
         public string Email { get; set; }
         public Specialization Specialization { get; set; }
         public long SpecializationId { get; set; }
-        public UserCoursePlan UserCoursePlan { get; set; }
+        public long UserCoursePlanId { get; set; }
+        public List<CoursesInPlan> CoursesInPlans { get; set; }
 
         public override bool Equals(object? obj)
         {
