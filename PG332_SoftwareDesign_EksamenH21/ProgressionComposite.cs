@@ -12,6 +12,7 @@ namespace PG332_SoftwareDesign_EksamenH21
 
         public List<IProgression> ListChildren()
         {
+            // TODO: implement or remove method
             return null;
         }
 
