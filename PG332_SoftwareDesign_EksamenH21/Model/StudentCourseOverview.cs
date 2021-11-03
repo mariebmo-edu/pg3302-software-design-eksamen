@@ -9,7 +9,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
     public class StudentCourseOverview
     {
         public long Id { get; set; }
-        public List<Course> Courses { get; set; } = new();
+        public Course Course { get; set; }
         public Status Status { get; set; }
         public Grade Grade { get; set; }
     }

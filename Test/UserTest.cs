@@ -42,7 +42,7 @@ namespace Test
             
             using (var db = new TrackerContext())
             {
-                Console.WriteLine($"Database path: { db.DbPath}");
+
                 db.Add(user);
                 db.SaveChanges();
 
