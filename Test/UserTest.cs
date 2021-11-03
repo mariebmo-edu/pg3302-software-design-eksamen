@@ -30,21 +30,16 @@ namespace Test
 
             var lecture = new Lecture();
             lecture.TaskSet.Tasks.Add(task_A);
-            //lecture.TaskSet.Tasks.Add(task_B);
-            //lecture.TaskSet.Tasks.Add(task_C);
-
             var course = new Course();
             course.Lectures.Add(lecture);
 
-            var semester = new Semester();
-            semester.Courses.Add(course);
 
             Specialization specialization = new Specialization();
             User user = new()
             {
                 Specialization = specialization
             };
-            user.Specialization.Semesters.Add(semester);
+            
             using (var db = new TrackerContext())
             {
                 Console.WriteLine($"Database path: { db.DbPath}");
