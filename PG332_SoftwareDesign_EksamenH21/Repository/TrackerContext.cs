@@ -14,6 +14,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
         public DbSet<TaskSet> TaskSets { get; set; }
         public DbSet<Specialization> Specializations{ get; set; }
         public DbSet<User> Users{ get; set; }
+        public DbSet<SpecializationCourses> SpecializationCourses{ get; set; }
+        public DbSet<OptionalCourses> OptionalCourses{ get; set; }
+
         public string DbPath { get; private set; }
 
         public TrackerContext()

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PG332_SoftwareDesign_EksamenH21.Model
 {
-    class SpecializationCourses
+    public class SpecializationCourses
     {
         public long Id { get; set; }
         public long SpecializationId { get; set; }
