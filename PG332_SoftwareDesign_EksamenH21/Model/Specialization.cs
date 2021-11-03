@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace PG332_SoftwareDesign_EksamenH21.Model
 {
-    class Specialization
+    public class Specialization
     {
-        public Semester[] Semesters { get; set; }
+        public long Id { get; set; }    
+        public List<Semester> Semesters { get; set; } = new();
         [NotMapped]
         public IProgression Progression { get; set; }
     }

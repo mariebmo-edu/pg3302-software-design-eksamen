@@ -1,5 +1,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
+using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21.Repository
 {
@@ -11,6 +12,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<TaskSet> TaskSets { get; set; }
+        public DbSet<Specialization> Specializations{ get; set; }
+        public DbSet<User> Users{ get; set; }
         public string DbPath { get; private set; }
 
         public TrackerContext()
