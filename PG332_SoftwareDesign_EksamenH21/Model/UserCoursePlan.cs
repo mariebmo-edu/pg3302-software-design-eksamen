@@ -5,7 +5,7 @@
         public long Id { get; set; }
         public long UserId { get; set; }
         public long CourseId { get; set; }
-        public SemesterEnum SemesterEnum { get; set; }
+        public SemesterEnum? SemesterEnum { get; set; }
     }
 
     public enum SemesterEnum
