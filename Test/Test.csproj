@@ -12,4 +12,8 @@
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\PG332_SoftwareDesign_EksamenH21\PG332_SoftwareDesign_EksamenH21.csproj" />
+    </ItemGroup>
+
 </Project>
