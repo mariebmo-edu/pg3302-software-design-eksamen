@@ -60,6 +60,26 @@ namespace Test
 
                 Assert.AreEqual(user, userFromServer);
             }
+
+
         }
+
+        public void RetrieveUserFromDB()
+        {
+            using (var db = new TrackerContext())
+            {
+                Console.WriteLine($"Database path: { db.DbPath}");
+
+                var user = db.Users
+                    .Find(1);
+
+                Assert.AreEqual(1, user.Id);
+
+                Console.WriteLine($"User: {user.ToString()}");
+            }
+
+
+        }
+
     }
 }

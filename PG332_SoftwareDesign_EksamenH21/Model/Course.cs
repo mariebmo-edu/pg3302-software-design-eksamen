@@ -7,6 +7,7 @@ namespace PG332_SoftwareDesign_EksamenH21
     public class Course
     {
         public long Id { get; set; }
+        public string CourseCode { get; set; }
         public List<Lecture> Lectures { get; set; } = new();
         public DateTime ExamDate { get; set; }
         public ExamType ExamType { get; set; }
