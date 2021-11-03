@@ -14,8 +14,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
         public DbSet<Specialization> Specializations{ get; set; }
         public DbSet<User> Users{ get; set; }
         public DbSet<CoursesInSpecialization> CoursesInSpecializations{ get; set; }
-        public DbSet<UserCoursePlan> UserCoursePlan{ get; set; }
-        public DbSet<CoursesInPlan> CourseInPlans { get; set; }
+        public DbSet<StudentCourseOverview> CourseInPlans { get; set; }
 
         public string DbPath { get; private set; }
 
