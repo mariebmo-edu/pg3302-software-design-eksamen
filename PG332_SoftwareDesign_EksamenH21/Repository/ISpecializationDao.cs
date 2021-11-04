@@ -7,10 +7,8 @@ using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21.Repository
 {
-    interface IUserDao : ICrudDao<User>
+    interface ISpecializationDao : ICrudDao<Specialization>
     {
-        public User RetrieveByEmail(string email);
-        public User RetrieveByLastName(string lastName);
-
+        public 
     }
 }
