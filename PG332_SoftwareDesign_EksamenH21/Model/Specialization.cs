@@ -10,7 +10,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
     public class Specialization
     {
         public long Id { get; set; }
-        public CoursesInSpecialization SpecializationCourses { get; set; }
+        public string Name { get; set; }
+        public string? Code { get; set; }
+        public List<CoursesInSpecialization>? CoursesInSpecializations { get; set; }
         [NotMapped]
         public IProgression Progression { get; set; }
     }

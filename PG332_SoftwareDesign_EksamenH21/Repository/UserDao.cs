@@ -14,20 +14,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
     public class UserDao : IUserDao
     {
    
-        public void Update(User m)
-        {
-            using TrackerContext trackerContext = new TrackerContext();
-            trackerContext.Update(m);
-            trackerContext.SaveChanges();
-        }
-
-        public void Save(User m)
-        {
-            using TrackerContext trackerContext = new TrackerContext();
-            trackerContext.Add(m);
-            trackerContext.SaveChanges();
-        }
-
         public User RetrieveById(long id)
         {
             using TrackerContext trackerContext = new TrackerContext();
@@ -58,10 +44,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
             return RetrieveOneByField(u => u.LastName == lastName);
         }
 
-        private User RetrieveOneByField(Func<User,bool> predicate)
+        public User RetrieveOneByField(Func<User,bool> predicate)
         {
             using TrackerContext trackerContext = new TrackerContext();
-
             return trackerContext.Users.FirstOrDefault(predicate);
         }
     }

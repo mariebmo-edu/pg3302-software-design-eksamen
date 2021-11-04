@@ -9,6 +9,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
 {
     interface ISpecializationDao : ICrudDao<Specialization>
     {
-        public 
+        public Specialization RetrieveByName(string name);
+        public Specialization RetrieveByCode(string code);
     }
 }
