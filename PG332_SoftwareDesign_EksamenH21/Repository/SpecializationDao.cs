@@ -9,6 +9,20 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
 {
     public class SpecializationDao : ISpecializationDao
     {
+        public void Update(Specialization m)
+        {
+            using TrackerContext trackerContext = new();
+            trackerContext.Update(m);
+            trackerContext.SaveChanges();
+        }
+
+        public void Save(Specialization m)
+        {
+            using TrackerContext trackerContext = new();
+            trackerContext.Add(m);
+            trackerContext.SaveChanges();
+        }
+
         public Specialization RetrieveById(long id)
         {
             using TrackerContext trackerContext = new();
