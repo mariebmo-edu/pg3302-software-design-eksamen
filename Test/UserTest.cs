@@ -50,8 +50,8 @@ namespace Test
                 User userFromServer = db.Users
                     .OrderByDescending(s => s.Id)
                     .First();
-                Console.WriteLine($"Semester id: {user.Id}");
-                Console.WriteLine($"Semester from server id: {userFromServer.Id}");
+                Console.WriteLine($"user id: {user.Id}");
+                Console.WriteLine($"user id from server id: {userFromServer.Id}");
 
                 Assert.AreEqual(user, userFromServer);
             }
@@ -59,21 +59,25 @@ namespace Test
 
         }
 
-        public void RetrieveUserFromDB()
+        [Test]
+        public void UpdateUserInDB()
         {
-            using (var db = new TrackerContext())
+            User user = new User()
             {
-                Console.WriteLine($"Database path: { db.DbPath}");
+                FirstName = "Test",
+                LastName = "Persson",
+                Email = "test@persson.no"
+            };
 
-                var user = db.Users
-                    .Find(1);
+            UserDao userDao = new UserDao();
+            userDao.Save(user);
 
-                Assert.AreEqual(1, user.Id);
+            User userFromServer = userDao.RetrieveById(user.Id);
+            Assert.AreEqual(user, userFromServer);
 
-                Console.WriteLine($"User: {user.ToString()}");
-            }
-
-
+            user.Email = "persson@test.no";
+            userDao.Update(user);
+            Assert.AreEqual("persson@test.no", user.Email);
         }
 
     }
