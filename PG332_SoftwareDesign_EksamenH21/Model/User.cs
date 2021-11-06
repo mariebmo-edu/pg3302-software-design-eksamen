@@ -16,6 +16,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
         public long? UserCoursePlanId { get; set; }
         public StudentCourseOverview? StudentCourseOverview { get; set; }
 
+        public override string ToString()
+        {
+            return $"{nameof(Id)}: {Id}, {nameof(FirstName)}: {FirstName}, {nameof(LastName)}: {LastName}, {nameof(Address)}: {Address}, {nameof(PhoneNumber)}: {PhoneNumber}, {nameof(Email)}: {Email}, {nameof(Specialization)}: {Specialization}, {nameof(SpecializationId)}: {SpecializationId}, {nameof(UserCoursePlanId)}: {UserCoursePlanId}, {nameof(StudentCourseOverview)}: {StudentCourseOverview}";
+        }
+
         public override bool Equals(object? obj)
         {
             if (obj is not User) return false;
