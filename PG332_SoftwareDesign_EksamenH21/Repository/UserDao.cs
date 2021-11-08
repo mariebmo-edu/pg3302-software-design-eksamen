@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using Microsoft.EntityFrameworkCore.Storage;
 using PG332_SoftwareDesign_EksamenH21.Model;
 
+
 namespace PG332_SoftwareDesign_EksamenH21.Repository
 {
     public class UserDao : IUserDao
@@ -23,6 +24,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
         {
             _trackerContext.Update(m);
             _trackerContext.SaveChanges();
+
         }
 
         public void Save(User m)
@@ -39,7 +41,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
         public List<User> ListAll()
         {
             return _trackerContext.Users.ToList();
-
         }
 
         public void Delete(long id)
