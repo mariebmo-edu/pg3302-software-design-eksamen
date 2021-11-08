@@ -15,7 +15,13 @@ namespace PG332_SoftwareDesign_EksamenH21
             UI = ui;
         }
 
-        public void StartProgram() 
+        public void StartProgram()
+        {
+            LoginUser();
+            ExecuteUserChoice();
+        }
+
+        private void LoginUser()
         {
             var credentials = UI.GetLoginCredentials(); // Må først få bruker til å logge inn
             string email = credentials[0], password = credentials[1];
@@ -25,7 +31,6 @@ namespace PG332_SoftwareDesign_EksamenH21
                 email = credentials[0];
                 password = credentials[1];
             }
-            ExecuteUserChoice();
         }
 
         private bool UserValid(string email, string password)
