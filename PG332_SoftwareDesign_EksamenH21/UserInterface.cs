@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using PG332_SoftwareDesign_EksamenH21.Model;
+using static BCrypt.Net.BCrypt;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {
@@ -7,13 +10,13 @@ namespace PG332_SoftwareDesign_EksamenH21
     {
         public void ShowMenuOptions()
         {
-            
+               
         }
 
-        public User GetLoginCredentials()
+        public string[] GetLoginCredentials()
         {
             // Kun midlertidig for å få testen til å kjøre grønt
-            return new() {Id = 42069, FirstName = "G", LastName = "Bergesen", Email = "gMail@email.no"};
+            return new[]{"gMail@email.no", "password123"};
         }
 
         public UserChoice GetUserChoice()

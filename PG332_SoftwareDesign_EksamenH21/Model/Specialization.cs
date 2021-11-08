@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace PG332_SoftwareDesign_EksamenH21.Model
 {
-    public class Specialization
+    public class Specialization : IProgressable
     {
         public long Id { get; set; }
         public string Name { get; set; }
         public string? Code { get; set; }
         public List<CoursesInSpecialization>? CoursesInSpecializations { get; set; }
         [NotMapped]
-        public IProgression Progression { get; set; }
+        public bool Published { get; set; } = false;
 
         protected bool Equals(Specialization other)
         {

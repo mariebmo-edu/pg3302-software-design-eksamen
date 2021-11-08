@@ -1,10 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using NUnit.Framework;
 using PG332_SoftwareDesign_EksamenH21;
-
+using PG332_SoftwareDesign_EksamenH21.Handlers;
 
 namespace Test
 {
-    public class ProgressionTest
+    class ProgressionTest
     {
         [SetUp]
         public void Setup()
@@ -13,137 +17,151 @@ namespace Test
         }
 
         [Test]
-        public void NodeNotFinished()
+        public void NodeNotPublishedAndNotFinished()
         {
-            ProgressionNode TaskProgression = new();
-            TaskProgression.Published = true;
-            TaskProgression.Finished = false;
-            Assert.AreEqual(0.00, TaskProgression.GetProgression());
+            Task task = new();
+
+            ProgressionHandlerLeaf taskF = new(task);
+
+            Assert.AreEqual(new ProgressionWrapper(0.00,0.00), taskF.GetProgression());
         }
 
         [Test]
-        public void NodeFinished()
+        public void NodeNotPublishedAndFinished()
         {
-            ProgressionNode TaskProgression = new();
-            TaskProgression.Published = true;
-            TaskProgression.Finished = true;
-            Assert.AreEqual(1.00, TaskProgression.GetProgression());
+            Task task = new();
+            task.Finished = true;
+
+            ProgressionHandlerLeaf taskF = new(task);
+
+            Assert.AreEqual(new ProgressionWrapper(0.00, 0.00), taskF.GetProgression());
         }
 
         [Test]
-        public void CompositeWithNodeChildren()
+        public void NodePublishedAndNotFinished()
         {
-            ProgressionNode TaskProgression1 = new();
-            TaskProgression1.Published = true;
-            TaskProgression1.Finished = false;
+            Task task = new();
+            task.Published = true;
 
-            ProgressionNode TaskProgression2 = new();
-            TaskProgression2.Published = true;
-            TaskProgression2.Finished = true;
+            ProgressionHandlerLeaf taskF = new(task);
 
-            ProgressionComposite TaskSetProgression = new(2);
-            TaskSetProgression.Published = true;
-            TaskSetProgression.Children.Add(TaskProgression1);
-            TaskSetProgression.Children.Add(TaskProgression2);
-
-            Assert.AreEqual(0.50, TaskSetProgression.GetProgression());
+            Assert.AreEqual(new ProgressionWrapper(1.00, 0.00), taskF.GetProgression());
         }
 
         [Test]
-        public void CompositeWithCompositeChildren()
+        public void NodePublishedAndFinished()
         {
-            ProgressionNode Task1 = new();
-            Task1.Published = true;
-            Task1.Finished = false;
+            Task task = new();
+            task.Published = true;
+            task.Finished = true;
 
-            ProgressionNode Task2 = new();
-            Task2.Published = true;
-            Task2.Finished = true;
+            ProgressionHandlerLeaf taskF = new(task);
 
-            ProgressionNode Task3 = new();
-            Task3.Published = true;
-            Task3.Finished = true;
+            Assert.AreEqual(new ProgressionWrapper(1.00, 1.00), taskF.GetProgression());
+        }
+        
+        [Test]
+        public void NotPublishedCompositeWithPublishedLeafChildren()
+        {
+            Task task1 = new();
+            task1.Published = true;
 
-            ProgressionComposite TaskSet1 = new(3);
-            TaskSet1.Published = true;
-            TaskSet1.Children.Add(Task1);
-            TaskSet1.Children.Add(Task2);
-            TaskSet1.Children.Add(Task3);
+            Task task2 = new();
+            task2.Published = true;
+            task2.Finished = true;
 
+            TaskSet taskSet = new();
+            taskSet.Tasks.Add(task1);
+            taskSet.Tasks.Add(task2);
 
+            ProgressionHandlerComposite taskSetF = new(taskSet);
 
-            ProgressionNode Task4 = new();
-            Task4.Published = true;
-            Task4.Finished = false;
-
-            ProgressionNode Task5 = new();
-            Task5.Published = true;
-            Task5.Finished = true;
-
-            ProgressionNode Task6 = new();
-            Task6.Published = true;
-            Task6.Finished = true;
-
-            ProgressionComposite TaskSet2 = new(3);
-            TaskSet2.Published = true;
-            TaskSet2.Children.Add(Task4);
-            TaskSet2.Children.Add(Task5);
-            TaskSet2.Children.Add(Task6);
-
-
-
-            ProgressionComposite Lecture = new(2);
-            Lecture.Published = true;
-            Lecture.Children.Add(TaskSet1);
-            Lecture.Children.Add(TaskSet2);
-
-
-
-            Assert.AreEqual(0.66, Lecture.GetProgression());
+            Assert.AreEqual(new ProgressionWrapper(0.00, 0.00), taskSetF.GetProgression());
         }
 
         [Test]
-        public void CompositeWithNodeAndCompositeChildren()
+        public void PublishedCompositeWithAnyLeafChildren()
         {
-            ProgressionNode Task1 = new();
-            Task1.Published = true;
-            Task1.Finished = false;
+            Task task1 = new();
 
-            ProgressionNode Task2 = new();
-            Task2.Published = true;
-            Task2.Finished = false;
+            Task task2 = new();
+            task2.Published = true;
+            task2.Finished = true;
 
-            ProgressionNode Task3 = new();
-            Task3.Published = true;
-            Task3.Finished = true;
+            Task task3 = new();
+            task3.Published = true;
 
-            ProgressionNode Task4 = new();
-            Task4.Published = true;
-            Task4.Finished = true;
+            Task task4 = new();
+            task4.Finished = true;
 
-            ProgressionComposite TaskSet1 = new(4);
-            TaskSet1.Published = true;
-            TaskSet1.Children.Add(Task1);
-            TaskSet1.Children.Add(Task2);
-            TaskSet1.Children.Add(Task3);
-            TaskSet1.Children.Add(Task4);
+            TaskSet taskSet = new();
+            taskSet.Published = true;
+            taskSet.Tasks.Add(task1);
+            taskSet.Tasks.Add(task2);
+            taskSet.Tasks.Add(task3);
+            taskSet.Tasks.Add(task4);
 
+            ProgressionHandlerComposite taskSetF = new(taskSet);
 
-
-            ProgressionNode Lecture = new();
-            Lecture.Published = true;
-            Lecture.Finished = true;
-
-
-
-            ProgressionComposite LectureTotal = new(2);
-            LectureTotal.Published = true;
-            LectureTotal.Children.Add(TaskSet1);
-            LectureTotal.Children.Add(Lecture);
-
-
-
-            Assert.AreEqual(0.75, LectureTotal.GetProgression());
+            Assert.AreEqual(new ProgressionWrapper(0.50, 0.25), taskSetF.GetProgression());
         }
+        
+        [Test]
+        public void CompositeWithLeafAndCompositeChildren()
+        {
+            Task task1 = new();
+            task1.Published = true;
+            task1.Finished = true;
+
+            Task task2 = new();
+            task2.Published = true;
+
+            TaskSet taskSet1 = new();
+            taskSet1.Published = true;
+            taskSet1.Tasks.Add(task1);
+            taskSet1.Tasks.Add(task2);
+
+            Task task3 = new();
+            task3.Published = true;
+
+            Task task4 = new();
+            task4.Published = true;
+
+            TaskSet taskSet2 = new();
+            taskSet2.Published = true;
+            taskSet2.Tasks.Add(task3);
+            taskSet2.Tasks.Add(task4);
+
+            Task task5 = new();
+
+            Task task6 = new();
+
+            TaskSet taskSet3 = new();
+            taskSet3.Tasks.Add(task5);
+            taskSet3.Tasks.Add(task6);
+
+            Lecture lecture1 = new();
+            lecture1.Published = true;
+            lecture1.Finished = true;
+            lecture1.TaskSet = taskSet1;
+
+            Lecture lecture2 = new();
+            lecture2.Published = true;
+            lecture2.TaskSet = taskSet2;
+
+            Lecture lecture3 = new();
+            lecture3.TaskSet = taskSet3;
+
+            Course course = new();
+            course.Published = true;
+            course.Lectures.Add(lecture1);
+            course.Lectures.Add(lecture2);
+            course.Lectures.Add(lecture3);
+
+            ProgressionHandlerComposite courseF = new(course);
+
+            Assert.AreEqual(new ProgressionWrapper(0.66, 0.25), courseF.GetProgression());
+        }
+        
     }
 }

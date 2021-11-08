@@ -5,7 +5,7 @@ namespace PG332_SoftwareDesign_EksamenH21
     public interface IUserInterface
     {
         public void ShowMenuOptions();
-        public User GetLoginCredentials();
+        public string[] GetLoginCredentials();
         public UserChoice GetUserChoice();
     }
 }
