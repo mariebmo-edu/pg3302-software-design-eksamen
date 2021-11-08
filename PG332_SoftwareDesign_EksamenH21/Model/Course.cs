@@ -5,7 +5,7 @@ using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {
-    public class Course
+    public class Course : IProgressable
     {
         [NotMapped]
         public SemesterEnum Semester { get; set; }
@@ -15,8 +15,7 @@ namespace PG332_SoftwareDesign_EksamenH21
         public DateTime ExamDate { get; set; }
         public ExamType ExamType { get; set; }
         public float CoursePoints { get; set; }
-        [NotMapped]
-        public IProgression Progression { get; set; }
+        [NotMapped] public bool Published { get; set; } = false;
 
     }
 
