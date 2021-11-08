@@ -1,5 +1,6 @@
 ﻿using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
+using static BCrypt.Net.BCrypt;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {
@@ -16,20 +17,30 @@ namespace PG332_SoftwareDesign_EksamenH21
 
         public void StartProgram() 
         {
-            User = UI.GetLoginCredentials(); // Må først få bruker til å logge inn
-            while (!UserValid(User))
+            var credentials = UI.GetLoginCredentials(); // Må først få bruker til å logge inn
+            string email = credentials[0], password = credentials[1];
+            while (!UserValid(email, password))
             {
-                User = UI.GetLoginCredentials(); // Så lenge bruker ikke er gyldig ber vi dem prøve igjen.
+                credentials = UI.GetLoginCredentials(); // Så lenge bruker ikke er gyldig ber vi dem prøve igjen.
+                email = credentials[0];
+                password = credentials[1];
             }
             ExecuteUserChoice();
         }
 
-        private bool UserValid(User user)
+        private bool UserValid(string email, string password)
         {
             UserDao dao = new UserDao();
-            User actual = dao.RetrieveByEmail(user.Email);
-            // TODO: Sjekke for passord her??
-            return user.Id == actual.Id;
+            User retrieveByEmail = dao.RetrieveByEmail(email);
+            if (retrieveByEmail is null) return false;
+            
+            if (Verify(password, retrieveByEmail.password))
+            {
+                User = retrieveByEmail;
+                return true;
+            }
+
+            return false;
         }
 
         private void ExecuteUserChoice()
