@@ -12,5 +12,5 @@ namespace PG332_SoftwareDesign_EksamenH21
         [NotMapped] public bool Published { get; set; } = false;
 
         [NotMapped] public bool Finished { get; set; } = false;
-        
+    }
 }
