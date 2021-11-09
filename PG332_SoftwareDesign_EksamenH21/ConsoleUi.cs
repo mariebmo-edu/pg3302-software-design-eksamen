@@ -32,6 +32,7 @@ namespace PG332_SoftwareDesign_EksamenH21
         
         public void start()
         {
+            // Email = "gMail@email.no", password = HashPassword("password123")};
             UserLoginMenu();
 
             while (true)
@@ -142,13 +143,10 @@ namespace PG332_SoftwareDesign_EksamenH21
             switch (ConsoleRead())
             {
                 case "y":
-                    // should change done status
+                    task.Finished = !task.Finished;
                     break;
                 case "n":
-                    // should not change status
-                    break;
-                default:
-                    // invalid option
+                    // do nothing
                     break;
             }
         }
