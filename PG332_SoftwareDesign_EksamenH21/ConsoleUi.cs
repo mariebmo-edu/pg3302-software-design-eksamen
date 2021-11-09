@@ -16,7 +16,7 @@ namespace PG332_SoftwareDesign_EksamenH21
 
         public void ShowMainMenu()
         {
-            throw new System.NotImplementedException();
+            PrintMessage(null);
         }
 
         public void ShowSubMenu()
