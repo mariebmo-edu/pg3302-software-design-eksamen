@@ -1,10 +1,12 @@
-﻿namespace PG332_SoftwareDesign_EksamenH21
+﻿using System;
+
+namespace PG332_SoftwareDesign_EksamenH21
 {
     public class ConsoleUi : IConsoleUi 
     {
         public void PrintMessage(string message)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine(message);
         }
 
         public void PrintPercentageDone(int percentage)
