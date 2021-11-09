@@ -7,7 +7,9 @@ namespace PG332_SoftwareDesign_EksamenH21
     public class Task : IFinishable
     {
         public long Id { get; set; }
-        public string Name { get; set; }
+        public string Title { get; set; }
+
+        public string Description { get; set; }
         [NotMapped] public bool Published { get; set; } = false;
         [NotMapped] public bool Finished { get; set; } = false;
     }

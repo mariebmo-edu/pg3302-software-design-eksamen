@@ -1,4 +1,5 @@
-﻿using PG332_SoftwareDesign_EksamenH21.Model;
+﻿using System;
+using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
 using static BCrypt.Net.BCrypt;
 
@@ -8,6 +9,7 @@ namespace PG332_SoftwareDesign_EksamenH21
     {
         private IUserInterface UI { get; } = new UserInterface();
         private User User;
+        public IConsoleUi ConsoleUi { get; set; } = new ConsoleUi();
         
         
         public BusinessLogic(IUserInterface ui)
@@ -19,6 +21,7 @@ namespace PG332_SoftwareDesign_EksamenH21
         {
             LoginUser();
             ExecuteUserChoice();
+            ConsoleUi.start();
         }
 
         private void LoginUser()
