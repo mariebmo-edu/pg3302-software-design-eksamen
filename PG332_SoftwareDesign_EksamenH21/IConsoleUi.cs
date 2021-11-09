@@ -8,12 +8,18 @@
 
         void ShowMainMenu();
 
-        void ShowSubMenu();
+        void ShowCourseMenu(int courseId);
+
+        void ShowTaskSetMenu(Lecture lecture);
+
+        void TaskMenu(Task task);
 
         void ShowRegisterUserMenu();
 
         void ShowSelectSpecializationMenu();
 
         void ShowSelectOptionalCourseMenu();
+        void start();
+        string[] GetLoginCredentials();
     }
 }
