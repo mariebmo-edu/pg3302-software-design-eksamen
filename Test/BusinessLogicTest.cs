@@ -8,6 +8,7 @@ namespace Test
 {
     class BusinessLogicTest
     {
+        /*
         [Test]
         public void ShouldLoginUser()
         {
@@ -20,12 +21,13 @@ namespace Test
             else
                 userDao.Save(createdUser);
             IUserInterface ui = new UserInterface();
-            BusinessLogic businessLogic = new BusinessLogic(ui);
+            UserAuthenticator userAuthenticator = new UserAuthenticator(ui);
             
-            businessLogic.StartProgram();
-            var loggedInUser = businessLogic.GetLoggedInUser();
+            userAuthenticator.StartProgram();
+            var loggedInUser = userAuthenticator.GetLoggedInUser();
             
             Assert.AreEqual(createdUser.Id, loggedInUser.Id);
         }   
+        */
     }
 }
