@@ -1,19 +1,11 @@
-﻿namespace PG332_SoftwareDesign_EksamenH21
+﻿using PG332_SoftwareDesign_EksamenH21.Model;
+
+namespace PG332_SoftwareDesign_EksamenH21
 {
     public interface IUserInterface
     {
-        void PrintMessage(string message);
-
-        void PrintPercentageDone(int percentage);
-
-        void ShowMainMenu();
-
-        void ShowSubMenu();
-
-        void ShowRegisterUserMenu();
-
-        void ShowSelectSpecializationMenu();
-
-        void ShowSelectOptionalCourseMenu();
+        public void ShowMenuOptions();
+        public string[] GetLoginCredentials();
+        public UserChoice GetUserChoice();
     }
 }
