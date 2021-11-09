@@ -16,6 +16,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
         public long? SpecializationId { get; set; }
         public long? UserCoursePlanId { get; set; }
         public StudentCourseOverview? StudentCourseOverview { get; set; }
+        public List<Semester> semesters { get; set; }
+        public long? currentSemesterId { get; set; }
 
         public override bool Equals(object? obj)
         {
