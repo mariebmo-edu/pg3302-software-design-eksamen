@@ -48,6 +48,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
             trackerContext.SaveChanges();
         }
 
+        
         public User RetrieveByEmail(string email)
         {
             return RetrieveOneByField(u => u.Email == email);
