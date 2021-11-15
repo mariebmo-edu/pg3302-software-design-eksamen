@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PG332_SoftwareDesign_EksamenH21.Repository;
 
 namespace PG332_SoftwareDesign_EksamenH21.Migrations
 {
     [DbContext(typeof(TrackerContext))]
-    partial class TrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20211115182330_refactored_user_migration_v5")]
+    partial class refactored_user_migration_v5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,7 +162,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<int>("SemesterEnum")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long?>("UserId")
+                    b.Property<long>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -238,11 +240,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Semester", b =>
                 {
-                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.User", "User")
+                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.User", null)
                         .WithMany("Semesters")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Task", b =>

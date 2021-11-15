@@ -9,8 +9,8 @@ using PG332_SoftwareDesign_EksamenH21.Repository;
 namespace PG332_SoftwareDesign_EksamenH21.Migrations
 {
     [DbContext(typeof(TrackerContext))]
-    [Migration("20211115171626_workgoddamnit")]
-    partial class workgoddamnit
+    [Migration("20211115180644_refactored_user_migration_v1")]
+    partial class refactored_user_migration_v1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,9 +39,14 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<long?>("SemesterId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<long?>("SpecializationId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("SemesterId");
+
+                    b.HasIndex("SpecializationId");
 
                     b.ToTable("Courses");
                 });
@@ -100,33 +105,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.ToTable("Address");
                 });
 
-            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.CoursesInSpecialization", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("CourseId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Semester")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("SpecializationId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("mandatory")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("SpecializationId");
-
-                    b.ToTable("CoursesInSpecializations");
-                });
-
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.Specialization", b =>
                 {
                     b.Property<long>("Id")
@@ -144,35 +122,10 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.ToTable("Specializations");
                 });
 
-            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.StudentCourseOverview", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("CourseId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Grade")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("StudentCourseOverviews");
-                });
-
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("CurrentSemesterId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
@@ -188,24 +141,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("TEXT");
 
-                    b.Property<long?>("SpecializationId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("StudentCourseOverviewId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("UserCoursePlanId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("password")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SpecializationId");
-
-                    b.HasIndex("StudentCourseOverviewId");
 
                     b.ToTable("Users");
                 });
@@ -223,7 +163,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Semester");
+                    b.ToTable("Semesters");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Task", b =>
@@ -270,6 +210,10 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.HasOne("PG332_SoftwareDesign_EksamenH21.Semester", null)
                         .WithMany("Courses")
                         .HasForeignKey("SemesterId");
+
+                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.Specialization", null)
+                        .WithMany("CoursesInSpecializations")
+                        .HasForeignKey("SpecializationId");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Lecture", b =>
@@ -286,47 +230,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .HasForeignKey("PG332_SoftwareDesign_EksamenH21.Model.Address", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.CoursesInSpecialization", b =>
-                {
-                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.Specialization", null)
-                        .WithMany("CoursesInSpecializations")
-                        .HasForeignKey("SpecializationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-                });
-
-            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.StudentCourseOverview", b =>
-                {
-                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId");
-
-                    b.Navigation("Course");
-                });
-
-            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.User", b =>
-                {
-                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.Specialization", "Specialization")
-                        .WithMany()
-                        .HasForeignKey("SpecializationId");
-
-                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.StudentCourseOverview", "StudentCourseOverview")
-                        .WithMany()
-                        .HasForeignKey("StudentCourseOverviewId");
-
-                    b.Navigation("Specialization");
-
-                    b.Navigation("StudentCourseOverview");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Semester", b =>

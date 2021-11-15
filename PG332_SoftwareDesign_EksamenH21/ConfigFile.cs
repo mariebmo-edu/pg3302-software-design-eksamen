@@ -22,39 +22,45 @@ namespace PG332_SoftwareDesign_EksamenH21
             address.Country = "Norway";
             user.password = HashPassword("password123");
             Specialization specialization = new();
-            user.Specialization = specialization;
+            //ser.Specialization = specialization;
 
             user.Address = address;
             user.FirstName = "Roman";
             user.LastName = "Morso";
-            user.Specialization = specialization;
+            //user.Specialization = specialization;
             user.Email = "roman@morso.no";
             user.PhoneNumber = "54892456";
-            user.Specialization = specialization;
+            //user.Specialization = specialization;
             Course course_a = new();
             Course course_b = new();
             Course course_c = new();
             course_a.Semester = SemesterEnum.FIRST;
             course_b.Semester = SemesterEnum.FIRST;
             course_c.Semester = SemesterEnum.FIRST;
-            user.CurrentSemesterId = SemesterEnum.FIRST;
-            user.Semesters = new();
-            user.Semesters.Add(new Semester());
+            //user.CurrentSemesterId = SemesterEnum.FIRST;
+            Semester firstSemester = new();
+            Semester secondSemester = new();
+            Semester thirdSemester = new();
+            Semester fourthSemester = new();
+            Semester fifthSemester = new();
+            Semester sixthSemester = new();
 
-            user.Semesters[0].Courses.Add(course_a);
-            user.Semesters[0].Courses.Add(course_b);
-            user.Semesters[0].Courses.Add(course_c);
+            user.Semesters = new()
+            {
+                firstSemester, secondSemester, thirdSemester, fourthSemester, fifthSemester, sixthSemester
+            };
 
-            CoursesInSpecialization coursesInSpecialization = new();
-            coursesInSpecialization.Course = course_a;
+            firstSemester.Courses.Add(course_a);
+            firstSemester.Courses.Add(course_b);
+            firstSemester.Courses.Add(course_c);
+
                 
             Lecture lecture = new();
 
             course_a.Lectures.Add(lecture);
 
-            StudentCourseOverview studentCourseOverview = new();
-            studentCourseOverview.Course = course_a;
-            user.StudentCourseOverview = studentCourseOverview;
+
+            //user.StudentCourseOverview = studentCourseOverview;
 
             Task task_a = new();
             Task task_b = new();

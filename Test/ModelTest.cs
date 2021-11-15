@@ -35,11 +35,8 @@ namespace Test
 
 
             Specialization specialization = new Specialization();
-            User user = new()
-            {
-                Specialization = specialization
-            };
-            
+            User user = new();
+
             using (var db = new TrackerContext())
             {
 
