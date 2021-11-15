@@ -10,12 +10,17 @@ namespace PG332_SoftwareDesign_EksamenH21
 {
     public class ConsoleUi : IConsoleUi
     {
+        public UserController UserController { get; private set; }
         public User User { get; set; }
         public bool IsLoggedIn { get; set; } = false;
 
+        public void SetUserController(UserController controller)
+        {
+            UserController = controller;
+        }
         public void UserLoginMenu()
         {
-            UserAuthenticator userAuthenticator = new UserAuthenticator();
+            UserAuthenticator userAuthenticator = new UserAuthenticator(UserController);
          
             string loginPresentation = "*** Login ***\r\n";
             PrintMessage(loginPresentation);
@@ -43,15 +48,15 @@ namespace PG332_SoftwareDesign_EksamenH21
         
         public void start()
         {
+
+            UserController.Authenticate();
             // Email = "gMail@email.no", password = HashPassword("password123")};
-            UserLoginMenu();
-            MainMenuController menuController = new();
-            menuController.Handle(User.Id);
             
-            string firstName = User.FirstName + " " + User.LastName;
+
+            string fullName = UserController.GetFullName();
             while (true)
             {
-                ShowMainMenu(firstName);
+                ShowMainMenu(fullName);
                 switch (ConsoleRead())
                 {
                     case "1":
@@ -83,26 +88,37 @@ namespace PG332_SoftwareDesign_EksamenH21
         public void ShowMainMenu(string fullName)
         {
             //string name = "Harry";
-            string semesterName = User.CurrentSemester.ToString();
-            Semester semester = User.Semesters[(int)User.CurrentSemester];
-            ProgressionHandlerComposite semesetrHandler = new(semester);
+            
+            Semester semester = UserController.GetSemesters()[(int)UserController.GetCurrentSemester()];
+            ProgressionHandlerComposite semesterHandler = new(semester);
 
-            ProgressionWrapper progWrap = semesetrHandler.GetProgression();
+            ProgressionWrapper progWrap = semesterHandler.GetProgression();
 
             string progressionBar = ProgressionBarHandler.GenerateProgressBar(progWrap);
             string mainMenuPresentation = $"Velkommen, {fullName}\r\n" +
                                           $"Nåværende semester: {semester}\r\n" +
                                           $"{progressionBar}\r\n" +
                                           "\r\n" +
-                                          $"Velg emne:\r\n" +
+                                          $"Velg emne:\r\n";
+            /*+
                                           $"1 - AdvJava\r\n" +
                                           $"2 - SoftDes\r\n" +
                                           $"3 - AlgDat\r\n" +
                                           $"4 - SmiPro\r\n" +
-                                          "\r\n" +
-                                          $"0 - gå til spesialiseringsmeny\r\n" +
-                                          "\r\n" +
-                                          "E - avslutt\r\n";
+                                          "\r\n" + 
+                    
+                                          
+                                          
+                                          */
+            var semesters = UserController.GetSemesters();
+            
+            for (int i = 0; i < semesters.Count; i++)
+            {
+                mainMenuPresentation += $"{i + 1} - {semesters[i]}\r\n";
+            }
+            mainMenuPresentation += "0 - gå til spesialiseringsmeny\r\n" +
+                                    "\r\n" +
+                                        "E - avslutt\r\n";
             PrintMessage(mainMenuPresentation);
         }
 

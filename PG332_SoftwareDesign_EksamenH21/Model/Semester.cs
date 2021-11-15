@@ -11,5 +11,7 @@ namespace PG332_SoftwareDesign_EksamenH21
         public SemesterEnum SemesterEnum { get; set; }
         public List<Course> Courses { get; set; } = new();
         [NotMapped] public bool Published { get; set; } = false;
+        
     }
+    
 }

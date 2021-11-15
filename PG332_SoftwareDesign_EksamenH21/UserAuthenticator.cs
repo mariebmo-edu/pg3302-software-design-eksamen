@@ -1,4 +1,5 @@
 ﻿using System;
+using PG332_SoftwareDesign_EksamenH21.Controllers;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
 using static BCrypt.Net.BCrypt;
@@ -7,11 +8,15 @@ namespace PG332_SoftwareDesign_EksamenH21
 {
     public class UserAuthenticator
     {
+        private readonly UserController _userController;
+
+        public UserAuthenticator(UserController userController)
+        {
+            _userController = userController;
+        }
+
         public User User { get; set; }
 
-        public void StartProgram()
-        {
-        }
 
         /*
         private void LoginUser(string email, string password)
@@ -33,7 +38,8 @@ namespace PG332_SoftwareDesign_EksamenH21
 
             if (Verify(password, retrieveByEmail.password))
             {
-                User = retrieveByEmail;
+                _userController.SetUser(retrieveByEmail);
+                
                 return true;
             }
 

@@ -8,6 +8,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
 {
     class CourseDao
     {
-
+        
     }
 }
