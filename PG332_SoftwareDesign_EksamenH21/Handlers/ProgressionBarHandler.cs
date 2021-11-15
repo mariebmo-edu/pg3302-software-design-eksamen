@@ -6,7 +6,7 @@ namespace PG332_SoftwareDesign_EksamenH21
 {
     public class ProgressionBarHandler
     {
-        public static String GenereteProgressBar(ProgressionWrapper progressionWrapper)
+        public static String GenerateProgressBar(ProgressionWrapper progressionWrapper)
         {
             int finishedLength = Convert.ToInt32(100 * progressionWrapper.FinishedPercent);
             int publishedLength = Convert.ToInt32(100 * progressionWrapper.PublishedPercent) - finishedLength;

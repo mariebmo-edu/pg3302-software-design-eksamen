@@ -15,7 +15,7 @@ namespace Test
             String _expected =
                 "|#########################=========================--------------------------------------------------|";
 
-            Assert.AreEqual(_expected, ProgressionBarHandler.GenereteProgressBar(progressionWrapper));
+            Assert.AreEqual(_expected, ProgressionBarHandler.GenerateProgressBar(progressionWrapper));
         }
     }
 }
