@@ -63,7 +63,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Semester",
+                name: "Semesters",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
@@ -72,9 +72,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Semester", x => x.Id);
+                    table.PrimaryKey("PK_Semesters", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Semester_Users_UserId",
+                        name: "FK_Semesters_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -91,45 +91,24 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     ExamDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ExamType = table.Column<int>(type: "INTEGER", nullable: false),
                     CoursePoints = table.Column<float>(type: "REAL", nullable: false),
-                    SemesterId = table.Column<long>(type: "INTEGER", nullable: true)
+                    SemesterId = table.Column<long>(type: "INTEGER", nullable: true),
+                    SpecializationId = table.Column<long>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Courses_Semester_SemesterId",
+                        name: "FK_Courses_Semesters_SemesterId",
                         column: x => x.SemesterId,
-                        principalTable: "Semester",
+                        principalTable: "Semesters",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CoursesInSpecializations",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Semester = table.Column<int>(type: "INTEGER", nullable: false),
-                    SpecializationId = table.Column<long>(type: "INTEGER", nullable: false),
-                    CourseId = table.Column<long>(type: "INTEGER", nullable: false),
-                    mandatory = table.Column<bool>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CoursesInSpecializations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CoursesInSpecializations_Courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Courses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CoursesInSpecializations_Specializations_SpecializationId",
+                        name: "FK_Courses_Specializations_SpecializationId",
                         column: x => x.SpecializationId,
                         principalTable: "Specializations",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -147,27 +126,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     table.PrimaryKey("PK_Lectures", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Lectures_Courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Courses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StudentCourseOverviews",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CourseId = table.Column<long>(type: "INTEGER", nullable: true),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false),
-                    Grade = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StudentCourseOverviews", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_StudentCourseOverviews_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
@@ -226,13 +184,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                 column: "SemesterId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CoursesInSpecializations_CourseId",
-                table: "CoursesInSpecializations",
-                column: "CourseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CoursesInSpecializations_SpecializationId",
-                table: "CoursesInSpecializations",
+                name: "IX_Courses_SpecializationId",
+                table: "Courses",
                 column: "SpecializationId");
 
             migrationBuilder.CreateIndex(
@@ -241,14 +194,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Semester_UserId",
-                table: "Semester",
+                name: "IX_Semesters_UserId",
+                table: "Semesters",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentCourseOverviews_CourseId",
-                table: "StudentCourseOverviews",
-                column: "CourseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tasks_TaskSetId",
@@ -268,16 +216,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                 name: "Address");
 
             migrationBuilder.DropTable(
-                name: "CoursesInSpecializations");
-
-            migrationBuilder.DropTable(
-                name: "StudentCourseOverviews");
-
-            migrationBuilder.DropTable(
                 name: "Tasks");
-
-            migrationBuilder.DropTable(
-                name: "Specializations");
 
             migrationBuilder.DropTable(
                 name: "TaskSets");
@@ -289,7 +228,10 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                 name: "Courses");
 
             migrationBuilder.DropTable(
-                name: "Semester");
+                name: "Semesters");
+
+            migrationBuilder.DropTable(
+                name: "Specializations");
 
             migrationBuilder.DropTable(
                 name: "Users");

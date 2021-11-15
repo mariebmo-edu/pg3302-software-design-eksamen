@@ -38,22 +38,27 @@ namespace PG332_SoftwareDesign_EksamenH21
             course_b.Semester = SemesterEnum.FIRST;
             course_c.Semester = SemesterEnum.FIRST;
             //user.CurrentSemesterId = SemesterEnum.FIRST;
-            user.Semesters = new();
-            user.Semesters.Add(new Semester());
+            Semester firstSemester = new();
+            Semester secondSemester = new();
+            Semester thirdSemester = new();
+            Semester fourthSemester = new();
+            Semester fifthSemester = new();
+            Semester sixthSemester = new();
+            user.Semesters = new()
+            {
+                firstSemester, secondSemester, thirdSemester, fourthSemester, fifthSemester, sixthSemester
+            };
 
-            user.Semesters[0].Courses.Add(course_a);
-            user.Semesters[0].Courses.Add(course_b);
-            user.Semesters[0].Courses.Add(course_c);
+            firstSemester.Courses.Add(course_a);
+            firstSemester.Courses.Add(course_b);
+            firstSemester.Courses.Add(course_c);
 
-            CoursesInSpecialization coursesInSpecialization = new();
-            coursesInSpecialization.Course = course_a;
                 
             Lecture lecture = new();
 
             course_a.Lectures.Add(lecture);
 
-            StudentCourseOverview studentCourseOverview = new();
-            studentCourseOverview.Course = course_a;
+
             //user.StudentCourseOverview = studentCourseOverview;
 
             Task task_a = new();
