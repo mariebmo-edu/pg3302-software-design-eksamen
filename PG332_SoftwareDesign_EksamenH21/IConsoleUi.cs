@@ -7,7 +7,7 @@
 
         void PrintPercentageDone(int percentage);
 
-        void ShowMainMenu();
+        void ShowMainMenu(string fullName);
 
         void ShowCourseMenu(int courseId);
 

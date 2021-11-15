@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PG332_SoftwareDesign_EksamenH21.Repository;
 
 namespace PG332_SoftwareDesign_EksamenH21.Migrations
 {
     [DbContext(typeof(TrackerContext))]
-    partial class TrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20211109140852_SemesterList")]
+    partial class SemesterList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,12 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<int>("ExamType")
                         .HasColumnType("INTEGER");
 
+                    b.Property<long?>("SemesterId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("SemesterId");
 
                     b.ToTable("Courses");
                 });
@@ -198,6 +205,22 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Semester", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Semester");
+                });
+
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Task", b =>
                 {
                     b.Property<long>("Id")
@@ -232,6 +255,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .IsUnique();
 
                     b.ToTable("TaskSets");
+                });
+
+            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Course", b =>
+                {
+                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Semester", null)
+                        .WithMany("Courses")
+                        .HasForeignKey("SemesterId");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Lecture", b =>
@@ -291,6 +321,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Navigation("StudentCourseOverview");
                 });
 
+            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Semester", b =>
+                {
+                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.User", null)
+                        .WithMany("semesters")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Task", b =>
                 {
                     b.HasOne("PG332_SoftwareDesign_EksamenH21.TaskSet", null)
@@ -325,6 +362,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.User", b =>
                 {
                     b.Navigation("Address");
+
+                    b.Navigation("semesters");
+                });
+
+            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Semester", b =>
+                {
+                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.TaskSet", b =>

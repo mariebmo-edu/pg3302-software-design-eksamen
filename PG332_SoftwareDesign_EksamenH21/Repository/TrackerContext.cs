@@ -27,6 +27,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
         
         // The following configures EF to create a Sqlite database file in the
         // special "local" folder for your platform.
+        // Data source=:memory:
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");
     }

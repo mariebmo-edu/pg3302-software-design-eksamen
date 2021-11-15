@@ -34,10 +34,10 @@ namespace PG332_SoftwareDesign_EksamenH21
         {
             // Email = "gMail@email.no", password = HashPassword("password123")};
             UserLoginMenu();
-
+            string firstName = User.FirstName + " " + User.LastName;
             while (true)
             {
-                ShowMainMenu();
+                ShowMainMenu(firstName);
                 switch (ConsoleRead())
                 {
                     case "1":
@@ -66,12 +66,12 @@ namespace PG332_SoftwareDesign_EksamenH21
             }
         }
 
-        public void ShowMainMenu()
+        public void ShowMainMenu(string fullName)
         {
-            string name = "Harry";
+            //string name = "Harry";
             string semester = "3";
             string progressionBar = "|####################==========----------|";
-            string mainMenuPresentation = $"Velkommen, {name}\r\n" +
+            string mainMenuPresentation = $"Velkommen, {fullName}\r\n" +
                                           $"Nåværende semester: {semester}\r\n" +
                                           $"{progressionBar}\r\n" +
                                           "\r\n" +
@@ -90,7 +90,14 @@ namespace PG332_SoftwareDesign_EksamenH21
         public void ShowCourseMenu(int courseIndex)
         {
             string courseName = "AdvJava";
-            List<Lecture> lectures = new List<Lecture>() {new Lecture() {Title = "Lecture1"}};
+            List<Lecture> lectures = new List<Lecture>()
+            {
+                new()
+                {
+                    Title = "Lecture1"
+                }
+            };
+
             string lecturePresentation = "";
 
             for (int i = 0; i < lectures.Count; i++)
