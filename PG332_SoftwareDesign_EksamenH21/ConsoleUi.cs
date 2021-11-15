@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using PG332_SoftwareDesign_EksamenH21.Controllers;
 using PG332_SoftwareDesign_EksamenH21.Handlers;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
@@ -44,6 +45,9 @@ namespace PG332_SoftwareDesign_EksamenH21
         {
             // Email = "gMail@email.no", password = HashPassword("password123")};
             UserLoginMenu();
+            MainMenuController menuController = new();
+            menuController.Handle(User.Id);
+            
             string firstName = User.FirstName + " " + User.LastName;
             while (true)
             {
