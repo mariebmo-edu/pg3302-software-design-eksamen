@@ -7,16 +7,63 @@ namespace PG332_SoftwareDesign_EksamenH21
 {
     public class ConsoleUi : IConsoleUi
     {
-        public User user { get; set; }
+        public User User { get; set; }
+        public bool IsLoggedIn { get; set; } = false;
 
-        public void PrintMessage(string message)
+        public void UserLoginMenu()
         {
-            Console.WriteLine(message);
+            UserAuthenticator userAuthenticator = new UserAuthenticator();
+         
+            string loginPresentation = "*** Login ***\r\n";
+            PrintMessage(loginPresentation);
+
+            while (!IsLoggedIn)
+            {
+                PrintMessage("Please enter your email address");
+                string email = ConsoleRead();
+                PrintMessage("Please enter your password");
+                string password = ConsoleRead();
+                
+                IsLoggedIn = userAuthenticator.UserValid(email, password);
+            }
+
+            User = userAuthenticator.User;
         }
-
-        public void PrintPercentageDone(int percentage)
+        
+        public void start()
         {
-            throw new System.NotImplementedException();
+            // Email = "gMail@email.no", password = HashPassword("password123")};
+            UserLoginMenu();
+
+            while (true)
+            {
+                ShowMainMenu();
+                switch (ConsoleRead())
+                {
+                    case "1":
+                        ShowCourseMenu(1);
+                        break;
+                    case "2":
+                        ShowCourseMenu(2);
+                        break;
+                    case "3":
+                        ShowCourseMenu(3);
+                        break;
+                    case "4":
+                        ShowCourseMenu(4);
+                        break;
+                    case "0":
+                        PrintMessage("gå til spesialiseringsmeny");
+                        break;
+                    case "E":
+                        PrintMessage("Du har valgt avslutt");
+                        ShowSelectSpecializationMenu();
+                        break;
+                    default:
+                        PrintMessage("Ugyldig valg");
+                        break;
+                }
+            }
         }
 
         public void ShowMainMenu()
@@ -24,25 +71,20 @@ namespace PG332_SoftwareDesign_EksamenH21
             string name = "Harry";
             string semester = "3";
             string progressionBar = "|####################==========----------|";
-            string expected = $"Velkommen, {name}\r\n" +
-                              $"Nåværende semester: {semester}\r\n" +
-                              $"{progressionBar}\r\n" +
-                              "\r\n" +
-                              $"Velg emne:\r\n" +
-                              $"1 - AdvJava\r\n" +
-                              $"2 - SoftDes\r\n" +
-                              $"3 - AlgDat\r\n" +
-                              $"4 - SmiPro\r\n" +
-                              "\r\n" +
-                              $"0 - gå til spesialiseringsmeny\r\n" +
-                              "\r\n" +
-                              "E - avslutt\r\n";
-            PrintMessage(expected);
-        }
-
-        public void ShowCourseMenu()
-        {
-            throw new NotImplementedException();
+            string mainMenuPresentation = $"Velkommen, {name}\r\n" +
+                                          $"Nåværende semester: {semester}\r\n" +
+                                          $"{progressionBar}\r\n" +
+                                          "\r\n" +
+                                          $"Velg emne:\r\n" +
+                                          $"1 - AdvJava\r\n" +
+                                          $"2 - SoftDes\r\n" +
+                                          $"3 - AlgDat\r\n" +
+                                          $"4 - SmiPro\r\n" +
+                                          "\r\n" +
+                                          $"0 - gå til spesialiseringsmeny\r\n" +
+                                          "\r\n" +
+                                          "E - avslutt\r\n";
+            PrintMessage(mainMenuPresentation);
         }
 
         public void ShowCourseMenu(int courseIndex)
@@ -61,8 +103,7 @@ namespace PG332_SoftwareDesign_EksamenH21
             string result = $"-- {courseName}\r\n" +
                             $"{progressBar}\r\n" +
                             $"\r\n" +
-                            $"{lecturePresentation}\r\n"
-                ;
+                            $"{lecturePresentation}\r\n";
 
             PrintMessage(result);
 
@@ -102,15 +143,18 @@ namespace PG332_SoftwareDesign_EksamenH21
             switch (ConsoleRead())
             {
                 case "y":
-                    // should change done status
+                    task.Finished = !task.Finished;
                     break;
                 case "n":
-                    // should not change status
-                    break;
-                default:
-                    // invalid option
+                    // do nothing
                     break;
             }
+        }
+
+
+        public void PrintPercentageDone(int percentage)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void ShowRegisterUserMenu()
@@ -129,39 +173,10 @@ namespace PG332_SoftwareDesign_EksamenH21
         }
 
 
-        public void start()
-        {
-            // Her skal loginUser returnere en User
 
-            while (true)
-            {
-                ShowMainMenu();
-                switch (ConsoleRead())
-                {
-                    case "1":
-                        ShowCourseMenu(1);
-                        break;
-                    case "2":
-                        ShowCourseMenu(2);
-                        break;
-                    case "3":
-                        ShowCourseMenu(3);
-                        break;
-                    case "4":
-                        ShowCourseMenu(4);
-                        break;
-                    case "0":
-                        PrintMessage("gå til spesialiseringsmeny");
-                        break;
-                    case "E":
-                        PrintMessage("Du har valgt avslutt");
-                        ShowSelectSpecializationMenu();
-                        break;
-                    default:
-                        PrintMessage("Ugyldig valg");
-                        break;
-                }
-            }
+        public void PrintMessage(string message)
+        {
+            Console.WriteLine(message);
         }
 
         public string ConsoleRead()

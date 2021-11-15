@@ -5,29 +5,17 @@ using static BCrypt.Net.BCrypt;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {
-    public class BusinessLogic
+    public class UserAuthenticator
     {
-        private IUserInterface UI { get; } = new UserInterface();
-        private User User;
-        public IConsoleUi ConsoleUi { get; set; } = new ConsoleUi();
-        
-        
-        public BusinessLogic(IUserInterface ui)
-        {
-            UI = ui;
-        }
+        public User User { get; set; }
 
         public void StartProgram()
         {
-            LoginUser();
-            ExecuteUserChoice();
-            ConsoleUi.start();
         }
 
-        private void LoginUser()
+        /*
+        private void LoginUser(string email, string password)
         {
-            var credentials = UI.GetLoginCredentials(); // Må først få bruker til å logge inn
-            string email = credentials[0], password = credentials[1];
             while (!UserValid(email, password))
             {
                 credentials = UI.GetLoginCredentials(); // Så lenge bruker ikke er gyldig ber vi dem prøve igjen.
@@ -35,13 +23,14 @@ namespace PG332_SoftwareDesign_EksamenH21
                 password = credentials[1];
             }
         }
+        */
 
-        private bool UserValid(string email, string password)
+        public bool UserValid(string email, string password)
         {
             UserDao dao = new UserDao();
             User retrieveByEmail = dao.RetrieveByEmail(email);
             if (retrieveByEmail is null) return false;
-            
+
             if (Verify(password, retrieveByEmail.password))
             {
                 User = retrieveByEmail;
@@ -51,6 +40,8 @@ namespace PG332_SoftwareDesign_EksamenH21
             return false;
         }
 
+
+/*
         private void ExecuteUserChoice()
         {
             UI.ShowMenuOptions();
@@ -66,11 +57,6 @@ namespace PG332_SoftwareDesign_EksamenH21
                 }
             }
         }
-
-        public User GetLoggedInUser()
-        {
-            return User;
-        }
+        */
     }
-    
 }

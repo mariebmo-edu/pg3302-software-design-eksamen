@@ -2,6 +2,7 @@
 {
     public interface IConsoleUi
     {
+        void UserLoginMenu();
         void PrintMessage(string message);
 
         void PrintPercentageDone(int percentage);
