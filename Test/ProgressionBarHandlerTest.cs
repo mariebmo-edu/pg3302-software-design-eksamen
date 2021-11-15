@@ -10,12 +10,12 @@ namespace Test
         [Test]
         public void ShouldGenerateBar()
         {
-            ProgressionWrapper progressionWrapper = new(0.66, 0.25);
+            ProgressionWrapper progressionWrapper = new(0.50, 0.25);
 
-            Console.WriteLine(ProgressionBarHandler.GenereteProgressbar(progressionWrapper));
-            
-            Assert.True(true);
+            String _expected =
+                "|#########################=========================--------------------------------------------------|";
 
+            Assert.AreEqual(_expected, ProgressionBarHandler.GenereteProgressBar(progressionWrapper));
         }
     }
 }

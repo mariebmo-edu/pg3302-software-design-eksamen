@@ -6,30 +6,27 @@ namespace PG332_SoftwareDesign_EksamenH21
 {
     public class ProgressionBarHandler
     {
-        public static String GenereteProgressbar(ProgressionWrapper progressionWrapper)
+        public static String GenereteProgressBar(ProgressionWrapper progressionWrapper)
         {
-            String sample = "|####################==========----------|";
+            int finishedLength = Convert.ToInt32(100 * progressionWrapper.FinishedPercent);
+            int publishedLength = Convert.ToInt32(100 * progressionWrapper.PublishedPercent) - finishedLength;
 
+            StringBuilder buffer = new();
+            buffer.Append("|");
+            BarGenerator('#', finishedLength, buffer);
+            BarGenerator('=', publishedLength, buffer);
+            BarGenerator('-', 101 - buffer.Length, buffer); 
+            buffer.Append("|");
 
-            double finishedLength = 100 * progressionWrapper.FinishedPercent;
-            double publishedLength = (100 * progressionWrapper.PublishedPercent) - finishedLength;
-            
-            String buffer = "|";
-            buffer += barGenerator('#', Convert.ToInt32(finishedLength));
-            buffer += barGenerator('=', Convert.ToInt32(publishedLength));
-            buffer += barGenerator('-', 100 - buffer.Length - 1);
-
-            return buffer;
+            return buffer.ToString();
         }
 
-        public static String barGenerator(char c, int amount)
+        private static void BarGenerator(char c, int amount, StringBuilder buffer)
         {
-            StringBuilder buffer = new();
             for (int i = 0; i < amount; i++)
             {
                 buffer.Append(c);
             }
-            return buffer.ToString();
         }
     }
 }
