@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
+using static BCrypt.Net.BCrypt;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {
@@ -13,12 +14,13 @@ namespace PG332_SoftwareDesign_EksamenH21
 
         public void AddDummyData()
         {
+
                 UserDao db = new UserDao();
                 User user = new();
                 Address address = new();
                 address.City = "Oslo";
                 address.Country = "Norway";
-                
+                user.password = HashPassword("password123");
                 Specialization specialization = new();
                 user.Specialization = specialization;
 
@@ -27,7 +29,8 @@ namespace PG332_SoftwareDesign_EksamenH21
                 user.LastName = "Morso";
                 user.Specialization = specialization;
                 user.Email = "roman@morso.no";
-
+                user.PhoneNumber = "54892456";
+                user.Specialization = specialization;
                 Course course_a = new();
                 Course course_b = new();
                 Course course_c = new();

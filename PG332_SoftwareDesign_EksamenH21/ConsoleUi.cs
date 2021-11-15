@@ -90,7 +90,14 @@ namespace PG332_SoftwareDesign_EksamenH21
         public void ShowCourseMenu(int courseIndex)
         {
             string courseName = "AdvJava";
-            List<Lecture> lectures = new List<Lecture>() {new Lecture() {Title = "Lecture1"}};
+            List<Lecture> lectures = new List<Lecture>()
+            {
+                new()
+                {
+                    Title = "Lecture1"
+                }
+            };
+
             string lecturePresentation = "";
 
             for (int i = 0; i < lectures.Count; i++)

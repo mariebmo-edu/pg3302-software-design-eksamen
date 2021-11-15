@@ -35,7 +35,7 @@ namespace Test
             Console.SetOut(stringWriter);
             
             ConsoleUi consoleUi = new ConsoleUi();
-            consoleUi.ShowMainMenu();
+            consoleUi.ShowMainMenu("harry");
             
             // Expected:
             string name = "Harry";

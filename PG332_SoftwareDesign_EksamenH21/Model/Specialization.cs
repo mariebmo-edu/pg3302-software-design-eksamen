@@ -11,7 +11,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
     {
         public long Id { get; set; }
         public string Name { get; set; }
+        #nullable enable
         public string? Code { get; set; }
+        #nullable enable
         public List<CoursesInSpecialization>? CoursesInSpecializations { get; set; }
         [NotMapped]
         public bool Published { get; set; } = false;
