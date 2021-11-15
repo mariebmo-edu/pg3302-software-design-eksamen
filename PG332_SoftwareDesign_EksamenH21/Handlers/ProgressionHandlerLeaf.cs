@@ -35,6 +35,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
                 return 1.00;
             }
 
+            
             return 0.00;
         }
 
