@@ -72,9 +72,9 @@ namespace PG332_SoftwareDesign_EksamenH21
         public void ShowMainMenu(string fullName)
         {
             //string name = "Harry";
-            string semester = User.CurrentSemesterId.ToString();
+            string semester = User.CurrentSemester.ToString();
 
-            ProgressionHandlerComposite semesetrHandler = new(User.Semesters[(int) User.CurrentSemesterId]);
+            ProgressionHandlerComposite semesetrHandler = new(User.Semesters[(int) User.CurrentSemester]);
             ProgressionWrapper progWrap = semesetrHandler.GetProgression();
 
             string progressionBar = ProgressionBarHandler.GenerateProgressBar(progWrap);

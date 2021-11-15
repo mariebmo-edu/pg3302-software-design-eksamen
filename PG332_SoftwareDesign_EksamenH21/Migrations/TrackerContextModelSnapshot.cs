@@ -170,9 +170,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("CurrentSemesterId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -186,24 +183,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("TEXT");
 
-                    b.Property<long?>("SpecializationId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("StudentCourseOverviewId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long?>("UserCoursePlanId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("password")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SpecializationId");
-
-                    b.HasIndex("StudentCourseOverviewId");
 
                     b.ToTable("Users");
                 });
@@ -310,21 +294,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .HasForeignKey("CourseId");
 
                     b.Navigation("Course");
-                });
-
-            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.User", b =>
-                {
-                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.Specialization", "Specialization")
-                        .WithMany()
-                        .HasForeignKey("SpecializationId");
-
-                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.StudentCourseOverview", "StudentCourseOverview")
-                        .WithMany()
-                        .HasForeignKey("StudentCourseOverviewId");
-
-                    b.Navigation("Specialization");
-
-                    b.Navigation("StudentCourseOverview");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Semester", b =>
