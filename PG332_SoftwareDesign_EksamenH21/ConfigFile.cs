@@ -35,6 +35,9 @@ namespace PG332_SoftwareDesign_EksamenH21
                 Course course_b = new();
                 Course course_c = new();
                 course_a.Semester = SemesterEnum.FIRST;
+                course_b.Semester = SemesterEnum.FIRST;
+                course_c.Semester = SemesterEnum.FIRST;
+                user.CurrentSemesterId = SemesterEnum.FIRST;
 
                 CoursesInSpecialization coursesInSpecialization = new();
                 coursesInSpecialization.Course = course_a;
