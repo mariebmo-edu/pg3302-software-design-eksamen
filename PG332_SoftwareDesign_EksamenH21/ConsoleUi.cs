@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using PG332_SoftwareDesign_EksamenH21.Handlers;
 using PG332_SoftwareDesign_EksamenH21.Model;
@@ -31,6 +32,12 @@ namespace PG332_SoftwareDesign_EksamenH21
             }
 
             User = userAuthenticator.User;
+            SemesterDao semesterDao = new();
+
+            List<Semester> semesters = semesterDao.ListAll();
+            semesters.Sort((a, b) => a.Id.CompareTo(b.Id));
+
+            User.Semesters = semesters;
         }
         
         public void start()
@@ -72,9 +79,10 @@ namespace PG332_SoftwareDesign_EksamenH21
         public void ShowMainMenu(string fullName)
         {
             //string name = "Harry";
-            string semester = User.CurrentSemester.ToString();
+            string semesterName = User.CurrentSemester.ToString();
+            Semester semester = User.Semesters[(int)User.CurrentSemester];
+            ProgressionHandlerComposite semesetrHandler = new(semester);
 
-            ProgressionHandlerComposite semesetrHandler = new(User.Semesters[(int) User.CurrentSemester]);
             ProgressionWrapper progWrap = semesetrHandler.GetProgression();
 
             string progressionBar = ProgressionBarHandler.GenerateProgressBar(progWrap);

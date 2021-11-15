@@ -17,7 +17,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
         public string Email { get; set; }
         public string password { get; set; }
         #nullable enable
-        public List<Semester> Semesters { get; set; }
+        public List<Semester> Semesters { get; set; } = new();
         [NotMapped]
         public SemesterEnum CurrentSemester { get; set; }
 
@@ -27,5 +27,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
             User user = (User) obj;
             return (user.Email == Email && user.Id == Id && user.FirstName == FirstName && user.LastName == LastName);
         }
+
     }
 }
