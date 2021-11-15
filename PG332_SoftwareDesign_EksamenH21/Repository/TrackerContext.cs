@@ -22,11 +22,12 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
         {
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Environment.GetFolderPath(folder);
-            DbPath = $"tracker.db";
+            DbPath = $"{path}{System.IO.Path.DirectorySeparatorChar}tracker.db";
         }
         
         // The following configures EF to create a Sqlite database file in the
         // special "local" folder for your platform.
+        // Data source=:memory:
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");
     }
