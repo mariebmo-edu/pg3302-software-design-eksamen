@@ -16,7 +16,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
         public string? PhoneNumber { get; set; }
         public string Email { get; set; }
         public string password { get; set; }
-        public List<Semester> Semesters { get; set; }
+        #nullable enable
+        public List<Semester> Semesters { get; set; } = new();
         [NotMapped]
         public SemesterEnum CurrentSemester { get; set; }
 

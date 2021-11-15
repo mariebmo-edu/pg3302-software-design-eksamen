@@ -7,7 +7,7 @@ namespace PG332_SoftwareDesign_EksamenH21
     public class Semester : IProgressable
     {
         public long Id { get; set; }
-        public long UserId { get; set;  }
+        public User User { get; set;  }
         public SemesterEnum SemesterEnum { get; set; }
         public List<Course> Courses { get; set; } = new();
         [NotMapped] public bool Published { get; set; } = false;

@@ -22,7 +22,7 @@ namespace PG332_SoftwareDesign_EksamenH21
             address.Country = "Norway";
             user.password = HashPassword("password123");
             Specialization specialization = new();
-           //ser.Specialization = specialization;
+            //ser.Specialization = specialization;
 
             user.Address = address;
             user.FirstName = "Roman";
@@ -44,6 +44,7 @@ namespace PG332_SoftwareDesign_EksamenH21
             Semester fourthSemester = new();
             Semester fifthSemester = new();
             Semester sixthSemester = new();
+
             user.Semesters = new()
             {
                 firstSemester, secondSemester, thirdSemester, fourthSemester, fifthSemester, sixthSemester
