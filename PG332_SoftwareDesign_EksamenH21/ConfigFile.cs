@@ -249,6 +249,9 @@ namespace PG332_SoftwareDesign_EksamenH21
                 firstSemester, secondSemester, thirdSemester, fourthSemester, fifthSemester, sixthSemester
             };
 
+            AddCourseData( new Semester[] { firstSemester, secondSemester, thirdSemester } );
+
+            /*
             Lecture lecture = new();
             pg3302.Lectures.Add( lecture );
 
@@ -264,9 +267,6 @@ namespace PG332_SoftwareDesign_EksamenH21
             lecture.TaskSet.Tasks.Add( mission_1 );
             lecture.TaskSet.Tasks.Add( mission_2 );
             lecture.TaskSet.Tasks.Add( mission_3 );
-
-
-            /*
 
             UserDao db = new UserDao();
             User user = new();
@@ -329,6 +329,46 @@ namespace PG332_SoftwareDesign_EksamenH21
             db.Save(user);
             */
 
+        }
+
+        void AddCourseData(Semester[] semesters) {
+            foreach(Semester s in semesters){
+                foreach(Course c in s.Courses) {
+
+                    Random random = new();
+                    int lectureAmount = random.Next( 12 );
+
+                    for(int i = 0; i < lectureAmount; i++) {
+                        Lecture lecture = new();
+                        lecture.Title = RandomTitle();
+                        c.Lectures.Add( lecture );
+                        int taskAmount = random.Next( 5 );
+
+                        for(int j=0; j<taskAmount; j++) {
+                            Task task = new();
+                            task.Description = RandomDescription();
+                            c.Lectures[i].TaskSet.Tasks.Add( task );
+                        }
+
+
+                    }
+                }
+            }
+        }
+
+        string RandomTitle() {
+            string[] titles = { "Fantastic Beasts and where to find them", "Hvor mye veier en hvalross", "Hvor mye tjente egentlig Monica i Friends?" };
+
+            Random random = new();
+
+            return titles[random.Next( titles.Length-1 )];
+        }
+
+        string RandomDescription() {
+            string[] descriptions = {"Skriv åtte sider om hvor mye du liker ost", "Hvis en appelsin bodde på månen, og Bush var president, hvor lang ville en linjal på 32 cm vært i juni?"};
+            Random random = new();
+
+            return descriptions[random.Next( descriptions.Length - 1 )];
         }
     }
 }
