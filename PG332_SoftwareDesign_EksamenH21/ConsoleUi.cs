@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PG332_SoftwareDesign_EksamenH21.Handlers;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
 
@@ -72,7 +73,11 @@ namespace PG332_SoftwareDesign_EksamenH21
         {
             //string name = "Harry";
             string semester = User.CurrentSemesterId.ToString();
-            string progressionBar = "|####################==========----------|";
+
+            ProgressionHandlerComposite semesetrHandler = new(User.Semesters[(int) User.CurrentSemesterId]);
+            ProgressionWrapper progWrap = semesetrHandler.GetProgression();
+
+            string progressionBar = ProgressionBarHandler.GenerateProgressBar(progWrap);
             string mainMenuPresentation = $"Velkommen, {fullName}\r\n" +
                                           $"Nåværende semester: {semester}\r\n" +
                                           $"{progressionBar}\r\n" +
