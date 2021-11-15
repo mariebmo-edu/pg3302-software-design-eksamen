@@ -34,7 +34,12 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<int>("ExamType")
                         .HasColumnType("INTEGER");
 
+                    b.Property<long?>("SemesterId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("SemesterId");
 
                     b.ToTable("Courses");
                 });
@@ -49,6 +54,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("LectureDateTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -162,7 +170,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("CurrentSemesterId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
@@ -183,10 +195,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<long?>("UserCoursePlanId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long?>("currentSemesterId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("password")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -198,17 +208,36 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Semester", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Semester");
+                });
+
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Task", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
                     b.Property<long?>("TaskSetId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -232,6 +261,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .IsUnique();
 
                     b.ToTable("TaskSets");
+                });
+
+            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Course", b =>
+                {
+                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Semester", null)
+                        .WithMany("Courses")
+                        .HasForeignKey("SemesterId");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Lecture", b =>
@@ -291,6 +327,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Navigation("StudentCourseOverview");
                 });
 
+            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Semester", b =>
+                {
+                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.User", null)
+                        .WithMany("Semesters")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Task", b =>
                 {
                     b.HasOne("PG332_SoftwareDesign_EksamenH21.TaskSet", null)
@@ -325,6 +368,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.User", b =>
                 {
                     b.Navigation("Address");
+
+                    b.Navigation("Semesters");
+                });
+
+            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Semester", b =>
+                {
+                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.TaskSet", b =>

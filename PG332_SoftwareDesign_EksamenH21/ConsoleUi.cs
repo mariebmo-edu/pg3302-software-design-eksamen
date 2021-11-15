@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PG332_SoftwareDesign_EksamenH21.Handlers;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
 
@@ -20,9 +21,11 @@ namespace PG332_SoftwareDesign_EksamenH21
             while (!IsLoggedIn)
             {
                 PrintMessage("Please enter your email address");
-                string email = ConsoleRead();
+                String email = "roman@morso.no";
+                String password = "password123";
+                //string email = ConsoleRead();
                 PrintMessage("Please enter your password");
-                string password = ConsoleRead();
+                //string password = ConsoleRead();
                 
                 IsLoggedIn = userAuthenticator.UserValid(email, password);
             }
@@ -69,8 +72,12 @@ namespace PG332_SoftwareDesign_EksamenH21
         public void ShowMainMenu(string fullName)
         {
             //string name = "Harry";
-            string semester = "3";
-            string progressionBar = "|####################==========----------|";
+            string semester = User.CurrentSemesterId.ToString();
+
+            ProgressionHandlerComposite semesetrHandler = new(User.Semesters[(int) User.CurrentSemesterId]);
+            ProgressionWrapper progWrap = semesetrHandler.GetProgression();
+
+            string progressionBar = ProgressionBarHandler.GenerateProgressBar(progWrap);
             string mainMenuPresentation = $"Velkommen, {fullName}\r\n" +
                                           $"Nåværende semester: {semester}\r\n" +
                                           $"{progressionBar}\r\n" +
