@@ -20,9 +20,11 @@ namespace PG332_SoftwareDesign_EksamenH21
             while (!IsLoggedIn)
             {
                 PrintMessage("Please enter your email address");
-                string email = ConsoleRead();
+                String email = "roman@morso.no";
+                String password = "password123";
+                //string email = ConsoleRead();
                 PrintMessage("Please enter your password");
-                string password = ConsoleRead();
+                //string password = ConsoleRead();
                 
                 IsLoggedIn = userAuthenticator.UserValid(email, password);
             }
@@ -69,7 +71,7 @@ namespace PG332_SoftwareDesign_EksamenH21
         public void ShowMainMenu(string fullName)
         {
             //string name = "Harry";
-            string semester = "3";
+            string semester = User.CurrentSemesterId.ToString();
             string progressionBar = "|####################==========----------|";
             string mainMenuPresentation = $"Velkommen, {fullName}\r\n" +
                                           $"Nåværende semester: {semester}\r\n" +
