@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21.Model
@@ -20,7 +21,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
         public long? UserCoursePlanId { get; set; }
         public StudentCourseOverview? StudentCourseOverview { get; set; }
         public List<Semester> Semesters { get; set; }
-        public long? CurrentSemesterId { get; set; }
+        public SemesterEnum CurrentSemesterId { get; set; }
 
         public override bool Equals(object? obj)
         {
