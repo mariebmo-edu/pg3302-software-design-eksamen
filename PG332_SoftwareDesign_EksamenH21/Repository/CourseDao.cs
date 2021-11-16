@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21.Repository
 {
@@ -13,11 +14,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
             return trackerContext.Courses;
         }
         
-        public List<Course> RetrieveCourseBySemesterIdAndUser(long semesterId, long userId)
-        {
-            using TrackerContext trackerContext = new();
-            return trackerContext.Courses.Where(c => c.SemesterId == semesterId && c.UserId == userId).ToList();
-        }
         public Course RetrieveOneByField(Func<Course, bool> predicate)
         {
             using TrackerContext trackerContext = new();
@@ -27,6 +23,12 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
         public Course retrieveByCode(string code)
         {
             return RetrieveOneByField(c => c.CourseCode == code);
+        }
+
+        public List<Course> RetrieveCoursesBySemesterId(long id)
+        {
+            using TrackerContext trackerContext = new();
+            return trackerContext.Courses.Where(c => c.SemesterId ==  id).ToList();
         }
     }
 }

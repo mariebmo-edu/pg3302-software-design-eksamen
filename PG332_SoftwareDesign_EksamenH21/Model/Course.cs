@@ -20,6 +20,10 @@ namespace PG332_SoftwareDesign_EksamenH21
         public float CoursePoints { get; set; }
         [NotMapped] public bool Published { get; set; } = false;
 
+        public override string ToString()
+        {
+            return $"{CourseCode} | {CoursePoints}";
+        }
     }
 
     public enum ExamType
