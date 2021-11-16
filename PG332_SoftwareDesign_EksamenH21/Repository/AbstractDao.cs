@@ -6,31 +6,31 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PG332_SoftwareDesign_EksamenH21.Repository
 {
-    public abstract class AbstractDao<T> : ICrudDao<T> where T : class
+    public abstract class AbstractDao<TModel> : ICrudDao<TModel> where TModel : class
     {
-        public void Update(T m)
+        public void Update(TModel m)
         {
             using TrackerContext trackerContext = new TrackerContext();
             trackerContext.Update(m);
             trackerContext.SaveChanges();
         }
 
-        public void Save(T m)
+        public void Save(TModel m)
         {
             using TrackerContext trackerContext = new();
             trackerContext.Add(m);
             trackerContext.SaveChanges();
         }
 
-        public T RetrieveById(long id)
+        public TModel RetrieveById(long id)
         {
             using TrackerContext trackerContext = new();
             return RetrieveDbSet(trackerContext).Find(id);
         }
 
-        protected abstract DbSet<T> RetrieveDbSet(TrackerContext trackerContext);
+        protected abstract DbSet<TModel> RetrieveDbSet(TrackerContext trackerContext);
         
-        public List<T> ListAll()
+        public List<TModel> ListAll()
         {
             using TrackerContext trackerContext = new();
             return RetrieveDbSet(trackerContext).ToList();
@@ -43,7 +43,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
             trackerContext.SaveChanges();
         }
 
-        public T RetrieveOneByField(Func<T, bool> predicate)
+        public TModel RetrieveOneByField(Func<TModel, bool> predicate)
         {
             using TrackerContext trackerContext = new();
             return RetrieveDbSet(trackerContext).FirstOrDefault(predicate);
