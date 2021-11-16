@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21.Repository
 {
@@ -48,6 +49,12 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
         {
             using TrackerContext trackerContext = new();
             return trackerContext.Semesters.FirstOrDefault(predicate);
+        }
+
+        public List<Semester> RetrieveUserSemesters(User user)
+        {
+            using TrackerContext trackerContext = new();
+            return trackerContext.Semesters.Where(semester => semester.User.Id == user.Id).ToList();
         }
     }
 }
