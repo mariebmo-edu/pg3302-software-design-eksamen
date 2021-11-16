@@ -11,8 +11,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
         public void Authenticate()
         {
             UserAuthenticator auth = new UserAuthenticator(this); 
-            string email = "roman@morso.no";
-            string password = "password123";
+            string email = "kim@bruun.no";
+            string password = "daarligpassord";
             auth.UserValid(email, password);
             auth.User = User;
         }
@@ -22,26 +22,23 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
             return $"{User.FirstName} {User.LastName}";
         }
 
-        public List<Semester> GetSemesters()
+        public Semester GetCurrentSemester()
         {
             SemesterDao dao = new SemesterDao();
-            return null;
+            return dao.RetrieveOneByField(u => u.SemesterEnum == User.CurrentSemester);
         }
 
         public List<Course> GetCourses()
         {
             CourseDao dao = new CourseDao();
-            return null;
+            SemesterDao semesterDao = new SemesterDao();
+            long semesterId = semesterDao.GetSemesterIdByUserIdAndSemesterEnum(User.Id, User.CurrentSemester);
+            return dao.RetrieveCoursesBySemesterId(semesterId);
         }
 
         public void SetUser(User user)
         {
             User = user;
-        }
-
-        public SemesterEnum GetCurrentSemester()
-        {
-            return User.CurrentSemester;
         }
     }
 }
