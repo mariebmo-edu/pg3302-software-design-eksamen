@@ -9,8 +9,8 @@ using PG332_SoftwareDesign_EksamenH21.Repository;
 namespace PG332_SoftwareDesign_EksamenH21.Migrations
 {
     [DbContext(typeof(TrackerContext))]
-    [Migration("20211115182000_refactored_user_migration_v4")]
-    partial class refactored_user_migration_v4
+    [Migration("20211116130411_V3")]
+    partial class V3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,10 +36,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<int>("ExamType")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long?>("SemesterId")
+                    b.Property<long>("SemesterId")
                         .HasColumnType("INTEGER");
 
                     b.Property<long?>("SpecializationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -105,7 +108,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Address");
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.Specialization", b =>
@@ -141,11 +144,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PhoneNumber")
+                    b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("password")
-                        .IsRequired()
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -159,10 +162,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("Finished")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("SemesterEnum")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("UserId")
+                    b.Property<long?>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -180,6 +186,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("Finished")
+                        .HasColumnType("INTEGER");
 
                     b.Property<long?>("TaskSetId")
                         .HasColumnType("INTEGER");
@@ -215,7 +224,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                 {
                     b.HasOne("PG332_SoftwareDesign_EksamenH21.Semester", null)
                         .WithMany("Courses")
-                        .HasForeignKey("SemesterId");
+                        .HasForeignKey("SemesterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.Specialization", null)
                         .WithMany("CoursesInSpecializations")
@@ -240,11 +251,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Semester", b =>
                 {
-                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.User", null)
+                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.User", "User")
                         .WithMany("Semesters")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Task", b =>

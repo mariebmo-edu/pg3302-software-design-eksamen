@@ -34,10 +34,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<int>("ExamType")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long?>("SemesterId")
+                    b.Property<long>("SemesterId")
                         .HasColumnType("INTEGER");
 
                     b.Property<long?>("SpecializationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -103,7 +106,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Address");
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.Specialization", b =>
@@ -139,11 +142,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PhoneNumber")
+                    b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("password")
-                        .IsRequired()
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -156,7 +159,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
-
 
                     b.Property<bool>("Finished")
                         .HasColumnType("INTEGER");
@@ -220,7 +222,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                 {
                     b.HasOne("PG332_SoftwareDesign_EksamenH21.Semester", null)
                         .WithMany("Courses")
-                        .HasForeignKey("SemesterId");
+                        .HasForeignKey("SemesterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.Specialization", null)
                         .WithMany("CoursesInSpecializations")

@@ -9,8 +9,8 @@ using PG332_SoftwareDesign_EksamenH21.Repository;
 namespace PG332_SoftwareDesign_EksamenH21.Migrations
 {
     [DbContext(typeof(TrackerContext))]
-    [Migration("20211116092500_FinishedFields")]
-    partial class FinishedFields
+    [Migration("20211116121026_V1")]
+    partial class V1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,10 +36,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<int>("ExamType")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long?>("SemesterId")
+                    b.Property<long>("SemesterId")
                         .HasColumnType("INTEGER");
 
                     b.Property<long?>("SpecializationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -141,11 +144,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("PhoneNumber")
+                    b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("password")
-                        .IsRequired()
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -221,7 +224,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                 {
                     b.HasOne("PG332_SoftwareDesign_EksamenH21.Semester", null)
                         .WithMany("Courses")
-                        .HasForeignKey("SemesterId");
+                        .HasForeignKey("SemesterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.Specialization", null)
                         .WithMany("CoursesInSpecializations")

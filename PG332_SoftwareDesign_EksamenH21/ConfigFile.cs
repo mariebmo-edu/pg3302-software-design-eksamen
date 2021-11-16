@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
 using static BCrypt.Net.BCrypt;
@@ -14,7 +11,7 @@ namespace PG332_SoftwareDesign_EksamenH21
 
         public void AddDummyData()
         {
-
+            clearDataFromDb();
             //SPECIALIZATION
             SpecializationDao specializationDao = new();
             Specialization specialization = new();
@@ -207,6 +204,7 @@ namespace PG332_SoftwareDesign_EksamenH21
             user.FirstName = "Kim";
             user.LastName = "Bruun";
             user.Password = HashPassword( "daarligpassord" );
+            user.Email = "kim@bruun.no";
             user.PhoneNumber = "12378094";
             user.CurrentSemester = SemesterEnum.THIRD;
 
@@ -221,30 +219,36 @@ namespace PG332_SoftwareDesign_EksamenH21
             firstSemester.Courses.Add( db1102 );
             firstSemester.Courses.Add( pgr102 );
             firstSemester.Courses.Add( pro105 );
-
+            firstSemester.SemesterEnum = SemesterEnum.FIRST;
+            
             secondSemester.Courses.Add( pgr103 );
             secondSemester.Courses.Add( tk2100 );
             secondSemester.Courses.Add( pro104 );
             secondSemester.Courses.Add( pg2201 );
-
+            secondSemester.SemesterEnum = SemesterEnum.SECOND;
+            
             thirdSemester.Courses.Add( pg3302 );
             thirdSemester.Courses.Add( pg4200 );
             thirdSemester.Courses.Add( pgr203 );
             thirdSemester.Courses.Add( pro201_autumn );
-
+            thirdSemester.SemesterEnum = SemesterEnum.THIRD;
+            
             fourthSemester.Courses.Add( pro201_spring );
             fourthSemester.Courses.Add( pg6301 );
             fourthSemester.Courses.Add( pgr208 );
             fourthSemester.Courses.Add( pg5100 );
-
+            fourthSemester.SemesterEnum = SemesterEnum.FOURTH;
+            
             fifthSemester.Courses.Add( pg6102 );
             fifthSemester.Courses.Add( pgr301 );
             fifthSemester.Courses.Add( pg3401 );
             fifthSemester.Courses.Add( pg5501 );
-
+            fifthSemester.SemesterEnum = SemesterEnum.FIFTH;
+            
             sixthSemester.Courses.Add( bao302 );
             sixthSemester.Courses.Add( pj6100 );
-
+            sixthSemester.SemesterEnum = SemesterEnum.SIXTH;
+            
             user.Semesters = new() { 
                 firstSemester, secondSemester, thirdSemester, fourthSemester, fifthSemester, sixthSemester
             };
@@ -328,11 +332,26 @@ namespace PG332_SoftwareDesign_EksamenH21
             lecture.TaskSet.Tasks.Add(task_b);
             lecture.TaskSet.Tasks.Add(task_c);
 
-
-            db.Save(user);
-            */
+*/
+            userDao.Save(user);
+            
 
         }
+
+        private void clearDataFromDb()
+        {
+            using TrackerContext trackerContext = new();
+            trackerContext.Courses.RemoveRange(trackerContext.Courses);
+            trackerContext.Lectures.RemoveRange(trackerContext.Lectures);
+            trackerContext.Semesters.RemoveRange(trackerContext.Semesters);
+            trackerContext.Specializations.RemoveRange(trackerContext.Specializations);
+            trackerContext.Tasks.RemoveRange(trackerContext.Tasks);
+            trackerContext.TaskSets.RemoveRange(trackerContext.TaskSets);
+            trackerContext.Users.RemoveRange(trackerContext.Users);
+            trackerContext.Addresses.RemoveRange(trackerContext.Addresses);
+            trackerContext.SaveChanges();
+        }
+
 
         void AddCourseData(Semester[] semesters) {
             foreach(Semester s in semesters){
@@ -349,11 +368,10 @@ namespace PG332_SoftwareDesign_EksamenH21
 
                         for(int j=0; j<taskAmount; j++) {
                             Task task = new();
+                            task.Title = RandomTitle();
                             task.Description = RandomDescription();
                             c.Lectures[i].TaskSet.Tasks.Add( task );
                         }
-
-
                     }
                 }
             }
@@ -364,14 +382,14 @@ namespace PG332_SoftwareDesign_EksamenH21
 
             Random random = new();
 
-            return titles[random.Next( titles.Length-1 )];
+            return titles[random.Next( titles.Length )];
         }
 
         string RandomDescription() {
             string[] descriptions = {"Skriv åtte sider om hvor mye du liker ost", "Hvis en appelsin bodde på månen, og Bush var president, hvor lang ville en linjal på 32 cm vært i juni?"};
             Random random = new();
 
-            return descriptions[random.Next( descriptions.Length - 1 )];
+            return descriptions[random.Next( descriptions.Length)];
         }
     }
 }
