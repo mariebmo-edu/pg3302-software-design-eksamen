@@ -5,25 +5,21 @@ using System.Text;
 using NUnit.Framework;
 using PG332_SoftwareDesign_EksamenH21;
 using PG332_SoftwareDesign_EksamenH21.Handlers;
+using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace Test
 {
     class ProgressionTest
     {
-        [SetUp]
-        public void Setup()
-        {
-
-        }
 
         [Test]
         public void NodeNotPublishedAndNotFinished()
         {
             Task task = new();
 
-            ProgressionHandlerLeaf taskF = new(task);
-
-            Assert.AreEqual(new ProgressionWrapper(0.00,0.00), taskF.GetProgression());
+            Assert.AreEqual(
+                new ProgressionWrapper(0.00,0.00),
+                ProgressionHandlerFactory.MakeProgressionHandler(task).GetProgression());
         }
 
         [Test]
@@ -32,9 +28,9 @@ namespace Test
             Task task = new();
             task.Finished = true;
 
-            ProgressionHandlerLeaf taskF = new(task);
-
-            Assert.AreEqual(new ProgressionWrapper(0.00, 0.00), taskF.GetProgression());
+            Assert.AreEqual(
+                new ProgressionWrapper(0.00, 0.00),
+                ProgressionHandlerFactory.MakeProgressionHandler(task).GetProgression());
         }
 
         [Test]
@@ -43,9 +39,9 @@ namespace Test
             Task task = new();
             task.Published = true;
 
-            ProgressionHandlerLeaf taskF = new(task);
-
-            Assert.AreEqual(new ProgressionWrapper(1.00, 0.00), taskF.GetProgression());
+            Assert.AreEqual(
+                new ProgressionWrapper(1.00, 0.00),
+                ProgressionHandlerFactory.MakeProgressionHandler(task).GetProgression());
         }
 
         [Test]
@@ -55,9 +51,9 @@ namespace Test
             task.Published = true;
             task.Finished = true;
 
-            ProgressionHandlerLeaf taskF = new(task);
-
-            Assert.AreEqual(new ProgressionWrapper(1.00, 1.00), taskF.GetProgression());
+            Assert.AreEqual(
+                new ProgressionWrapper(1.00, 1.00),
+                ProgressionHandlerFactory.MakeProgressionHandler(task).GetProgression());
         }
         
         [Test]
@@ -74,9 +70,9 @@ namespace Test
             taskSet.Tasks.Add(task1);
             taskSet.Tasks.Add(task2);
 
-            ProgressionHandlerComposite taskSetF = new(taskSet);
-
-            Assert.AreEqual(new ProgressionWrapper(0.00, 0.00), taskSetF.GetProgression());
+            Assert.AreEqual(
+                new ProgressionWrapper(0.00, 0.00),
+                ProgressionHandlerFactory.MakeProgressionHandler(taskSet).GetProgression());
         }
 
         [Test]
@@ -101,9 +97,9 @@ namespace Test
             taskSet.Tasks.Add(task3);
             taskSet.Tasks.Add(task4);
 
-            ProgressionHandlerComposite taskSetF = new(taskSet);
-
-            Assert.AreEqual(new ProgressionWrapper(0.50, 0.25), taskSetF.GetProgression());
+            Assert.AreEqual(
+                new ProgressionWrapper(0.50, 0.25),
+                ProgressionHandlerFactory.MakeProgressionHandler(taskSet).GetProgression());
         }
         
         [Test]
@@ -158,9 +154,10 @@ namespace Test
             course.Lectures.Add(lecture2);
             course.Lectures.Add(lecture3);
 
-            ProgressionHandlerComposite courseF = new(course);
-
-            Assert.AreEqual(new ProgressionWrapper(0.66, 0.25), courseF.GetProgression());
+            Assert.AreEqual(
+                new ProgressionWrapper(0.66, 0.25),
+                ProgressionHandlerFactory.MakeProgressionHandler(course).GetProgression()
+                );
         }
         
     }

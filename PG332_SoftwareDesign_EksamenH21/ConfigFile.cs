@@ -273,8 +273,9 @@ namespace PG332_SoftwareDesign_EksamenH21
             Address address = new();
             address.City = "Oslo";
             address.Country = "Norway";
+
             user.password = HashPassword("password123");
-            //ser.Specialization = specialization;
+            //user.Specialization = specialization;
 
             user.Address = address;
             user.FirstName = "Kim";
@@ -301,10 +302,12 @@ namespace PG332_SoftwareDesign_EksamenH21
             Semester fifthSemester = new();
             Semester sixthSemester = new();
 
+
             user.Semesters = new()
             {
                 firstSemester, secondSemester, thirdSemester, fourthSemester, fifthSemester, sixthSemester
             };
+
 
             firstSemester.Courses.Add(course_a);
             firstSemester.Courses.Add(course_b);

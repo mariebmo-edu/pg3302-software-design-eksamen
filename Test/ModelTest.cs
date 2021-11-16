@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
-using PG332_SoftwareDesign_EksamenH21;
+﻿using NUnit.Framework;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
-using Task = PG332_SoftwareDesign_EksamenH21.Task;
+using static BCrypt.Net.BCrypt;
 
 namespace Test
 {
@@ -19,42 +13,6 @@ namespace Test
 
         }
 
-        [Test]
-        public void SaveUserAndAggregatedClassesTest()
-        {
-
-
-            var task_A = new Task();
-            var task_B = new Task();
-            var task_C = new Task();
-
-            var lecture = new Lecture();
-            lecture.TaskSet.Tasks.Add(task_A);
-            var course = new Course();
-            course.Lectures.Add(lecture);
-
-
-            Specialization specialization = new Specialization();
-            User user = new();
-
-            using (var db = new TrackerContext())
-            {
-
-                db.Add(user);
-                db.SaveChanges();
-
-
-                User userFromServer = db.Users
-                    .OrderByDescending(s => s.Id)
-                    .First();
-                Console.WriteLine($"user id: {user.Id}");
-                Console.WriteLine($"user id from server id: {userFromServer.Id}");
-
-                Assert.AreEqual(user, userFromServer);
-            }
-
-
-        }
 
         [Test]
         public void UpdateUserInDB()
@@ -63,7 +21,8 @@ namespace Test
             {
                 FirstName = "Test",
                 LastName = "Persson",
-                Email = "test@persson.no"
+                Email = "test@persson.no",
+                Password = HashPassword("password123")
             };
 
             UserDao userDao = new UserDao();
