@@ -12,6 +12,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
         public IProgressable Progressable { get; }
 
         public List<IProgressionHandler<IProgressable>> Children = new();
+        public ProgressionWrapper ProgressionWrapper { get; set; }
 
         public ProgressionHandlerComposite(IProgressable progressable)
         {
@@ -54,19 +55,24 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         public ProgressionWrapper GetProgression()
         {
-            ProgressionWrapper progression = new(0.00, 0.00);
-
             if (!Progressable.Published)
             {
-                return progression;
+                return new ProgressionWrapper(0.00, 0.00);
             }
+
+            if (!(ProgressionWrapper == null))
+            {
+                return ProgressionWrapper / Children.Count;
+            }
+
+            ProgressionWrapper = new(0.00, 0.00);
 
             foreach (var c in Children)
             {
-                progression = progression + c.GetProgression();
+                ProgressionWrapper = ProgressionWrapper + c.GetProgression();
             }
             
-            return progression / Children.Count;
+            return ProgressionWrapper / Children.Count;
         }
     }
 }

@@ -75,6 +75,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
                 {
                     _progComp.Children.Add(MakeProgressionHandler(t));
                 }
+
+                return _progComp;
             }
 
             return new ProgressionHandlerLeaf(_progressable as Task);
