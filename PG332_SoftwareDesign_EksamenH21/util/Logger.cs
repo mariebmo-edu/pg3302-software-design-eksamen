@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading;
 
 namespace PG332_SoftwareDesign_EksamenH21.util
 {
@@ -16,9 +17,9 @@ namespace PG332_SoftwareDesign_EksamenH21.util
 
         public async void Write(string message)
         {
-            String fileName = "log.txt";
+            String fileName = $"{Environment.CurrentDirectory}/log.txt";
             DateTime dateTime = DateTime.Now;
-            using StreamWriter file = new(fileName, true);
+            await using StreamWriter file = new(fileName, true);
             await file.WriteAsync($"{dateTime} : {message}{Environment.NewLine}");
         }
     }
