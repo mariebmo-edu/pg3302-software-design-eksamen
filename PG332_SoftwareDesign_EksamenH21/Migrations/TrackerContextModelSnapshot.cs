@@ -157,6 +157,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("Finished")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("SemesterEnum")
                         .HasColumnType("INTEGER");
 
@@ -178,6 +181,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("Finished")
+                        .HasColumnType("INTEGER");
 
                     b.Property<long?>("TaskSetId")
                         .HasColumnType("INTEGER");
