@@ -9,77 +9,77 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 {
     public class ProgressionHandlerFactory
     {
-        public static IProgressionHandler<IProgressable> MakeProgressionHandler(IProgressable _progressable)
+        public static IProgressionHandler<IProgressable> MakeProgressionHandler(IProgressable progressable)
         {
-            if (_progressable is User)
+            if (progressable is User)
             {
-                User u = _progressable as User;
+                User u = progressable as User;
 
-                ProgressionHandlerComposite _progComp = new(u);
+                ProgressionHandlerComposite progComp = new(u);
 
                 foreach (var s in u.Semesters)
                 {
-                    _progComp.Children.Add(MakeProgressionHandler(s));
+                    progComp.Children.Add(MakeProgressionHandler(s));
                 }
 
-                return _progComp;
+                return progComp;
             }
             
-            if (_progressable is Semester)
+            if (progressable is Semester)
             {
-                Semester s = _progressable as Semester;
+                Semester s = progressable as Semester;
 
-                ProgressionHandlerComposite _progComp = new(s);
+                ProgressionHandlerComposite progComp = new(s);
 
                 foreach (var c in s.Courses)
                 {
-                    _progComp.Children.Add(MakeProgressionHandler(c));
+                    progComp.Children.Add(MakeProgressionHandler(c));
                 }
 
-                return _progComp;
+                return progComp;
             }
 
-            if (_progressable is Course)
+            if (progressable is Course)
             {
-                Course c = _progressable as Course;
+                Course c = progressable as Course;
 
-                ProgressionHandlerComposite _progComp = new(c);
+                ProgressionHandlerComposite progComp = new(c);
 
                 foreach (var l in c.Lectures)
                 {
-                    _progComp.Children.Add(MakeProgressionHandler(l));
+                    progComp.Children.Add(MakeProgressionHandler(l));
                 }
 
-                return _progComp;
+                return progComp;
             }
 
-            if (_progressable is Lecture)
+            if (progressable is Lecture)
             {
-                Lecture l = _progressable as Lecture;
+                Lecture l = progressable as Lecture;
 
-                ProgressionHandlerComposite _progComp = new(l);
+                ProgressionHandlerComposite progComp = new(l);
 
-                _progComp.Children.Add(new ProgressionHandlerLeaf(l));
-                _progComp.Children.Add(MakeProgressionHandler(l.TaskSet));
+                progComp.Children.Add(new ProgressionHandlerLeaf(l));
+                progComp.Children.Add(MakeProgressionHandler(l.TaskSet));
 
-                return _progComp;
+                return progComp;
             }
 
-            if (_progressable is TaskSet)
+            if (progressable is TaskSet)
             {
-                TaskSet ts = _progressable as TaskSet;
+                TaskSet ts = progressable as TaskSet;
 
-                ProgressionHandlerComposite _progComp = new(ts);
+                ProgressionHandlerComposite progComp = new(ts);
 
                 foreach (var t in ts.Tasks)
                 {
-                    _progComp.Children.Add(MakeProgressionHandler(t));
+                    progComp.Children.Add(MakeProgressionHandler(t));
                 }
 
-                return _progComp;
+                return progComp;
             }
 
-            return new ProgressionHandlerLeaf(_progressable as Task);
+            return new ProgressionHandlerLeaf(progressable as Task);
         }
     }
 }
