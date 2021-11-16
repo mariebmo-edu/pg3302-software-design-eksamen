@@ -157,6 +157,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+
                     b.Property<bool>("Finished")
                         .HasColumnType("INTEGER");
 
