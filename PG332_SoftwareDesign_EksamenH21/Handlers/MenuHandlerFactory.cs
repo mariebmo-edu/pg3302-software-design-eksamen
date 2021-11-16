@@ -9,12 +9,12 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 {
     class MenuHandlerFactory
     {
-        public static MenuHandler MakeMenuHandler(IProgressable progressable)
+        public static MenuHandler MakeMenuHandler(IProgressable progressable, MenuHandler superMenu)
         {
             if (progressable is User)
             {
                 User u = progressable as User;
-                MenuHandler mh = new(u, false);
+                MenuHandler mh = new(u, null, false);
                 foreach (var s in u.Semesters)
                 {
                     mh.Options.Add(s);
@@ -25,7 +25,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             if (progressable is Semester)
             {
                 Semester s = progressable as Semester;
-                MenuHandler mh = new(s, false);
+                MenuHandler mh = new(s, superMenu, false);
                 foreach (var c in s.Courses)
                 {
                     mh.Options.Add(c);
@@ -36,7 +36,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             if (progressable is Course)
             {
                 Course c = progressable as Course;
-                MenuHandler mh = new(c, false);
+                MenuHandler mh = new(c, superMenu, false);
                 foreach (var l in c.Lectures)
                 {
                     mh.Options.Add(l);
@@ -47,7 +47,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             if (progressable is Lecture)
             {
                 Lecture l = progressable as Lecture;
-                MenuHandler mh = new(l, true);
+                MenuHandler mh = new(l, superMenu, true);
                 foreach (var t in l.TaskSet.Tasks)
                 {
                     mh.Options.Add(t);
@@ -56,7 +56,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             }
             
             Task task = progressable as Task;
-            MenuHandler menuHandler = new(task, true);
+            MenuHandler menuHandler = new(task, superMenu, true);
             return menuHandler;
         }
     }
