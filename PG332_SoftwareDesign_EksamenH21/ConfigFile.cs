@@ -11,6 +11,7 @@ namespace PG332_SoftwareDesign_EksamenH21
 
         public void AddDummyData()
         {
+            clearDataFromDb();
             //SPECIALIZATION
             SpecializationDao specializationDao = new();
             Specialization specialization = new();
@@ -337,6 +338,20 @@ namespace PG332_SoftwareDesign_EksamenH21
 
         }
 
+        private void clearDataFromDb()
+        {
+            using TrackerContext trackerContext = new();
+            trackerContext.Courses.RemoveRange(trackerContext.Courses);
+            trackerContext.Lectures.RemoveRange(trackerContext.Lectures);
+            trackerContext.Semesters.RemoveRange(trackerContext.Semesters);
+            trackerContext.Specializations.RemoveRange(trackerContext.Specializations);
+            trackerContext.Tasks.RemoveRange(trackerContext.Tasks);
+            trackerContext.TaskSets.RemoveRange(trackerContext.TaskSets);
+            trackerContext.Users.RemoveRange(trackerContext.Users);
+            trackerContext.Addresses.RemoveRange(trackerContext.Addresses);
+            trackerContext.SaveChanges();
+        }
+
 
         void AddCourseData(Semester[] semesters) {
             foreach(Semester s in semesters){
@@ -353,11 +368,10 @@ namespace PG332_SoftwareDesign_EksamenH21
 
                         for(int j=0; j<taskAmount; j++) {
                             Task task = new();
+                            task.Title = RandomTitle();
                             task.Description = RandomDescription();
                             c.Lectures[i].TaskSet.Tasks.Add( task );
                         }
-
-
                     }
                 }
             }
@@ -368,14 +382,14 @@ namespace PG332_SoftwareDesign_EksamenH21
 
             Random random = new();
 
-            return titles[random.Next( titles.Length-1 )];
+            return titles[random.Next( titles.Length )];
         }
 
         string RandomDescription() {
             string[] descriptions = {"Skriv åtte sider om hvor mye du liker ost", "Hvis en appelsin bodde på månen, og Bush var president, hvor lang ville en linjal på 32 cm vært i juni?"};
             Random random = new();
 
-            return descriptions[random.Next( descriptions.Length - 1 )];
+            return descriptions[random.Next( descriptions.Length)];
         }
     }
 }
