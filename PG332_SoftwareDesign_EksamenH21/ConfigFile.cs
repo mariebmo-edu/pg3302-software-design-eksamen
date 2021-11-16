@@ -206,7 +206,7 @@ namespace PG332_SoftwareDesign_EksamenH21
             user.Address = address;
             user.FirstName = "Kim";
             user.LastName = "Bruun";
-            user.password = HashPassword( "daarligpassord" );
+            user.Password = HashPassword( "daarligpassord" );
             user.PhoneNumber = "12378094";
             user.CurrentSemester = SemesterEnum.THIRD;
 
