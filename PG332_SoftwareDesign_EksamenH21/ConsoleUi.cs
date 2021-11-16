@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using PG332_SoftwareDesign_EksamenH21.Controllers;
 using PG332_SoftwareDesign_EksamenH21.Handlers;
@@ -99,17 +98,8 @@ namespace PG332_SoftwareDesign_EksamenH21
                                           $"Nåværende semester: {semester}\r\n" +
                                           $"{progressionBar}\r\n" +
                                           "\r\n" +
-                                          $"Velg emne:\r\n";
-            /*+
-                                          $"1 - AdvJava\r\n" +
-                                          $"2 - SoftDes\r\n" +
-                                          $"3 - AlgDat\r\n" +
-                                          $"4 - SmiPro\r\n" +
-                                          "\r\n" + 
-                    
-                                          
-                                          
-                                          */
+                                          "Velg emne:\r\n";
+            
             var courses = UserController.GetCourses();
             
             for (int i = 0; i < courses.Count; i++)
@@ -196,22 +186,22 @@ namespace PG332_SoftwareDesign_EksamenH21
 
         public void PrintPercentageDone(int percentage)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void ShowRegisterUserMenu()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void ShowSelectSpecializationMenu()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void ShowSelectOptionalCourseMenu()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
 
