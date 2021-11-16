@@ -9,7 +9,7 @@ using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace Test
 {
-    class ProgressionTest
+    class ProgressionHandlerTest
     {
 
         [Test]
@@ -154,10 +154,11 @@ namespace Test
             course.Lectures.Add(lecture2);
             course.Lectures.Add(lecture3);
 
+            
             Assert.AreEqual(
                 new ProgressionWrapper(0.66, 0.25),
                 ProgressionHandlerFactory.MakeProgressionHandler(course).GetProgression()
-                );
+            );
         }
         
     }

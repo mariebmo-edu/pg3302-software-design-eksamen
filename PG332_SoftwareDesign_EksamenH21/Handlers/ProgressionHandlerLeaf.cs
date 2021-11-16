@@ -18,6 +18,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         public double GetPublishedPercent()
         {
+            var forDebug = Progressable;
             if (Progressable.Published)
             {
                 return 1.00;
