@@ -20,7 +20,7 @@ namespace PG332_SoftwareDesign_EksamenH21
             Address address = new();
             address.City = "Oslo";
             address.Country = "Norway";
-            user.password = HashPassword("password123");
+            user.Password = HashPassword("password123");
             Specialization specialization = new();
             //ser.Specialization = specialization;
 
