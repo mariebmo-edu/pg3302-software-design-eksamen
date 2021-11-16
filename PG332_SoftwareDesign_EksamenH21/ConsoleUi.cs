@@ -28,8 +28,8 @@ namespace PG332_SoftwareDesign_EksamenH21
             while (!IsLoggedIn)
             {
                 PrintMessage("Please enter your email address");
-                String email = "roman@morso.no";
-                String password = "password123";
+                String email = "kim@bruun.no";
+                String password = "12378094";
                 //string email = ConsoleRead();
                 PrintMessage("Please enter your password");
                 //string password = ConsoleRead();
@@ -88,8 +88,8 @@ namespace PG332_SoftwareDesign_EksamenH21
         public void ShowMainMenu(string fullName)
         {
             //string name = "Harry";
-            
-            Semester semester = UserController.GetSemesters()[(int)UserController.GetCurrentSemester()];
+
+            Semester semester = UserController.GetCurrentSemester();
             ProgressionHandlerComposite semesterHandler = new(semester);
 
             ProgressionWrapper progWrap = semesterHandler.GetProgression();
@@ -110,11 +110,11 @@ namespace PG332_SoftwareDesign_EksamenH21
                                           
                                           
                                           */
-            var semesters = UserController.GetSemesters();
+            var courses = UserController.GetCourses();
             
-            for (int i = 0; i < semesters.Count; i++)
+            for (int i = 0; i < courses.Count; i++)
             {
-                mainMenuPresentation += $"{i + 1} - {semesters[i]}\r\n";
+                mainMenuPresentation += $"{i + 1} - {courses[i]}\r\n";
             }
             mainMenuPresentation += "0 - gå til spesialiseringsmeny\r\n" +
                                     "\r\n" +
