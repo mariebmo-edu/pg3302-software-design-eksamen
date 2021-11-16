@@ -47,7 +47,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
                 foreach (var l in c.Lectures)
                 {
-                    _progComp.Children.Add(MakeProgressionHandler(c));
+                    _progComp.Children.Add(MakeProgressionHandler(l));
                 }
 
                 return _progComp;

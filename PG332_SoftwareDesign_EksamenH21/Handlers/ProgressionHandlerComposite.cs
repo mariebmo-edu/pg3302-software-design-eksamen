@@ -21,6 +21,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         public double GetPublishedPercent()
         {
+            /*
             double returnValue = 0.00;
 
             if (!Progressable.Published)
@@ -34,10 +35,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             }
 
             return Math.Round(returnValue / Children.Count, 2, MidpointRounding.ToZero);
+            */
+            return 0.00;
         }
 
         public double GetFinishedPercent()
         {
+            /*
             double returnValue = 0.00;
 
             if (!Progressable.Published)
@@ -51,6 +55,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             }
 
             return Math.Round(returnValue / Children.Count, 2, MidpointRounding.ToZero);
+            */
+            return 0.00;
         }
 
         public ProgressionWrapper GetProgression()
