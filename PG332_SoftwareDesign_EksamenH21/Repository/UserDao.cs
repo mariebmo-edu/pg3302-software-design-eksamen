@@ -6,7 +6,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
 {
     public class UserDao : AbstractDao<User>, IUserDao
     {
-        public override DbSet<User> GetDbSet(TrackerContext trackerContext)
+        protected override DbSet<User> GetDbSet(TrackerContext trackerContext)
         {
             return trackerContext.Users;
         }

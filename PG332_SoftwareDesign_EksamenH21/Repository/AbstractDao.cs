@@ -28,7 +28,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
             return GetDbSet(trackerContext).Find(id);
         }
 
-        public abstract DbSet<T> GetDbSet(TrackerContext trackerContext);
+        protected abstract DbSet<T> GetDbSet(TrackerContext trackerContext);
         
         public List<T> ListAll()
         {

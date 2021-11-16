@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PG332_SoftwareDesign_EksamenH21.Migrations
 {
-    public partial class refactored_user_migration_v1 : Migration
+    public partial class V1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,7 +31,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     LastName = table.Column<string>(type: "TEXT", nullable: true),
                     PhoneNumber = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
-                    password = table.Column<string>(type: "TEXT", nullable: false)
+                    Password = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,7 +68,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    UserId = table.Column<long>(type: "INTEGER", nullable: true)
+                    UserId = table.Column<long>(type: "INTEGER", nullable: true),
+                    SemesterEnum = table.Column<int>(type: "INTEGER", nullable: false),
+                    Finished = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -87,11 +89,12 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                 {
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    SemesterId = table.Column<long>(type: "INTEGER", nullable: false),
+                    UserId = table.Column<long>(type: "INTEGER", nullable: false),
                     CourseCode = table.Column<string>(type: "TEXT", nullable: true),
                     ExamDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ExamType = table.Column<int>(type: "INTEGER", nullable: false),
                     CoursePoints = table.Column<float>(type: "REAL", nullable: false),
-                    SemesterId = table.Column<long>(type: "INTEGER", nullable: true),
                     SpecializationId = table.Column<long>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
@@ -102,7 +105,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         column: x => x.SemesterId,
                         principalTable: "Semesters",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Courses_Specializations_SpecializationId",
                         column: x => x.SpecializationId,
@@ -118,6 +121,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", nullable: true),
+                    LectureId = table.Column<long>(type: "INTEGER", nullable: false),
                     LectureDateTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     CourseId = table.Column<long>(type: "INTEGER", nullable: true)
                 },
@@ -159,6 +163,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Finished = table.Column<bool>(type: "INTEGER", nullable: false),
                     TaskSetId = table.Column<long>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
