@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection;
 using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21
@@ -10,6 +11,8 @@ namespace PG332_SoftwareDesign_EksamenH21
         [NotMapped]
         public SemesterEnum Semester { get; set; }
         public long Id { get; set; }
+        public long SemesterId { get; set; }
+        public long UserId { get; set; }
         public string CourseCode { get; set; }
         public List<Lecture> Lectures { get; set; } = new();
         public DateTime ExamDate { get; set; }

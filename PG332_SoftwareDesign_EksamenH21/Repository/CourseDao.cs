@@ -41,7 +41,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
             trackerContext.SaveChanges();
         }
 
-
+        public List<Course> RetrieveCourseBySemesterIdAndUser(long semesterId, long userId)
+        {
+            using TrackerContext trackerContext = new();
+            return trackerContext.Courses.Where(c => c.SemesterId == semesterId && c.UserId == userId).ToList();
+        }
         public Course RetrieveOneByField(Func<Course, bool> predicate)
         {
             using TrackerContext trackerContext = new();
