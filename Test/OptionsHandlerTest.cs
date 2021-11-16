@@ -18,7 +18,7 @@ namespace Test
             
             OptionsHandler tsOh = new(taskSet, null, false);
 
-            OptionsHandler actual = tsOh.ChooseOption("t");
+            OptionsHandler actual = tsOh.ChooseOption("t") as OptionsHandler;
             
             Assert.AreEqual(tsOh, actual);
         }
@@ -37,7 +37,7 @@ namespace Test
 
             OptionsHandler expected = new(task1, tsOh, true);
 
-            OptionsHandler actual = tsOh.ChooseOption("1");
+            OptionsHandler actual = tsOh.ChooseOption("1") as OptionsHandler;
 
             for (int i = 0; i < expected.Options.Count; i++)
             {
@@ -61,7 +61,7 @@ namespace Test
             
             OptionsHandler tsOh = MakeMenuHandler(taskSet, null);
 
-            OptionsHandler actual = tsOh.ChooseOption("1").ChooseOption("0");
+            OptionsHandler actual = tsOh.ChooseOption("1").ChooseOption("0") as OptionsHandler;
             
             Assert.AreEqual(tsOh, actual);
         }
@@ -88,7 +88,7 @@ namespace Test
             task1.Published = true;
 
             OptionsHandler tOh = new(task1, null, true);
-            OptionsHandler actual = tOh.ChooseOption("0");
+            OptionsHandler actual = tOh.ChooseOption("0") as OptionsHandler;
             Assert.AreEqual(tOh, actual);
         }
     }
