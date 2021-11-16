@@ -5,7 +5,7 @@ using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21.Model
 {
-    public class User
+    public class User : IProgressable
     {
         public long Id { get; set; }
         public string FirstName { get; set; }
@@ -20,6 +20,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
         public List<Semester> Semesters { get; set; } = new();
         [NotMapped]
         public SemesterEnum CurrentSemester { get; set; }
+        [NotMapped]
+        public bool Published { get; set; } = true;
 
         public override bool Equals(object? obj)
         {
