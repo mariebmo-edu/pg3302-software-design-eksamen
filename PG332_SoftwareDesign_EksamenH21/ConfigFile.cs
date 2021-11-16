@@ -363,18 +363,27 @@ namespace PG332_SoftwareDesign_EksamenH21
                     for(int i = 0; i < lectureAmount; i++) {
                         Lecture lecture = new();
                         lecture.Title = RandomTitle();
+                        lecture.Finished = randomBool();
                         c.Lectures.Add( lecture );
                         int taskAmount = random.Next( 5 );
 
                         for(int j=0; j<taskAmount; j++) {
                             Task task = new();
                             task.Title = RandomTitle();
+                            task.Finished = randomBool();
                             task.Description = RandomDescription();
                             c.Lectures[i].TaskSet.Tasks.Add( task );
                         }
                     }
                 }
             }
+        }
+
+        private bool randomBool()
+        {
+            Random nextInt = new Random();
+
+            return nextInt.Next(2) == 1;
         }
 
         string RandomTitle() {
