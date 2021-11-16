@@ -4,6 +4,7 @@ using PG332_SoftwareDesign_EksamenH21.Controllers;
 using PG332_SoftwareDesign_EksamenH21.Handlers;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
+using PG332_SoftwareDesign_EksamenH21.util;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {
@@ -87,7 +88,6 @@ namespace PG332_SoftwareDesign_EksamenH21
         public void ShowMainMenu(string fullName)
         {
             //string name = "Harry";
-
             Semester semester = UserController.GetCurrentSemester();
             ProgressionHandlerComposite semesterHandler = new(semester);
 
