@@ -45,8 +45,8 @@ namespace PG332_SoftwareDesign_EksamenH21
         {
             // Email = "gMail@email.no", password = HashPassword("password123")};
             UserLoginMenu();
-            MainMenuController menuController = new();
-            menuController.Handle(User.Id);
+            // MainMenuController menuController = new();
+            //menuController.Handle(User.Id);
             
             string firstName = User.FirstName + " " + User.LastName;
             while (true)

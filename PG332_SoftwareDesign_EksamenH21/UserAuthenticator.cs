@@ -31,7 +31,7 @@ namespace PG332_SoftwareDesign_EksamenH21
             User retrieveByEmail = dao.RetrieveByEmail(email);
             if (retrieveByEmail is null) return false;
 
-            if (Verify(password, retrieveByEmail.password))
+            if (Verify(password, retrieveByEmail.Password))
             {
                 User = retrieveByEmail;
                 return true;
