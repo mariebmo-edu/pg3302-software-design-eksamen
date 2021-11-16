@@ -3,44 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace PG332_SoftwareDesign_EksamenH21.Repository
 {
-    class CourseDao : ICrudDao<Course>
+    class CourseDao : AbstractDao<Course>, ICourseDao
     {
-        public void Update(Course m)
+        
+        public override DbSet<Course> GetDbSet(TrackerContext trackerContext)
         {
-            using TrackerContext trackerContext = new TrackerContext();
-            trackerContext.Courses.Update(m);
-            trackerContext.SaveChanges();
+            return trackerContext.Courses;
         }
-
-        public void Save(Course m)
-        {
-            using TrackerContext trackerContext = new TrackerContext();
-            trackerContext.Add(m);
-            trackerContext.SaveChanges();
-        }
-
-        public Course RetrieveById(long id)
-        {
-            using TrackerContext trackerContext = new();
-            return trackerContext.Courses.Find(id);
-        }
-
-        public List<Course> ListAll()
-        {
-            using TrackerContext trackerContext = new();
-            return trackerContext.Courses.ToList();
-        }
-
-        public void Delete(long id)
-        {
-            using TrackerContext trackerContext = new();
-            trackerContext.Remove(trackerContext.Courses.Find(id));
-            trackerContext.SaveChanges();
-        }
-
+        
         public List<Course> RetrieveCourseBySemesterIdAndUser(long semesterId, long userId)
         {
             using TrackerContext trackerContext = new();
@@ -50,6 +24,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
         {
             using TrackerContext trackerContext = new();
             return trackerContext.Courses.FirstOrDefault(predicate);
+        }
+
+        public Course retrieveByCode(string code)
+        {
+            return RetrieveOneByField(c => c.CourseCode == code);
         }
     }
 }
