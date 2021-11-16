@@ -8,7 +8,7 @@ using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21.Repository
 {
-    class SemesterDao : AbstractDao<Semester>, ICrudDao<Semester>
+    class SemesterDao : AbstractDao<Semester>, ISemesterDao
     {
         protected override DbSet<Semester> RetrieveDbSet(TrackerContext trackerContext)
         {

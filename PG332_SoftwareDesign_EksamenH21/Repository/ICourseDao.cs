@@ -9,7 +9,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
 {
     interface ICourseDao : ICrudDao<Course>
     {
-        Course retrieveByCode(string code);
+        Course RetrieveByCode(string code);
 
         List<Course> RetrieveCoursesBySemesterId(long id);
     }
