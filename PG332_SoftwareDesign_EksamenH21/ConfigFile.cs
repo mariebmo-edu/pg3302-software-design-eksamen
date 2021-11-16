@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
 using static BCrypt.Net.BCrypt;
@@ -14,7 +11,6 @@ namespace PG332_SoftwareDesign_EksamenH21
 
         public void AddDummyData()
         {
-
             //SPECIALIZATION
             SpecializationDao specializationDao = new();
             Specialization specialization = new();
@@ -207,6 +203,7 @@ namespace PG332_SoftwareDesign_EksamenH21
             user.FirstName = "Kim";
             user.LastName = "Bruun";
             user.Password = HashPassword( "daarligpassord" );
+            user.Email = "kim@bruun.no";
             user.PhoneNumber = "12378094";
             user.CurrentSemester = SemesterEnum.THIRD;
 
@@ -334,11 +331,12 @@ namespace PG332_SoftwareDesign_EksamenH21
             lecture.TaskSet.Tasks.Add(task_b);
             lecture.TaskSet.Tasks.Add(task_c);
 
-
-            db.Save(user);
-            */
+*/
+            userDao.Save(user);
+            
 
         }
+
 
         void AddCourseData(Semester[] semesters) {
             foreach(Semester s in semesters){

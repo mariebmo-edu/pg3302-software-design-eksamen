@@ -25,7 +25,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
         public List<Semester> GetSemesters()
         {
             SemesterDao dao = new SemesterDao();
-            return dao.RetrieveUserSemesters(User);
+            return null;
         }
 
         public List<Course> GetCourses()
