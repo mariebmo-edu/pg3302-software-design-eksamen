@@ -33,7 +33,7 @@ namespace Test
             taskSet.Published = true;
             taskSet.Tasks.Add(task1);
 
-            OptionsHandler tsOh = MakeMenuHandler(taskSet, null);
+            OptionsHandler tsOh = MakeOptionsHandler(taskSet, null);
 
             OptionsHandler expected = new(task1, tsOh, true);
 
@@ -59,7 +59,7 @@ namespace Test
             taskSet.Published = true;
             taskSet.Tasks.Add(task1);
             
-            OptionsHandler tsOh = MakeMenuHandler(taskSet, null);
+            OptionsHandler tsOh = MakeOptionsHandler(taskSet, null);
 
             OptionsHandler actual = tsOh.ChooseOption("1").ChooseOption("0") as OptionsHandler;
             
@@ -74,7 +74,7 @@ namespace Test
             Task task1 = new();
             task1.Published = true;
 
-            OptionsHandler tOh = MakeMenuHandler(task1, null);
+            OptionsHandler tOh = MakeOptionsHandler(task1, null);
 
             tOh.ChooseOption("F");
 

@@ -7,25 +7,27 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 {
     public class OptionsHandler : IPrintable<IProgressable>
     {
-        // Skal brukes i UI av en menu/view-klasse
+        #region Documentation
+            // Skal brukes i UI av en menu/view-klasse
 
-        // BRUK OptionsHandlerFactory FOR Å GENERERE INSTANSER! Alt er automatisert der
+            // BRUK OptionsHandlerFactory FOR Å GENERERE INSTANSER! Alt er automatisert der
 
-        // Progressable property er nivået man er på (f.eks. Lecture)
+            // Progressable property er nivået man er på (f.eks. Lecture)
 
-        // Options property skal brukes for å printe menyvalg i konsollen (f.eks. alle Lectures i et Course)
+            // Options property skal brukes for å printe menyvalg i konsollen (f.eks. alle Lectures i et Course)
 
-        // SuperOption er den overordnede menyen (f.eks. hvis man er på et Course, er et spesifikt Semester SuperOption)
-        // Hvis SuperOption er null, skal det ikke printes menyvalg for dette (gjelder nå bare på User-nivå)
+            // SuperOption er den overordnede menyen (f.eks. hvis man er på et Course, er et spesifikt Semester SuperOption)
+            // Hvis SuperOption er null, skal det ikke printes menyvalg for dette (gjelder nå bare på User-nivå)
 
-        // IsFinishable property brukes for å generere menyvalg for å sette en Lecture/Task som Finished
+            // IsFinishable property brukes for å generere menyvalg for å sette en Lecture/Task som Finished
 
-        // OBS! Vi må generere meny på User-nivå FØR vi viser semestermenyen brukeren skal starte på!
-        // Ellers vil det ikke genereres SuperOption automatisk på Semester!
+            // OBS! Vi må generere meny på User-nivå FØR vi viser semestermenyen brukeren skal starte på!
+            // Ellers vil det ikke genereres SuperOption automatisk på Semester!
+            
+            // OBSnr2! Klassen som genererer meny må caste til OptionsHandler før den printer!
+            // Ellers vil den ikke få ut riktig info!
+        #endregion
         
-        // OBSnr2! Klassen som genererer meny må caste til OptionsHandler før den printer!
-        // Ellers vil den ikke få ut riktig info!
-
         #region Properties
 
             public IProgressable Progressable { get; set; }
@@ -46,167 +48,167 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         #endregion
 
-    #region Public methods
+        #region Public methods
 
-    public IPrintable<IProgressable> ChooseOption(string input)
-    {
-        if (input.ToLower().Equals("e"))
-        {
-            return Quit();
-        }
+            public IPrintable<IProgressable> ChooseOption(string input)
+            {
+                if (input.ToLower().Equals("e"))
+                {
+                    return Quit();
+                }
 
-        if (input.ToLower().Equals("f") && IsFinishable)
-        {
-            return SetFinished();
-        }
+                if (input.ToLower().Equals("f") && IsFinishable)
+                {
+                    return SetFinished();
+                }
 
-        int convertedInput;
+                int convertedInput;
 
-        if (!Int32.TryParse(input, out convertedInput))
-        {
-            return GetErrorMessage();
-        }
+                if (!Int32.TryParse(input, out convertedInput))
+                {
+                    return GetErrorMessage();
+                }
 
-        if (convertedInput >= 0 && convertedInput <= Options.Count)
-        {
-            return GetOption(convertedInput);
-        }
+                if (convertedInput >= 0 && convertedInput <= Options.Count)
+                {
+                    return GetOption(convertedInput);
+                }
 
-        if (convertedInput > Options.Count)
-        {
-            return GetErrorMessage();
-        }
+                if (convertedInput > Options.Count)
+                {
+                    return GetErrorMessage();
+                }
 
-        return this;
-    }
+                return this;
+            }
 
-    #endregion
+        #endregion
 
-    #region Private methods
+        #region Private methods
 
-    private OptionsHandler GetOption(int convertedInput)
-    {
-        if (convertedInput == 0 && SuperOption != null)
-        {
-            return SuperOption as OptionsHandler;
-        }
+            private OptionsHandler GetOption(int convertedInput)
+            {
+                if (convertedInput == 0 && SuperOption != null)
+                {
+                    return SuperOption;
+                }
 
-        if (convertedInput == 0 && SuperOption == null)
-        {
-            return this;
-        }
+                if (convertedInput == 0 && SuperOption == null)
+                {
+                    return this;
+                }
 
-        if (Options[convertedInput - 1].Published)
-        {
-            return OptionsHandlerFactory.MakeMenuHandler(Options[convertedInput - 1], this);
-        }
+                if (Options[convertedInput - 1].Published)
+                {
+                    return OptionsHandlerFactory.MakeOptionsHandler(Options[convertedInput - 1], this);
+                }
 
-        Console.WriteLine("Dette menyvalget er ikke publisert");
-        Console.WriteLine("Trykk en tast for å gå videre");
-        Logger.Instance.Write("UNPUBLISHED OPTION");
-        Console.ReadKey();
+                Console.WriteLine("Dette menyvalget er ikke publisert");
+                Console.WriteLine("Trykk en tast for å gå videre");
+                Logger.Instance.Write("UNPUBLISHED OPTION");
+                Console.ReadKey();
 
-        return this;
-    }
+                return this;
+            }
 
-    private OptionsHandler Quit()
-    {
-        Console.WriteLine("Vil du avslutte? [J/N]");
-        string quitInput = Console.ReadLine()?.ToLower();
+            private OptionsHandler Quit()
+            {
+                Console.WriteLine("Vil du avslutte? [J/N]");
+                string quitInput = Console.ReadLine()?.ToLower();
 
-        if (quitInput != null && !quitInput.Equals("j"))
-        {
-            return this;
-        }
+                if (quitInput != null && !quitInput.Equals("j"))
+                {
+                    return this;
+                }
 
-        Console.WriteLine("På gjensyn!");
-        Console.WriteLine("Trykk en tast for å avslutte");
-        Logger.Instance.Write("EXITING APPLICATION");
-        Console.ReadKey();
+                Console.WriteLine("På gjensyn!");
+                Console.WriteLine("Trykk en tast for å avslutte");
+                Logger.Instance.Write("EXITING APPLICATION");
+                Console.ReadKey();
 
-        Environment.Exit(0);
+                Environment.Exit(0);
 
-        return null;
-    }
+                return null;
+            }
 
-    private OptionsHandler GetErrorMessage()
-    {
-        Console.WriteLine("Velg et gyldig menyalternativ.");
-        Console.WriteLine("Trykk en tast for å gå videre");
-        Logger.Instance.Write("PEBKAC");
-        //Console.ReadKey(); // Kommenter ut for tester
+            private OptionsHandler GetErrorMessage()
+            {
+                Console.WriteLine("Velg et gyldig menyalternativ.");
+                Console.WriteLine("Trykk en tast for å gå videre");
+                Logger.Instance.Write("PEBKAC");
+                //Console.ReadKey(); // Kommenter ut for tester
 
-        return this;
-    }
+                return this;
+            }
 
-    private OptionsHandler SetFinished()
-    {
-        IFinishable f = Progressable as IFinishable;
-        f.Finished = !f.Finished;
-        Progressable = f;
+            private OptionsHandler SetFinished()
+            {
+                IFinishable f = Progressable as IFinishable;
+                f.Finished = !f.Finished;
+                Progressable = f;
 
-        string finished;
-        if (f.Finished)
-        {
-            finished = "ferdig!";
-        }
-        else
-        {
-            finished = "uferdig!";
-        }
+                string finished;
+                if (f.Finished)
+                {
+                    finished = "ferdig!";
+                }
+                else
+                {
+                    finished = "uferdig!";
+                }
 
-        Console.WriteLine(f.Title + " satt som " + finished);
-        Console.WriteLine("Trykk en tast for å gå videre");
-        Logger.Instance.Write(f.Title + " FINISHED BOOL TOGGLED");
-        //Console.ReadKey(); // Kommenter ut for tester
+                Console.WriteLine(f.Title + " satt som " + finished);
+                Console.WriteLine("Trykk en tast for å gå videre");
+                Logger.Instance.Write(f.Title + " FINISHED BOOL TOGGLED");
+                //Console.ReadKey(); // Kommenter ut for tester
 
-        return this;
-    }
+                return this;
+            }
 
-    #endregion
+        #endregion
 
-    #region Overridden methods
+        #region Overridden methods
 
-    protected bool Equals(OptionsHandler other)
-    {
-        return Equals(Progressable, other.Progressable) && Equals(Options, other.Options) &&
-               Equals(SuperOption, other.SuperOption) && IsFinishable == other.IsFinishable;
-    }
+        protected bool Equals(OptionsHandler other)
+            {
+                return Equals(Progressable, other.Progressable) && Equals(Options, other.Options) &&
+                       Equals(SuperOption, other.SuperOption) && IsFinishable == other.IsFinishable;
+            }
 
-    public static bool operator ==(OptionsHandler left, OptionsHandler right)
-    {
-        return Equals(left, right);
-    }
+            public static bool operator ==(OptionsHandler left, OptionsHandler right)
+            {
+                return Equals(left, right);
+            }
 
-    public static bool operator !=(OptionsHandler left, OptionsHandler right)
-    {
-        return !Equals(left, right);
-    }
+            public static bool operator !=(OptionsHandler left, OptionsHandler right)
+            {
+                return !Equals(left, right);
+            }
 
-    public override bool Equals(object? obj)
-    {
-        if (ReferenceEquals(null, obj)) return false;
-        if (ReferenceEquals(this, obj)) return true;
-        if (obj.GetType() != this.GetType()) return false;
-        return Equals((OptionsHandler) obj);
-    }
+            public override bool Equals(object? obj)
+            {
+                if (ReferenceEquals(null, obj)) return false;
+                if (ReferenceEquals(this, obj)) return true;
+                if (obj.GetType() != this.GetType()) return false;
+                return Equals((OptionsHandler) obj);
+            }
 
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(Progressable, Options, SuperOption, IsFinishable);
-    }
+            public override int GetHashCode()
+            {
+                return HashCode.Combine(Progressable, Options, SuperOption, IsFinishable);
+            }
 
-    public override string ToString()
-    {
-        string returnedString = GetType() + "\n" +
-                                Progressable.GetType() + Progressable.GetHashCode() + "\n" +
-                                Options.GetType() + Options.GetHashCode() + "\n" +
-                                SuperOption.GetType() + SuperOption.GetHashCode() + "\n" +
-                                IsFinishable.GetType() + IsFinishable.GetHashCode();
-        return returnedString;
-    }
+            public override string ToString()
+            {
+                string returnedString = GetType() + "\n" +
+                                        Progressable.GetType() + Progressable.GetHashCode() + "\n" +
+                                        Options.GetType() + Options.GetHashCode() + "\n" +
+                                        SuperOption.GetType() + SuperOption.GetHashCode() + "\n" +
+                                        IsFinishable.GetType() + IsFinishable.GetHashCode();
+                return returnedString;
+            }
 
-    #endregion
+        #endregion
 
     }
 }

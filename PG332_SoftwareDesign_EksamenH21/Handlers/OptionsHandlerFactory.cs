@@ -1,64 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PG332_SoftwareDesign_EksamenH21.Model;
+﻿using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21.Handlers
 {
     public class OptionsHandlerFactory
     {
-        public static OptionsHandler MakeMenuHandler(IProgressable progressable, OptionsHandler superOptions)
+        public static OptionsHandler MakeOptionsHandler(IProgressable progressable, OptionsHandler superOption)
         {
             if (progressable is User)
             {
                 User u = progressable as User;
-                OptionsHandler mh = new(u, null, false);
+                OptionsHandler oh = new(u, null, false);
                 foreach (var s in u.Semesters)
                 {
-                    mh.Options.Add(s);
+                    oh.Options.Add(s);
                 }
-                return mh;
+                return oh;
             }
 
             if (progressable is Semester)
             {
                 Semester s = progressable as Semester;
-                OptionsHandler mh = new(s, superOptions, false);
+                OptionsHandler oh = new(s, superOption, false);
                 foreach (var c in s.Courses)
                 {
-                    mh.Options.Add(c);
+                    oh.Options.Add(c);
                 }
-                return mh;
+                return oh;
             }
 
             if (progressable is Course)
             {
                 Course c = progressable as Course;
-                OptionsHandler mh = new(c, superOptions, false);
+                OptionsHandler oh = new(c, superOption, false);
                 foreach (var l in c.Lectures)
                 {
-                    mh.Options.Add(l);
+                    oh.Options.Add(l);
                 }
-                return mh;
+                return oh;
             }
 
             if (progressable is Lecture)
             {
                 Lecture l = progressable as Lecture;
-                OptionsHandler mh = new(l, superOptions, true);
+                OptionsHandler oh = new(l, superOption, true);
                 foreach (var t in l.TaskSet.Tasks)
                 {
-                    mh.Options.Add(t);
+                    oh.Options.Add(t);
                 }
-                return mh;
+                return oh;
             }
 
             if (progressable is TaskSet)
             {
                 TaskSet ts = progressable as TaskSet;
-                OptionsHandler oh = new(ts, superOptions, false);
+                OptionsHandler oh = new(ts, superOption, false);
                 foreach (var t in ts.Tasks)
                 {
                     oh.Options.Add(t);
@@ -68,7 +63,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             }
             
             Task task = progressable as Task;
-            OptionsHandler optionsHandler = new(task, superOptions, true);
+            OptionsHandler optionsHandler = new(task, superOption, true);
             return optionsHandler;
         }
     }
