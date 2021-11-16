@@ -14,13 +14,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
             return trackerContext.Courses;
         }
         
-        public Course RetrieveOneByField(Func<Course, bool> predicate)
-        {
-            using TrackerContext trackerContext = new();
-            return trackerContext.Courses.FirstOrDefault(predicate);
-        }
-
-        public Course retrieveByCode(string code)
+        public Course RetrieveByCode(string code)
         {
             return RetrieveOneByField(c => c.CourseCode == code);
         }
