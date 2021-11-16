@@ -5,7 +5,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
 {
     public class SpecializationDao : AbstractDao<Specialization>, ISpecializationDao
     {
-        protected override DbSet<Specialization> GetDbSet(TrackerContext trackerContext)
+        protected override DbSet<Specialization> RetrieveDbSet(TrackerContext trackerContext)
         {
             return trackerContext.Specializations;
         }

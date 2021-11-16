@@ -10,7 +10,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
 {
     class SemesterDao : AbstractDao<Semester>, ICrudDao<Semester>
     {
-        protected override DbSet<Semester> GetDbSet(TrackerContext trackerContext)
+        protected override DbSet<Semester> RetrieveDbSet(TrackerContext trackerContext)
         {
             return trackerContext.Semesters;
         }

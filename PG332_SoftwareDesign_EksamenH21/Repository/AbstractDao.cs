@@ -25,28 +25,28 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
         public T RetrieveById(long id)
         {
             using TrackerContext trackerContext = new();
-            return GetDbSet(trackerContext).Find(id);
+            return RetrieveDbSet(trackerContext).Find(id);
         }
 
-        protected abstract DbSet<T> GetDbSet(TrackerContext trackerContext);
+        protected abstract DbSet<T> RetrieveDbSet(TrackerContext trackerContext);
         
         public List<T> ListAll()
         {
             using TrackerContext trackerContext = new();
-            return GetDbSet(trackerContext).ToList();
+            return RetrieveDbSet(trackerContext).ToList();
         }
 
         public void Delete(long id)
         {
             using TrackerContext trackerContext = new();
-            trackerContext.Remove(GetDbSet(trackerContext).Find(id));
+            trackerContext.Remove(RetrieveDbSet(trackerContext).Find(id));
             trackerContext.SaveChanges();
         }
 
         public T RetrieveOneByField(Func<T, bool> predicate)
         {
             using TrackerContext trackerContext = new();
-            return GetDbSet(trackerContext).FirstOrDefault(predicate);
+            return RetrieveDbSet(trackerContext).FirstOrDefault(predicate);
         }
     }
 }
