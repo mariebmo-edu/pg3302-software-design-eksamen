@@ -54,37 +54,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         public ProgressionWrapper GetProgression()
         {
-            if (Progressable is Semester)
-            {
-                Semester s = Progressable as Semester;
-                foreach (var c in s.Courses)
-                {
-                    Children.Add(new ProgressionHandlerComposite(c));
-                }
-            }
-            else if (Progressable is Course)
-            {
-                Course c = Progressable as Course;
-                foreach (var l in c.Lectures)
-                {
-                    Children.Add(new ProgressionHandlerComposite(l));
-                }
-            }
-            else if (Progressable is Lecture)
-            {
-                Lecture l = Progressable as Lecture;
-                Children.Add(new ProgressionHandlerLeaf(l));
-                Children.Add(new ProgressionHandlerComposite(l.TaskSet));
-            }
-            else if (Progressable is TaskSet)
-            {
-                TaskSet ts = Progressable as TaskSet;
-                foreach (var t in ts.Tasks)
-                {
-                    Children.Add(new ProgressionHandlerLeaf(t));
-                }
-            }
-
             ProgressionWrapper progression = new(0.00, 0.00);
 
             if (!Progressable.Published)

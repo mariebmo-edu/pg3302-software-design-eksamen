@@ -11,6 +11,20 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
     {
         public static IProgressionHandler<IProgressable> MakeProgressionHandler(IProgressable _progressable)
         {
+            if (_progressable is User)
+            {
+                User u = _progressable as User;
+
+                ProgressionHandlerComposite _progComp = new(u);
+
+                foreach (var s in u.Semesters)
+                {
+                    _progComp.Children.Add(MakeProgressionHandler(s));
+                }
+
+                return _progComp;
+            }
+            
             if (_progressable is Semester)
             {
                 Semester s = _progressable as Semester;
