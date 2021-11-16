@@ -221,30 +221,36 @@ namespace PG332_SoftwareDesign_EksamenH21
             firstSemester.Courses.Add( db1102 );
             firstSemester.Courses.Add( pgr102 );
             firstSemester.Courses.Add( pro105 );
-
+            firstSemester.SemesterEnum = SemesterEnum.FIRST;
+            
             secondSemester.Courses.Add( pgr103 );
             secondSemester.Courses.Add( tk2100 );
             secondSemester.Courses.Add( pro104 );
             secondSemester.Courses.Add( pg2201 );
-
+            secondSemester.SemesterEnum = SemesterEnum.SECOND;
+            
             thirdSemester.Courses.Add( pg3302 );
             thirdSemester.Courses.Add( pg4200 );
             thirdSemester.Courses.Add( pgr203 );
             thirdSemester.Courses.Add( pro201_autumn );
-
+            thirdSemester.SemesterEnum = SemesterEnum.THIRD;
+            
             fourthSemester.Courses.Add( pro201_spring );
             fourthSemester.Courses.Add( pg6301 );
             fourthSemester.Courses.Add( pgr208 );
             fourthSemester.Courses.Add( pg5100 );
-
+            fourthSemester.SemesterEnum = SemesterEnum.FOURTH;
+            
             fifthSemester.Courses.Add( pg6102 );
             fifthSemester.Courses.Add( pgr301 );
             fifthSemester.Courses.Add( pg3401 );
             fifthSemester.Courses.Add( pg5501 );
-
+            fifthSemester.SemesterEnum = SemesterEnum.FIFTH;
+            
             sixthSemester.Courses.Add( bao302 );
             sixthSemester.Courses.Add( pj6100 );
-
+            sixthSemester.SemesterEnum = SemesterEnum.SIXTH;
+            
             user.Semesters = new() { 
                 firstSemester, secondSemester, thirdSemester, fourthSemester, fifthSemester, sixthSemester
             };
