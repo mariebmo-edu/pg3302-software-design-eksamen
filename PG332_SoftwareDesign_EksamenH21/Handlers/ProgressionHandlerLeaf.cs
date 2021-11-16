@@ -10,6 +10,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
     public class ProgressionHandlerLeaf : IProgressionHandler<IProgressable>
     {
         public IProgressable Progressable { get; }
+        public ProgressionWrapper ProgressionWrapper { get; set; }
 
         public ProgressionHandlerLeaf(IProgressable progressable)
         {
@@ -35,14 +36,19 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             {
                 return 1.00;
             }
-
             
             return 0.00;
         }
 
         public ProgressionWrapper GetProgression()
         {
-            return new(GetPublishedPercent(), GetFinishedPercent());
+            if (ProgressionWrapper == null)
+            {
+                ProgressionWrapper = new(GetPublishedPercent(), GetFinishedPercent());
+                return ProgressionWrapper;
+            }
+
+            return ProgressionWrapper;
         }
     }
 }

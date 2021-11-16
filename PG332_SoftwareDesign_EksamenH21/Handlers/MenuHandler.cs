@@ -13,8 +13,16 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         private IProgressable Progressable { get; set; }
         public List<IProgressable> Options { get; set; } = new();
+        public MenuHandler SuperMenu { get; set; }
         public bool IsFinishable { get; }
 
+        public MenuHandler(IProgressable progressable, MenuHandler superMenu, bool isFinishable)
+        {
+            Progressable = progressable;
+            SuperMenu = superMenu;
+            IsFinishable = isFinishable;
+        }
+        
         public MenuHandler chooseOption(string input)
         {
             int convertedInput = Int32.Parse(input);
@@ -26,12 +34,12 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
             if (input.ToLower().Equals("f") && (Progressable is Lecture || Progressable is Task))
             {
-                setFinished();
+                SetFinished();
             }
 
-            if (convertedInput == 1 || convertedInput <= Options.Count)
+            if (convertedInput > 0 && convertedInput <= Options.Count)
             {
-                return MenuHandlerFactory.MakeMenuHandler(Options[convertedInput-1]);
+                return MenuHandlerFactory.MakeMenuHandler(Options[convertedInput-1], this);
             }
 
             if (convertedInput > Options.Count)
@@ -43,38 +51,39 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         }
 
-        public MenuHandler(IProgressable progressable, bool isFinishable)
-        {
-            Progressable = progressable;
-            IsFinishable = isFinishable;
-        }
-
         public MenuHandler Quit()
         {
             Console.WriteLine("Vil du avslutte? [J/N]");
-            string quitInput = Console.ReadLine().ToLower();
+            string quitInput = Console.ReadLine()?.ToLower();
             if (!quitInput.Equals("j"))
             {
                 return this;
             }
+            
+            Console.WriteLine("På gjensyn!");
+            Console.WriteLine("Trykk en tast for å gå videre");
+            Console.ReadKey();
+            
             // terminate program
+            
             return null;
         }
 
         public MenuHandler GetErrorMessage()
         {
-            // error message
             Console.WriteLine("Velg et alternativ mellom 0 og " + Options.Count + ", eller E");
+            Console.WriteLine("Trykk en tast for å gå videre");
+            Console.ReadKey();
+            
             return this;
         }
 
-        public MenuHandler setFinished()
+        public MenuHandler SetFinished()
         {
-            // må muligens implementeres på en annen måte
-
             IFinishable f = Progressable as IFinishable;
             f.Finished = !f.Finished;
             Progressable = f;
+            
             string finished;
             if (f.Finished)
             {
@@ -84,8 +93,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             {
                 finished = "uferdig!";
             }
-            // mulig denne aldri blir synlig
+            
             Console.WriteLine(f.Title + " satt som " + finished);
+            Console.WriteLine("Trykk en tast for å gå videre");
+            Console.ReadKey();
+            
             return this;
         }
     }

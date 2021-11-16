@@ -154,7 +154,6 @@ namespace Test
             course.Lectures.Add(lecture2);
             course.Lectures.Add(lecture3);
 
-            
             Assert.AreEqual(
                 new ProgressionWrapper(0.66, 0.25),
                 ProgressionHandlerFactory.MakeProgressionHandler(course).GetProgression()
