@@ -7,7 +7,7 @@ using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21.Handlers
 {
-    class OptionsHandlerFactory
+    public class OptionsHandlerFactory
     {
         public static OptionsHandler MakeMenuHandler(IProgressable progressable, OptionsHandler superOptions)
         {
@@ -53,6 +53,18 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
                     mh.Options.Add(t);
                 }
                 return mh;
+            }
+
+            if (progressable is TaskSet)
+            {
+                TaskSet ts = progressable as TaskSet;
+                OptionsHandler oh = new(ts, superOptions, false);
+                foreach (var t in ts.Tasks)
+                {
+                    oh.Options.Add(t);
+                }
+
+                return oh;
             }
             
             Task task = progressable as Task;
