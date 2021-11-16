@@ -19,46 +19,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             Progressable = progressable;
         }
 
-        public double GetPublishedPercent()
-        {
-            /*
-            double returnValue = 0.00;
-
-            if (!Progressable.Published)
-            {
-                return returnValue;
-            }
-
-            foreach (var c in Children)
-            {
-                returnValue += c.GetPublishedPercent();
-            }
-
-            return Math.Round(returnValue / Children.Count, 2, MidpointRounding.ToZero);
-            */
-            return 0.00;
-        }
-
-        public double GetFinishedPercent()
-        {
-            /*
-            double returnValue = 0.00;
-
-            if (!Progressable.Published)
-            {
-                return returnValue;
-            }
-
-            foreach (var c in Children)
-            {
-                returnValue += c.GetFinishedPercent();
-            }
-
-            return Math.Round(returnValue / Children.Count, 2, MidpointRounding.ToZero);
-            */
-            return 0.00;
-        }
-
         public ProgressionWrapper GetProgression()
         {
             if (!Progressable.Published)
@@ -66,16 +26,14 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
                 return new ProgressionWrapper(0.00, 0.00);
             }
 
-            if (!(ProgressionWrapper == null))
+            if (ProgressionWrapper == null)
             {
-                return ProgressionWrapper / Children.Count;
-            }
+                ProgressionWrapper = new(0.00, 0.00);
 
-            ProgressionWrapper = new(0.00, 0.00);
-
-            foreach (var c in Children)
-            {
-                ProgressionWrapper = ProgressionWrapper + c.GetProgression();
+                foreach (var c in Children)
+                {
+                    ProgressionWrapper = ProgressionWrapper + c.GetProgression();
+                }
             }
             
             return ProgressionWrapper / Children.Count;

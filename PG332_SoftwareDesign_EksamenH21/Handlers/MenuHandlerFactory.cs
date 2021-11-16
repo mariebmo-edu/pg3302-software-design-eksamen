@@ -54,21 +54,10 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
                 }
                 return mh;
             }
-            /*
-            if (progressable is TaskSet)
-            {
-                TaskSet ts = progressable as TaskSet;
-                MenuHandler mh = new(ts, false);
-                foreach (var t in ts.Tasks)
-                {
-                    mh.Options.Add(t);
-                }
-                return mh;
-            }
-            */
+            
             Task task = progressable as Task;
-            MenuHandler MenuHandler = new(task, true);
-            return MenuHandler;
+            MenuHandler menuHandler = new(task, true);
+            return menuHandler;
         }
     }
 }
