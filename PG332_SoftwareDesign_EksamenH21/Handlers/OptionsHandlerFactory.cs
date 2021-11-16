@@ -7,14 +7,14 @@ using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21.Handlers
 {
-    class MenuHandlerFactory
+    class OptionsHandlerFactory
     {
-        public static MenuHandler MakeMenuHandler(IProgressable progressable, MenuHandler superMenu)
+        public static OptionsHandler MakeMenuHandler(IProgressable progressable, OptionsHandler superOptions)
         {
             if (progressable is User)
             {
                 User u = progressable as User;
-                MenuHandler mh = new(u, null, false);
+                OptionsHandler mh = new(u, null, false);
                 foreach (var s in u.Semesters)
                 {
                     mh.Options.Add(s);
@@ -25,7 +25,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             if (progressable is Semester)
             {
                 Semester s = progressable as Semester;
-                MenuHandler mh = new(s, superMenu, false);
+                OptionsHandler mh = new(s, superOptions, false);
                 foreach (var c in s.Courses)
                 {
                     mh.Options.Add(c);
@@ -36,7 +36,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             if (progressable is Course)
             {
                 Course c = progressable as Course;
-                MenuHandler mh = new(c, superMenu, false);
+                OptionsHandler mh = new(c, superOptions, false);
                 foreach (var l in c.Lectures)
                 {
                     mh.Options.Add(l);
@@ -47,7 +47,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             if (progressable is Lecture)
             {
                 Lecture l = progressable as Lecture;
-                MenuHandler mh = new(l, superMenu, true);
+                OptionsHandler mh = new(l, superOptions, true);
                 foreach (var t in l.TaskSet.Tasks)
                 {
                     mh.Options.Add(t);
@@ -56,8 +56,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             }
             
             Task task = progressable as Task;
-            MenuHandler menuHandler = new(task, superMenu, true);
-            return menuHandler;
+            OptionsHandler optionsHandler = new(task, superOptions, true);
+            return optionsHandler;
         }
     }
 }
