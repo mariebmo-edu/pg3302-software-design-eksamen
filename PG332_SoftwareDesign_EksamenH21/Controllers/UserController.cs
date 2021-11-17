@@ -32,8 +32,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
                 Console.Clear();
                 SaveUpdates();
             } while (_optionsHandler != null);
-
-            MenuPrinter.Goodbye();
         }
 
         private void SaveUpdates()
