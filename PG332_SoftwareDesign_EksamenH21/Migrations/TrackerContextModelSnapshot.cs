@@ -34,20 +34,18 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<int>("ExamType")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("Finished")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("SemesterEnum")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("SemesterId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<long?>("SpecializationId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("SemesterId");
-
-                    b.HasIndex("SpecializationId");
 
                     b.ToTable("Courses");
                 });
@@ -109,23 +107,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .IsUnique();
 
                     b.ToTable("Addresses");
-                });
-
-            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.Specialization", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Specializations");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.User", b =>
@@ -225,10 +206,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Model.Specialization", null)
-                        .WithMany("CoursesInSpecializations")
-                        .HasForeignKey("SpecializationId");
-
                     b.Navigation("Semester");
                 });
 
@@ -285,11 +262,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Course", b =>
                 {
                     b.Navigation("Lectures");
-                });
-
-            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.Specialization", b =>
-                {
-                    b.Navigation("CoursesInSpecializations");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.User", b =>
