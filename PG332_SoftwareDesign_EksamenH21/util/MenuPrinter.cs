@@ -81,5 +81,10 @@ namespace PG332_SoftwareDesign_EksamenH21
             Console.Clear();
             Console.WriteLine($"Velkommen {fullName}. Her er dine menyvalg:");
         }
+
+        public void Goodbye()
+        {
+            Console.WriteLine("På gjensyn!");
+        }
     }
 }

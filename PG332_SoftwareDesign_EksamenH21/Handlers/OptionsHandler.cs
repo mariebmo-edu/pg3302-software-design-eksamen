@@ -119,14 +119,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             {
                 return this;
             }
-
-            Console.WriteLine("På gjensyn!");
-            //Console.WriteLine("Trykk en tast for å avslutte");
-            Logger.Instance.Write("EXITING APPLICATION");
-            //Console.ReadKey();
-
-            Environment.Exit(0);
-
             return null;
         }
 
@@ -146,21 +138,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             f.Finished = !f.Finished;
             Progressable = f;
 
-            string finished;
-            if (f.Finished)
-            {
-                finished = "ferdig!";
-            }
-            else
-            {
-                finished = "uferdig!";
-            }
 
-            Console.WriteLine(f.Title + " satt som " + finished);
-            Console.WriteLine("Trykk en tast for å gå videre");
             Logger.Instance.Write(f.Title + " FINISHED BOOL TOGGLED");
-            Console.ReadKey(); // Kommenter ut for tester
-
             return this;
         }
 
