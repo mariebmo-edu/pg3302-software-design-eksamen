@@ -1,5 +1,6 @@
-﻿using PG332_SoftwareDesign_EksamenH21.Controllers;
-using PG332_SoftwareDesign_EksamenH21.util;
+﻿using System;
+using PG332_SoftwareDesign_EksamenH21.Controllers;
+using PG332_SoftwareDesign_EksamenH21.Repository;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {

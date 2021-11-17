@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using PG332_SoftwareDesign_EksamenH21.Model;
-using PG332_SoftwareDesign_EksamenH21.util;
 
 namespace PG332_SoftwareDesign_EksamenH21.Repository
 {

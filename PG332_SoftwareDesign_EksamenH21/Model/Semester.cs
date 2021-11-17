@@ -19,9 +19,3 @@ namespace PG332_SoftwareDesign_EksamenH21
     }
 }
 
-        public List<Course> GetOptionalCourses()
-        {
-            return _optionalCourses;
-        }
-    }
-}
