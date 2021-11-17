@@ -3,9 +3,9 @@ using PG332_SoftwareDesign_EksamenH21.Repository;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
             var users = new UserDao().ListAll();
             if (users == null || users.Count == 0)
