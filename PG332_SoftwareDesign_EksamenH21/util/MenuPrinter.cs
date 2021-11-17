@@ -30,10 +30,11 @@ namespace PG332_SoftwareDesign_EksamenH21
             {
                 Console.WriteLine("Skriv inn passord:");
             }
-            else if (printable is MessageWrapper)
+            else if (printable is LoginMessageWrapper)
             {
-                MessageWrapper message = printable as MessageWrapper;
-                Console.WriteLine(message.Message);
+                LoginMessageWrapper loginMessage = printable as LoginMessageWrapper;
+                Console.WriteLine(loginMessage.Message);
+                Console.WriteLine("Trykk enter for å fortsette");
             }
             else if (printable is QuitQuestionWrapper)
             {
@@ -97,32 +98,6 @@ namespace PG332_SoftwareDesign_EksamenH21
             Console.WriteLine(menuOptionsString.ToString());
             Console.WriteLine("\n[E] - Avslutt");
         }
-
-
-        // public string AskForEmail()
-        // {
-        //     Console.WriteLine("Vennligst skriv inn din e-post:");
-        //     return Console.ReadLine();
-        // }
-        //
-        // public string AskForPassword()
-        // {
-        //     Console.WriteLine("Vennligst skriv inn ditt passord:");
-        //     return Console.ReadLine();
-        // }
-        //
-        // public void ErrorWithAuthentication()
-        // {
-        //     Console.Clear();
-        //     Logger.Instance.Write("Error with authentication");
-        //     Console.WriteLine("Feil e-post eller passord. Prøv igjen.");
-        // }
-        //
-        // public void WelcomeMessage(string fullName)
-        // {
-        //     Console.Clear();
-        //     Console.WriteLine($"Velkommen {fullName}. Her er dine menyvalg:");
-        // }
 
         private string ReturnLine()
         {

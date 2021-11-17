@@ -2,17 +2,17 @@
 
 namespace PG332_SoftwareDesign_EksamenH21.Handlers
 {
-    public class MessageWrapper : IPrintable
+    public class LoginMessageWrapper : IPrintable
     {
         public IPrintable SuperOption { get; set; }
         public string Message { get; }
         private User _user;
         public IPrintable ChooseOption(string input)
         {
-            return OptionsHandlerFactory.MakeOptionsHandler(_user, null);
+            return OptionsHandlerFactory.MakeOptionsHandler(_user);
         }
 
-        public MessageWrapper(string message, User user)
+        public LoginMessageWrapper(string message, User user)
         {
             Message = message;
             _user = user;

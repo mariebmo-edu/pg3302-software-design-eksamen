@@ -12,7 +12,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             User user = Authenticate(input);
             if (user != null)
             {
-                return new MessageWrapper("Velkommen!", user);
+                return new LoginMessageWrapper("Velkommen!", user);
             }
 
             return new ErrorMessageWrapper("Autentiseringsfeil - Feil epost eller passord!", SuperOption);

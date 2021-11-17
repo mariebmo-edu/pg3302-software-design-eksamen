@@ -10,18 +10,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
         public User User { get; set; }
         private IPrintable _printable;
         private MenuPrinter MenuPrinter { get; set; } = new();
-        private UserAuthenticator _userAuthenticator = new();
-        
-        public void Start()
-        {
-            //User = _userAuthenticator.Authenticate();
-            //MenuPrinter.WelcomeMessage(GetFullName());
-            
-            
-            Menu();
-        }
 
-        private void Menu()
+        public void Start()
         {
             _printable = new EmailQuestionWrapper();
 
@@ -43,11 +33,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
                 User = printable.Progressable as User;
             }
             dao.Update(User);
-        }
-
-        public string GetFullName()
-        {
-            return $"{User.FirstName} {User.LastName}";
         }
     }
 }
