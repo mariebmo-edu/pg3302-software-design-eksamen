@@ -31,7 +31,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
                 _optionsHandler = _optionsHandler.ChooseOption(Console.ReadLine()) as OptionsHandler;
                 Console.Clear();
                 SaveUpdates();
-            } while (true);
+            } while (_optionsHandler != null);
         }
 
         private void SaveUpdates()

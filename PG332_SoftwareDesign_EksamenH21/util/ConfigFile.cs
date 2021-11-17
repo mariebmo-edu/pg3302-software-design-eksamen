@@ -13,6 +13,7 @@ namespace PG332_SoftwareDesign_EksamenH21
 
         public void AddDummyData()
         {
+            
             clearDataFromDb();
 
 
@@ -111,6 +112,7 @@ namespace PG332_SoftwareDesign_EksamenH21
             pro201_spring.ExamType = ExamType.PROJECT;
             pro201_spring.ExamDate = new DateTime( 2022, 5, 29 );
             pro201_spring.SemesterEnum = SemesterEnum.FOURTH;
+
 
             Course pg6301 = new();
             pg6301.CourseCode = "pg6301";
@@ -251,6 +253,7 @@ namespace PG332_SoftwareDesign_EksamenH21
             fourthSemester.Courses.Add( pgr208 );
             fourthSemester.Courses.Add( pg5100 );
             fourthSemester.SemesterEnum = SemesterEnum.FOURTH;
+            fourthSemester.Published = false;
 
             fifthSemester.Courses = new();
             fifthSemester.Courses.Add( pg6102 );
@@ -258,11 +261,14 @@ namespace PG332_SoftwareDesign_EksamenH21
             fifthSemester.Courses.Add( pg3401 );
             fifthSemester.Courses.Add( pg5501 );
             fifthSemester.SemesterEnum = SemesterEnum.FIFTH;
-
+            fifthSemester.Published = false;
+            
+            
             sixthSemester.Courses = new();
             sixthSemester.Courses.Add( bao302 );
             sixthSemester.Courses.Add( pj6100 );
             sixthSemester.SemesterEnum = SemesterEnum.SIXTH;
+            sixthSemester.Published = false;
             
             user.Semesters = new() { 
                 firstSemester, secondSemester, thirdSemester, fourthSemester, fifthSemester, sixthSemester
@@ -296,7 +302,7 @@ namespace PG332_SoftwareDesign_EksamenH21
                     c.Lectures = new();
                     for(int i = 0; i < lectureAmount; i++) {
                         Lecture lecture = new();
-                        lecture.Title = "Forelesning " + i;
+                        lecture.Title = "Forelesning " + (i + 1);
                         lecture.Finished = randomBool();
                         c.Lectures.Add( lecture );
                         int taskAmount = random.Next( 5 );
@@ -304,7 +310,7 @@ namespace PG332_SoftwareDesign_EksamenH21
                         c.Lectures[i].TaskSet.Tasks = new();
                         for(int j=0; j<taskAmount; j++) {
                             Task task = new();
-                            task.Title = "Mission " + j;
+                            task.Title = "Mission " + (j + 1);
                             task.Finished = randomBool();
                             task.Description = RandomDescription();
                             c.Lectures[i].TaskSet.Tasks.Add( task );

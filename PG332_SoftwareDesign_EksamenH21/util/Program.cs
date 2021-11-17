@@ -1,4 +1,6 @@
-﻿using PG332_SoftwareDesign_EksamenH21.Controllers;
+﻿using System;
+using PG332_SoftwareDesign_EksamenH21.Controllers;
+using PG332_SoftwareDesign_EksamenH21.Repository;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {
@@ -7,6 +9,7 @@ namespace PG332_SoftwareDesign_EksamenH21
         static void Main(string[] args)
         {
             new ConfigFile().AddDummyData();
+
             new UserController().Start();
         }
     }
