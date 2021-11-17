@@ -4,19 +4,17 @@ using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
 using static BCrypt.Net.BCrypt;
 
-namespace PG332_SoftwareDesign_EksamenH21
+namespace PG332_SoftwareDesign_EksamenH21.util
 {
-    class ConfigFile
+    public class ConfigFile
     {
-        public static string programFilesDir =
-            $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}{Path.DirectorySeparatorChar}";
+        public static readonly string ProgramFilesDir = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}{Path.DirectorySeparatorChar}";
 
         public void AddDummyData()
         {
             
             clearDataFromDb();
-
-
+            
             //first semester
             Course tk1104 = new();
             tk1104.CourseCode = "tk1104";
