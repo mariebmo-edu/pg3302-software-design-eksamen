@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21.Handlers
@@ -35,7 +31,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
                     ProgressionWrapper = ProgressionWrapper + c.GetProgression();
                 }
             }
-            
+
             return ProgressionWrapper / Children.Count;
         }
     }

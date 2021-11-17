@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Threading;
 
 namespace PG332_SoftwareDesign_EksamenH21.util
 {
@@ -11,9 +10,7 @@ namespace PG332_SoftwareDesign_EksamenH21.util
 
         public static Logger Instance => Lazy.Value;
 
-        private Logger()
-        {
-        }
+        private Logger() {}
 
         public async void Write(string message)
         {

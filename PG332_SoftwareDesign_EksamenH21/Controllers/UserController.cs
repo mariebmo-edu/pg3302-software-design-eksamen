@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using PG332_SoftwareDesign_EksamenH21.Handlers;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
@@ -32,11 +31,15 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
                 _optionsHandler = _optionsHandler.ChooseOption(Console.ReadLine()) as OptionsHandler;
                 Console.Clear();
                 MenuPrinter.ShowMenu(_optionsHandler);
-                UserDao dao = new UserDao();
-                dao.Update(User);
+                SaveUpdates();
             }
         }
 
+        private void SaveUpdates()
+        {
+            IUserDao dao = new UserDao();
+            dao.Update(User);
+        }
 
         public string GetFullName()
         {

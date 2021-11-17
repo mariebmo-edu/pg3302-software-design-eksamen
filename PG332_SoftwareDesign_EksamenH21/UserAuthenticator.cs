@@ -1,5 +1,4 @@
-﻿using System;
-using PG332_SoftwareDesign_EksamenH21.Controllers;
+﻿using PG332_SoftwareDesign_EksamenH21.Controllers;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
 using static BCrypt.Net.BCrypt;
@@ -12,7 +11,6 @@ namespace PG332_SoftwareDesign_EksamenH21
         private MenuPrinter<IProgressable> MenuPrinter = new();
         public User User { get; set; }
         
-
         public User Authenticate()
         {
             string email = MenuPrinter.AskForEmail();
@@ -25,7 +23,7 @@ namespace PG332_SoftwareDesign_EksamenH21
             }
             return User;
         }
-        
+
         private User UserValid(string email, string password)
         {
             UserDao dao = new UserDao();
@@ -36,7 +34,6 @@ namespace PG332_SoftwareDesign_EksamenH21
             {
                 return retrieveByEmail;
             }
-
             return null;
         }
     }
