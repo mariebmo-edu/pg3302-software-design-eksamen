@@ -17,10 +17,10 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
             User user = trackerContext.Users
                 .Include(user => user.Address)
                 .Include(user => user.Semesters)
-                .ThenInclude(semester => semester.Courses.OrderBy(s => s.SemesterEnum))
-                .ThenInclude(course => course.Lectures.OrderBy(l => l.Title))
+                .ThenInclude(semester => semester.Courses.OrderBy(course => course.SemesterEnum))
+                .ThenInclude(course => course.Lectures.OrderBy(lecture => lecture.Title))
                 .ThenInclude(lecture => lecture.TaskSet)
-                .ThenInclude(taskSet => taskSet.Tasks.OrderBy(t => t.Title))
+                .ThenInclude(taskSet => taskSet.Tasks.OrderBy(task => task.Title))
                 .FirstOrDefault(u => u.Email.Equals(email));
 
             return user;

@@ -16,8 +16,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
         {
             User = _userAuthenticator.Authenticate();
             MenuPrinter.WelcomeMessage(GetFullName());
-            
-            
             Menu();
         }
 
