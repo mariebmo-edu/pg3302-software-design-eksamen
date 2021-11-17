@@ -236,9 +236,10 @@ namespace PG332_SoftwareDesign_EksamenH21
 
             firstSemester.Courses = new();
             firstSemester.Courses.Add( tk1104 );
-            firstSemester.Courses.Add( db1102 );
+            /*firstSemester.Courses.Add( db1102 );
             firstSemester.Courses.Add( pgr102 );
             firstSemester.Courses.Add( pro105 );
+            */
             firstSemester.SemesterEnum = SemesterEnum.FIRST;
 
             secondSemester.Courses = new();
@@ -275,92 +276,12 @@ namespace PG332_SoftwareDesign_EksamenH21
             sixthSemester.SemesterEnum = SemesterEnum.SIXTH;
             
             user.Semesters = new() { 
-                firstSemester, secondSemester, thirdSemester, fourthSemester, fifthSemester, sixthSemester
+                firstSemester, //secondSemester, thirdSemester, fourthSemester, fifthSemester, sixthSemester
             };
 
             AddCourseData( new Semester[] { firstSemester, secondSemester, thirdSemester } );
-
-            /*
-            Lecture lecture = new();
-            pg3302.Lectures.Add( lecture );
-
-            Task mission_1 = new();
-            mission_1.Description = "Hva er S i Solid?";
-
-            Task mission_2 = new();
-            mission_2.Description = "Hva er facade (designpattern)?";
-
-            Task mission_3 = new();
-            mission_3.Description = "Hva er C#, og hvordan kom den seg til Visual Studio?";
-
-            lecture.TaskSet.Tasks.Add( mission_1 );
-            lecture.TaskSet.Tasks.Add( mission_2 );
-            lecture.TaskSet.Tasks.Add( mission_3 );
-
-            UserDao db = new UserDao();
-            User user = new();
-            Address address = new();
-            address.City = "Oslo";
-            address.Country = "Norway";
-
-            user.password = HashPassword("password123");
-            //user.Specialization = specialization;
-
-            user.Address = address;
-            user.FirstName = "Kim";
-            user.LastName = "Possible";
-
-            //user.Specialization = specialization;
-            user.Email = "kom@possible.no";
-            user.PhoneNumber = "12365432";
-
-            //user.Specialization = specialization;
-            Course course_a = new();
-            Course course_b = new();
-            Course course_c = new();
-
-            course_a.Semester = SemesterEnum.FIRST;
-            course_b.Semester = SemesterEnum.FIRST;
-            course_c.Semester = SemesterEnum.FIRST;
-
-            //user.CurrentSemesterId = SemesterEnum.FIRST;
-            Semester firstSemester = new();
-            Semester secondSemester = new();
-            Semester thirdSemester = new();
-            Semester fourthSemester = new();
-            Semester fifthSemester = new();
-            Semester sixthSemester = new();
-
-
-            user.Semesters = new()
-            {
-                firstSemester, secondSemester, thirdSemester, fourthSemester, fifthSemester, sixthSemester
-            };
-
-
-            firstSemester.Courses.Add(course_a);
-            firstSemester.Courses.Add(course_b);
-            firstSemester.Courses.Add(course_c);
-
-                
-            Lecture lecture = new();
-
-            course_a.Lectures.Add(lecture);
-
-
-            //user.StudentCourseOverview = studentCourseOverview;
-
-            Task task_a = new();
-            Task task_b = new();
-            Task task_c = new();
-            lecture.TaskSet.Tasks.Add(task_a);
-            lecture.TaskSet.Tasks.Add(task_b);
-            lecture.TaskSet.Tasks.Add(task_c);
-
-*/
-            userDao.Save(user);
             
-
+            userDao.Save(user);
         }
 
         private void clearDataFromDb()
