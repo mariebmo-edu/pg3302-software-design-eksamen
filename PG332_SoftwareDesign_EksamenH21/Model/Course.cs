@@ -5,18 +5,26 @@ using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {
-    public class Course : IProgressable
+    public class Course : IFinishable
     {
-        [NotMapped]
-        public SemesterEnum Semester { get; set; }
-        public long Id { get; set; }
+        public int Id { get; set; }
+        public int SemesterId { get; set; }
+        public Semester Semester { get; set; }
+        public SemesterEnum SemesterEnum { get; set; }
         public string CourseCode { get; set; }
-        public List<Lecture> Lectures { get; set; } = new();
+        public List<Lecture> Lectures { get; set; }
         public DateTime ExamDate { get; set; }
         public ExamType ExamType { get; set; }
         public float CoursePoints { get; set; }
-        [NotMapped] public bool Published { get; set; } = false;
+        [NotMapped] public bool Published { get; set; } = true;
+        public bool Finished { get; set; }
 
+        [NotMapped] public string Title => CourseCode;
+
+        public override string ToString()
+        {
+            return $"{CourseCode} | {CoursePoints}";
+        }
     }
 
     public enum ExamType

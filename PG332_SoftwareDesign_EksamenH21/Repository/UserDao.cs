@@ -1,68 +1,50 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using Microsoft.EntityFrameworkCore.Storage;
 using PG332_SoftwareDesign_EksamenH21.Model;
-
 
 namespace PG332_SoftwareDesign_EksamenH21.Repository
 {
-    public class UserDao : IUserDao
+    public class UserDao : AbstractDao<User>, IUserDao
     {
-        private readonly TrackerContext _trackerContext;
-
-        public UserDao()
+        protected override DbSet<User> RetrieveDbSet(TrackerContext trackerContext)
         {
-            _trackerContext = new TrackerContext();
+            return trackerContext.Users;
         }
 
-        public void Update(User m)
-        {
-            _trackerContext.Update(m);
-            _trackerContext.SaveChanges();
-
-        }
-
-        public void Save(User m)
-        {
-            _trackerContext.Add(m);
-            _trackerContext.SaveChanges();
-        }
-
-        public User RetrieveById(long id)
-        {
-            return _trackerContext.Find<User>(id);
-        }
-
-        public List<User> ListAll()
-        {
-            return _trackerContext.Users.ToList();
-        }
-
-        public void Delete(long id)
-        {
-            _trackerContext.Users.Remove(_trackerContext.Users.Find(id));
-            _trackerContext.SaveChanges();
-        }
-
-        
         public User RetrieveByEmail(string email)
         {
-            return RetrieveOneByField(u => u.Email == email);
+            using TrackerContext trackerContext = new();
+            User user = trackerContext.Users
+                .Include(user => user.Address)
+                .Include(user => user.Semesters)
+                .ThenInclude(semester => semester.Courses.OrderBy(s => s.SemesterEnum))
+                .ThenInclude(course => course.Lectures)
+                .ThenInclude(lecture => lecture.TaskSet)
+                .ThenInclude(taskSet => taskSet.Tasks.OrderBy(t => t.Title))
+                .FirstOrDefault(u => u.Email.Equals(email));
+            if (user != null)
+            {
+                SortLectures(user);
+            }
+            return user;
+        }
+
+        private static void SortLectures(User user)
+        {
+            foreach (var semester in user.Semesters)
+            {
+                foreach (var course in semester.Courses)
+                {
+                    course.Lectures.Sort((a, b) => Int32.Parse(a.Title.Split(" ")[1])
+                        .CompareTo(Int32.Parse(b.Title.Split(" ")[1])));
+                }
+            }
         }
 
         public User RetrieveByLastName(string lastName)
         {
             return RetrieveOneByField(u => u.LastName == lastName);
-        }
-
-        public User RetrieveOneByField(Func<User,bool> predicate)
-        {
-            return _trackerContext.Users.FirstOrDefault(predicate);
         }
     }
 }

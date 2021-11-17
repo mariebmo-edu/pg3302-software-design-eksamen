@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PG332_SoftwareDesign_EksamenH21.Model;
+﻿using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21.Handlers
 {
     public class ProgressionHandlerLeaf : IProgressionHandler<IProgressable>
     {
         public IProgressable Progressable { get; }
+        public ProgressionWrapper ProgressionWrapper { get; set; }
 
         public ProgressionHandlerLeaf(IProgressable progressable)
         {
@@ -18,6 +14,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         public double GetPublishedPercent()
         {
+            var forDebug = Progressable;
             if (Progressable.Published)
             {
                 return 1.00;
@@ -40,7 +37,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         public ProgressionWrapper GetProgression()
         {
-            return new(GetPublishedPercent(), GetFinishedPercent());
+            if (ProgressionWrapper == null)
+            {
+                ProgressionWrapper = new(GetPublishedPercent(), GetFinishedPercent());
+                return ProgressionWrapper;
+            }
+
+            return ProgressionWrapper;
         }
     }
 }

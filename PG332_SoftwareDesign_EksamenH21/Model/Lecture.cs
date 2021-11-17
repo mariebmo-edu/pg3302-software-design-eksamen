@@ -1,16 +1,19 @@
-using PG332_SoftwareDesign_EksamenH21.Model;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {
     public class Lecture : IFinishable
     {
-        public long Id { get; set; }
-        public TaskSet TaskSet { get; set; } = new();
+        public int Id { get; set; }
+        public int CourseId { get; set; }
+        public Course Course { get; set; }
+        public string Title { get; set; }
+        public TaskSet TaskSet { get; set; }
         public DateTime LectureDateTime { get; set; }
-        [NotMapped] public bool Published { get; set; } = false;
+        [NotMapped] public bool Published { get; set; } = true;
 
-        [NotMapped] public bool Finished { get; set; } = false;
+        [NotMapped] public bool Finished { get; set; }
     }
 }
