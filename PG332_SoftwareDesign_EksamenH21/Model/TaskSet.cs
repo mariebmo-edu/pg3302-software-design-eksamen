@@ -10,5 +10,6 @@ namespace PG332_SoftwareDesign_EksamenH21
         public long LectureId { get; private set; }
         public List<Task> Tasks { get; set; } = new();
         [NotMapped] public bool Published { get; set; } = false;
+        [NotMapped] public string Title { get; } = $"Oppgavesett";
     }
 }

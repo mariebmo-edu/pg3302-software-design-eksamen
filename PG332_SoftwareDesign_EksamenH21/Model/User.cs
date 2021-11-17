@@ -23,6 +23,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
         [NotMapped]
         public bool Published { get; set; } = true;
 
+        [NotMapped] public string Title => $"{FirstName} {LastName}";
+
         public override bool Equals(object? obj)
         {
             if (obj is not User) return false;

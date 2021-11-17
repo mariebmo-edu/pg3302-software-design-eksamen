@@ -20,6 +20,9 @@ namespace PG332_SoftwareDesign_EksamenH21
         public float CoursePoints { get; set; }
         [NotMapped] public bool Published { get; set; } = false;
 
+        [NotMapped]
+        public string Title => CourseCode;
+
         public override string ToString()
         {
             return $"{CourseCode} | {CoursePoints}";

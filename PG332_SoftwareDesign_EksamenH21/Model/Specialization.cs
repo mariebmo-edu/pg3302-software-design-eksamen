@@ -17,6 +17,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
         public List<Course>? CoursesInSpecializations { get; set; } = new();
         [NotMapped]
         public bool Published { get; set; } = false;
+        [NotMapped] public string Title => Name;
 
         protected bool Equals(Specialization other)
         {

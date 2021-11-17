@@ -13,6 +13,7 @@ namespace PG332_SoftwareDesign_EksamenH21
         public UserController UserController { get; private set; }
         public User User { get; set; }
         public bool IsLoggedIn { get; set; } = false;
+        public MenuPrinter<IProgressable> MenuPrinter { get; set; } = new(); // needs refactoring
 
         public void SetUserController(UserController controller)
         {
@@ -56,6 +57,8 @@ namespace PG332_SoftwareDesign_EksamenH21
             string fullName = UserController.GetFullName();
             while (true)
             {
+                // MenuPrinter.ShowMenu(OptionsHandlerFactory.MakeOptionsHandler(User, null));
+                
                 ShowMainMenu(fullName);
                 switch (ConsoleRead())
                 {
@@ -82,6 +85,7 @@ namespace PG332_SoftwareDesign_EksamenH21
                         PrintMessage("Ugyldig valg");
                         break;
                 }
+                
             }
         }
 
