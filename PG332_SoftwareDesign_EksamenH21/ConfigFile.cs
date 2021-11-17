@@ -13,19 +13,7 @@ namespace PG332_SoftwareDesign_EksamenH21
         public void AddDummyData()
         {
             clearDataFromDb();
-            //SPECIALIZATION
-            SpecializationDao specializationDao = new();
-            Specialization specialization = new();
-
-            specialization.Name = "Programmering";
-            specialization.Code = "pgr2020";
-
-            specializationDao.Save( specialization );
-
-
-
-            //COURSES
-            CourseDao courseDao = new();
+            
 
             //first semester
             Course tk1104 = new();
@@ -290,7 +278,6 @@ namespace PG332_SoftwareDesign_EksamenH21
             trackerContext.Courses.RemoveRange(trackerContext.Courses);
             trackerContext.Lectures.RemoveRange(trackerContext.Lectures);
             trackerContext.Semesters.RemoveRange(trackerContext.Semesters);
-            trackerContext.Specializations.RemoveRange(trackerContext.Specializations);
             trackerContext.Tasks.RemoveRange(trackerContext.Tasks);
             trackerContext.TaskSets.RemoveRange(trackerContext.TaskSets);
             trackerContext.Users.RemoveRange(trackerContext.Users);
