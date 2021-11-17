@@ -9,8 +9,8 @@ namespace PG332_SoftwareDesign_EksamenH21
         static void Main(string[] args)
         {
             new ConfigFile().AddDummyData();
-
-            new UserController().Start();
+            IReader reader = new Reader();
+            new ProgramController(reader).Start();
         }
     }
 }

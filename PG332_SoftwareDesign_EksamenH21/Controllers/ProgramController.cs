@@ -1,24 +1,32 @@
 ﻿using System;
+using System.Formats.Asn1;
 using PG332_SoftwareDesign_EksamenH21.Handlers;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
 
 namespace PG332_SoftwareDesign_EksamenH21.Controllers
 {
-    public class UserController
+    public class ProgramController
     {
-        public User User { get; set; }
-        private IPrintable _printable;
-        private MenuPrinter MenuPrinter { get; set; } = new();
+    
 
+        public User User { get; set; }
+        private MenuPrinter MenuPrinter { get; } = new();
+        private IPrintable _printable;
+        private IReader Reader { get; }
+        
+
+        public ProgramController(IReader reader)
+        {
+            Reader = reader;
+        }
         public void Start()
         {
             _printable = new EmailQuestionWrapper();
-
             do
             {
                 MenuPrinter.ShowMenu(_printable);
-                _printable = _printable.ChooseOption(Console.ReadLine());
+                _printable = _printable.ChooseOption(Reader.ReadLine());
                 Console.Clear();
                 if (_printable is OptionsWrapper) SaveUpdates();
             } while (_printable != null);

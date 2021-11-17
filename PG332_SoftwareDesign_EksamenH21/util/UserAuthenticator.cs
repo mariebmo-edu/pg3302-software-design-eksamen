@@ -7,7 +7,7 @@ namespace PG332_SoftwareDesign_EksamenH21
 {
     public class UserAuthenticator
     {
-        private readonly UserController _userController;
+        private readonly ProgramController _programController;
         private MenuPrinter MenuPrinter = new();
         public User User { get; set; }
         
