@@ -7,7 +7,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
 {
     public class User : IProgressable
     {
-        public long Id { get; set; }
+        public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         #nullable enable
@@ -17,7 +17,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
         public string Email { get; set; }
         public string Password { get; set; }
         #nullable enable
-        public List<Semester> Semesters { get; set; } = new();
+        public virtual List<Semester> Semesters { get; set; } = new();
         [NotMapped]
         public SemesterEnum CurrentSemester { get; set; }
         [NotMapped]
@@ -27,7 +27,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
         {
             if (obj is not User) return false;
             User user = (User) obj;
-            return (user.Email == Email && user.Id == Id && user.FirstName == FirstName && user.LastName == LastName);
+            return (user.Email == Email && user.UserId == UserId && user.FirstName == FirstName && user.LastName == LastName);
         }
 
     }

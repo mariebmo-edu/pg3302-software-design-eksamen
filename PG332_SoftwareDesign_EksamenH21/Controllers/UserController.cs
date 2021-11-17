@@ -6,7 +6,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
 {
     public class UserController
     {
-        private User User;
+        public User User { get; set; }
 
         public void Authenticate()
         {
@@ -25,14 +25,14 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
         public Semester GetCurrentSemester()
         {
             SemesterDao dao = new SemesterDao();
-            return dao.RetrieveOneByField(u => u.SemesterEnum == User.CurrentSemester);
+            return dao.RetrieveOneByField(s => s.SemesterEnum == User.CurrentSemester);
         }
 
         public List<Course> GetCourses()
         {
             CourseDao dao = new CourseDao();
             SemesterDao semesterDao = new SemesterDao();
-            long semesterId = semesterDao.GetSemesterIdByUserIdAndSemesterEnum(User.Id, User.CurrentSemester);
+            long semesterId = semesterDao.GetSemesterIdByUserIdAndSemesterEnum(User.UserId, User.CurrentSemester);
             return dao.RetrieveCoursesBySemesterId(semesterId);
         }
 

@@ -19,7 +19,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
         {
             using TrackerContext trackerContext = new();
 
-            return trackerContext.Semesters.Where(s => s.User.Id == id && s.SemesterEnum == semester).ToList()[0].Id;
+            return trackerContext.Semesters.Where(s => s.User.UserId == id && s.SemesterEnum == semester).ToList()[0].Id;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace PG332_SoftwareDesign_EksamenH21
 {
     public class ConsoleUi : IConsoleUi
     {
+        private OptionsHandler _optionsHandler;
         public UserController UserController { get; private set; }
         public User User { get; set; }
         public bool IsLoggedIn { get; set; } = false;
@@ -49,10 +50,35 @@ namespace PG332_SoftwareDesign_EksamenH21
         public void start()
         {
 
+            
+            // #1 Authenticate user
             UserController.Authenticate();
             // Email = "gMail@email.no", password = HashPassword("password123")};
             
+            //TODO: #2 Get current semester
+            Semester currentSemester = UserController.GetCurrentSemester();
+            User = UserController.User;
+            // User needs to have currentSemester :D
+            User.CurrentSemester = SemesterEnum.FIRST;
+            //TODO: #3 Use semester as parameter, -- check
+            //TODO: #4 Check out UserController. 
+            
+            //TODO: Get courses by semester ID
+            ICourseDao courseDao = new CourseDao();
 
+            List<Course> courses = courseDao.RetrieveCoursesBySemesterId(User.Semesters[0].Id);
+            
+            currentSemester.Courses = courseDao.RetrieveCoursesBySemesterId(currentSemester.Id);
+            
+            _optionsHandler = OptionsHandlerFactory.MakeOptionsHandler(User,null);
+            // OptionsHandler optionsHandler = OptionsHandlerFactory.MakeOptionsHandler();
+
+            OptionsHandler _optionsHandler2 = OptionsHandlerFactory.MakeOptionsHandler(User, _optionsHandler);
+            _optionsHandler2.Options.ForEach(o => Console.WriteLine(o));
+
+            Console.ReadKey();
+            
+            
             string fullName = UserController.GetFullName();
             while (true)
             {

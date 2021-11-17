@@ -6,9 +6,11 @@ namespace PG332_SoftwareDesign_EksamenH21
 {
     public class Task : IFinishable
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         public string Title { get; set; }
 
+        public int TaskSetId { get; set; }
+        public TaskSet TaskSet { get; set; }
         public string Description { get; set; }
         [NotMapped] public bool Published { get; set; } = false;
         public bool Finished { get; set; } = false;
@@ -16,7 +18,7 @@ namespace PG332_SoftwareDesign_EksamenH21
         #region Overridden methods
             protected bool Equals(Task other)
             {
-                return Id == other.Id && Title == other.Title && Description == other.Description &&
+                return TaskSetId == other.TaskSetId && Title == other.Title && Description == other.Description &&
                        Published == other.Published && Finished == other.Finished;
             }
 

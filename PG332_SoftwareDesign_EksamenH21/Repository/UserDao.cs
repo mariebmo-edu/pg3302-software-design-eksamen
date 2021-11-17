@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21.Repository
@@ -12,7 +13,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
 
         public User RetrieveByEmail(string email)
         {
-            return RetrieveOneByField(u => u.Email == email);
+            using TrackerContext trackerContext = new();
+            return trackerContext.Users
+                .Include(user => user.Semesters)
+                .Include(user => user.Address)
+                .FirstOrDefault(u => u.Email.Equals(email));
         }
 
         public User RetrieveByLastName(string lastName)

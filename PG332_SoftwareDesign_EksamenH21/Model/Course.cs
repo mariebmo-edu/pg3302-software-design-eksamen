@@ -8,13 +8,12 @@ namespace PG332_SoftwareDesign_EksamenH21
 {
     public class Course : IProgressable
     {
-        [NotMapped]
-        public SemesterEnum Semester { get; set; }
-        public long Id { get; set; }
-        public long SemesterId { get; set; }
-        public long UserId { get; set; }
+        public int Id { get; set; }
+        public int SemesterId { get; set; }
+        public Semester Semester { get; set; }
+        public SemesterEnum SemesterEnum { get; set; }
         public string CourseCode { get; set; }
-        public List<Lecture> Lectures { get; set; } = new();
+        public List<Lecture> Lectures { get; set; }
         public DateTime ExamDate { get; set; }
         public ExamType ExamType { get; set; }
         public float CoursePoints { get; set; }

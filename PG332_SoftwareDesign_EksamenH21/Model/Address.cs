@@ -2,8 +2,9 @@
 {
     public class Address
     {
-        public long Id { get; set; }
-        public long UserId { get; set; }
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public User User { get; set; }
         public string Street { get; set; }
         public string StreetNumber { get; set; }
         public string PostalCode { get; set; }
