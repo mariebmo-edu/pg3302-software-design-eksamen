@@ -264,7 +264,7 @@ namespace PG332_SoftwareDesign_EksamenH21
             sixthSemester.SemesterEnum = SemesterEnum.SIXTH;
             
             user.Semesters = new() { 
-                firstSemester, //secondSemester, thirdSemester, fourthSemester, fifthSemester, sixthSemester
+                firstSemester, secondSemester, thirdSemester, fourthSemester, fifthSemester, sixthSemester
             };
 
             AddCourseData( new Semester[] { firstSemester, secondSemester, thirdSemester } );
