@@ -17,6 +17,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             FinishedPercent = finishedPercent;
         }
 
+        public override string ToString()
+        {
+            return $"{GetType()} pp:{PublishedPercent}, fp:{FinishedPercent}";
+        }
+
         public static ProgressionWrapper operator + (ProgressionWrapper a, ProgressionWrapper b)
         {
             ProgressionWrapper s = new(a.PublishedPercent, a.FinishedPercent);
