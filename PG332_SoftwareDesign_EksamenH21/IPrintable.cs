@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using PG332_SoftwareDesign_EksamenH21.Handlers;
-using PG332_SoftwareDesign_EksamenH21.Model;
+﻿using System.Collections.Generic;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {

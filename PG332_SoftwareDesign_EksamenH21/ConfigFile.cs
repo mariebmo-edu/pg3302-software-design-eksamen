@@ -224,10 +224,10 @@ namespace PG332_SoftwareDesign_EksamenH21
 
             firstSemester.Courses = new();
             firstSemester.Courses.Add( tk1104 );
-            /*firstSemester.Courses.Add( db1102 );
+            firstSemester.Courses.Add( db1102 );
             firstSemester.Courses.Add( pgr102 );
             firstSemester.Courses.Add( pro105 );
-            */
+            
             firstSemester.SemesterEnum = SemesterEnum.FIRST;
 
             secondSemester.Courses = new();

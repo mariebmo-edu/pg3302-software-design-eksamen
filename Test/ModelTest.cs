@@ -7,13 +7,6 @@ namespace Test
 {
     class ModelTest
     {
-        [SetUp]
-        public void Setup()
-        {
-
-        }
-
-
         [Test]
         public void UpdateUserInDB()
         {
