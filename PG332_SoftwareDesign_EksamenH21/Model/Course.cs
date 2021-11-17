@@ -6,7 +6,7 @@ using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {
-    public class Course : IProgressable
+    public class Course : IFinishable
     {
         public int Id { get; set; }
         public int SemesterId { get; set; }
@@ -18,6 +18,7 @@ namespace PG332_SoftwareDesign_EksamenH21
         public ExamType ExamType { get; set; }
         public float CoursePoints { get; set; }
         [NotMapped] public bool Published { get; set; } = true;
+        public bool Finished { get; set; }
 
         [NotMapped]
         public string Title => CourseCode;
