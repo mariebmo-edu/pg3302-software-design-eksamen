@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PG332_SoftwareDesign_EksamenH21.Handlers
 {
@@ -15,6 +11,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
         {
             PublishedPercent = publishedPercent;
             FinishedPercent = finishedPercent;
+        }
+
+        public override string ToString()
+        {
+            return $"{GetType()} pp:{PublishedPercent}, fp:{FinishedPercent}";
         }
 
         public static ProgressionWrapper operator + (ProgressionWrapper a, ProgressionWrapper b)

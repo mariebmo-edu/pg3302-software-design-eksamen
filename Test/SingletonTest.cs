@@ -1,4 +1,3 @@
-using System;
 using NUnit.Framework;
 using PG332_SoftwareDesign_EksamenH21.util;
 

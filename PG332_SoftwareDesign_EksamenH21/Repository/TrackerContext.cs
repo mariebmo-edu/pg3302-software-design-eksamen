@@ -1,4 +1,3 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 using PG332_SoftwareDesign_EksamenH21.Model;
 
@@ -11,7 +10,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
         public DbSet<Lecture> Lectures { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<TaskSet> TaskSets { get; set; }
-        public DbSet<Specialization> Specializations{ get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Semester> Semesters { get; set; }
@@ -20,14 +18,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
 
         public TrackerContext()
         {
-            //var folder = Environment.SpecialFolder.LocalApplicationData;
-            //var path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             DbPath = $"{ConfigFile.programFilesDir}tracker.db";
         }
         
-        // The following configures EF to create a Sqlite database file in the
-        // special "local" folder for your platform.
-        // Data source=:memory:
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlite($"Data Source={DbPath}");
     }
