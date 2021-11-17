@@ -17,19 +17,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
             User user = trackerContext.Users
                 .Include(user => user.Address)
                 .Include(user => user.Semesters)
-                .ThenInclude(semester => semester.Courses)
-                .ThenInclude(course => course.Lectures)
+                .ThenInclude(semester => semester.Courses.OrderBy(s => s.SemesterEnum))
+                .ThenInclude(course => course.Lectures.OrderBy(l => l.Title))
                 .ThenInclude(lecture => lecture.TaskSet)
-                .ThenInclude(taskSet => taskSet.Tasks)
+                .ThenInclude(taskSet => taskSet.Tasks.OrderBy(t => t.Title))
                 .FirstOrDefault(u => u.Email.Equals(email));
 
-            if (user != null)
-            {
-                user.Semesters.Sort((a, b) => a.SemesterEnum.CompareTo(b.SemesterEnum));
-                return user;
-            }
-
-            return null;
+            return user;
         }
 
         public User RetrieveByLastName(string lastName)
