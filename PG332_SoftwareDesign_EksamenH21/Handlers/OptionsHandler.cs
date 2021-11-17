@@ -24,8 +24,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             // OBS! Vi må generere meny på User-nivå FØR vi viser semestermenyen brukeren skal starte på!
             // Ellers vil det ikke genereres SuperOption automatisk på Semester!
             
-            // OBSnr2! Klassen som genererer meny må caste til OptionsHandler før den printer!
-            // Ellers vil den ikke få ut riktig info!
         #endregion
         
         #region Properties
@@ -136,7 +134,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
                 Console.WriteLine("Velg et gyldig menyalternativ.");
                 Console.WriteLine("Trykk en tast for å gå videre");
                 Logger.Instance.Write("PEBKAC");
-                //Console.ReadKey(); // Kommenter ut for tester
+                Console.ReadKey(); // Kommenter ut for tester
 
                 return this;
             }
@@ -160,7 +158,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
                 Console.WriteLine(f.Title + " satt som " + finished);
                 Console.WriteLine("Trykk en tast for å gå videre");
                 Logger.Instance.Write(f.Title + " FINISHED BOOL TOGGLED");
-                //Console.ReadKey(); // Kommenter ut for tester
+                Console.ReadKey(); // Kommenter ut for tester
 
                 return this;
             }
