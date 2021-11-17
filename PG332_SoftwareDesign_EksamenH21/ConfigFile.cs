@@ -295,7 +295,7 @@ namespace PG332_SoftwareDesign_EksamenH21
                     c.Lectures = new();
                     for(int i = 0; i < lectureAmount; i++) {
                         Lecture lecture = new();
-                        lecture.Title = RandomTitle();
+                        lecture.Title = "Forelesning " + i;
                         lecture.Finished = randomBool();
                         c.Lectures.Add( lecture );
                         int taskAmount = random.Next( 5 );
@@ -303,7 +303,7 @@ namespace PG332_SoftwareDesign_EksamenH21
                         c.Lectures[i].TaskSet.Tasks = new();
                         for(int j=0; j<taskAmount; j++) {
                             Task task = new();
-                            task.Title = RandomTitle();
+                            task.Title = "Mission " + j;
                             task.Finished = randomBool();
                             task.Description = RandomDescription();
                             c.Lectures[i].TaskSet.Tasks.Add( task );
