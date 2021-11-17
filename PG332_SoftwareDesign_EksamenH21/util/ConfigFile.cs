@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
+using System.IO;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
 using static BCrypt.Net.BCrypt;
@@ -9,11 +9,12 @@ namespace PG332_SoftwareDesign_EksamenH21
     class ConfigFile
     {
         public static string programFilesDir =
-            $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}{System.IO.Path.DirectorySeparatorChar}";
+            $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}{Path.DirectorySeparatorChar}";
+
         public void AddDummyData()
         {
             clearDataFromDb();
-            
+
 
             //first semester
             Course tk1104 = new();

@@ -25,14 +25,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
         {
             _optionsHandler = OptionsHandlerFactory.MakeOptionsHandler(User);
 
-            MenuPrinter.ShowMenu(_optionsHandler);
-            while (true)
+            do
             {
+                MenuPrinter.ShowMenu(_optionsHandler);
                 _optionsHandler = _optionsHandler.ChooseOption(Console.ReadLine()) as OptionsHandler;
                 Console.Clear();
-                MenuPrinter.ShowMenu(_optionsHandler);
                 SaveUpdates();
-            }
+            } while (true);
         }
 
         private void SaveUpdates()
