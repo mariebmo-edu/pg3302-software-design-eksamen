@@ -15,7 +15,11 @@ namespace PG332_SoftwareDesign_EksamenH21
             {
                 OptionsHandler oh = printable as OptionsHandler;
 
-                Console.WriteLine(oh.Progressable.Title);
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("--------------------");
+                Console.WriteLine(CenteredHeader(oh));
+                Console.WriteLine("--------------------");
+                Console.ForegroundColor = ConsoleColor.Gray;
 
                 IProgressionHandler<IProgressable> ph =
                     ProgressionHandlerFactory.MakeProgressionHandler(oh.Progressable);
@@ -53,6 +57,7 @@ namespace PG332_SoftwareDesign_EksamenH21
 
                 Console.WriteLine(menuOptionsString.ToString());
             }
+
             Console.WriteLine("\n[E] - Avslutt");
         }
 
@@ -80,6 +85,19 @@ namespace PG332_SoftwareDesign_EksamenH21
         {
             Console.Clear();
             Console.WriteLine($"Velkommen {fullName}. Her er dine menyvalg:");
+        }
+
+        private string CenteredHeader(OptionsHandler oh)
+        {
+
+            StringBuilder sb = new();
+
+            for (int i = 0; i < (20 - oh.Progressable.Title.Length) / 2; i++)
+            {
+                sb.Append(' ');
+            }
+
+            return sb.ToString() + oh.Progressable.Title;
         }
     }
 }
