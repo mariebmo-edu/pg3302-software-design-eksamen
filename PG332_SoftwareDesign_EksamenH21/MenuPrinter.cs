@@ -14,10 +14,9 @@ namespace PG332_SoftwareDesign_EksamenH21
                 OptionsHandler oh = printable as OptionsHandler;
                 
                 Console.WriteLine(oh.Progressable.Title);
-                
-                ProgressionWrapper pw = ProgressionHandlerFactory
-                    .MakeProgressionHandler(oh.Progressable)
-                    .GetProgression();
+
+                IProgressionHandler<IProgressable> ph = ProgressionHandlerFactory.MakeProgressionHandler(oh.Progressable);
+                ProgressionWrapper pw = ph.GetProgression();
                 Console.WriteLine(ProgressionBarHandler.GenerateProgressBar(pw));
 
                 StringBuilder menuOptionsString = new();
@@ -44,7 +43,7 @@ namespace PG332_SoftwareDesign_EksamenH21
 
                 if (oh.SuperOption != null)
                 {
-                    menuOptionsString.Append("[0] - Tilbake til " + oh.SuperOption.Progressable.Title);
+                    menuOptionsString.Append("\n[0] - Tilbake til " + oh.SuperOption.Progressable.Title);
                 }
                 
                 Console.WriteLine(menuOptionsString.ToString());
@@ -52,6 +51,7 @@ namespace PG332_SoftwareDesign_EksamenH21
             // else if (printable is LoginMenu)
             {
             }
+            Console.WriteLine("\n[E] - Avslutt");
         }
     }
 }

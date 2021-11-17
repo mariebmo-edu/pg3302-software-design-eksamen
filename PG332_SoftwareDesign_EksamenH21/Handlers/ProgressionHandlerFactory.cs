@@ -16,7 +16,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
                 User u = progressable as User;
 
                 ProgressionHandlerComposite progComp = new(u);
-
+                
                 foreach (var s in u.Semesters)
                 {
                     progComp.Children.Add(MakeProgressionHandler(s));
@@ -43,14 +43,19 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             {
                 Course c = progressable as Course;
 
-                ProgressionHandlerComposite progComp = new(c);
-
-                foreach (var l in c.Lectures)
+                if (c.Lectures.Count > 0)
                 {
-                    progComp.Children.Add(MakeProgressionHandler(l));
+                    ProgressionHandlerComposite progComp = new(c);
+
+                    foreach (var l in c.Lectures)
+                    {
+                        progComp.Children.Add(MakeProgressionHandler(l));
+                    }
+                    
+                    return progComp;
                 }
 
-                return progComp;
+                return new ProgressionHandlerLeaf(c);
             }
 
             if (progressable is Lecture)
@@ -60,8 +65,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
                 ProgressionHandlerComposite progComp = new(l);
 
                 progComp.Children.Add(new ProgressionHandlerLeaf(l));
-                progComp.Children.Add(MakeProgressionHandler(l.TaskSet));
-
+                if (l.TaskSet.Tasks.Count > 0)
+                {
+                    progComp.Children.Add(MakeProgressionHandler(l.TaskSet));
+                }
+                
                 return progComp;
             }
 
@@ -70,12 +78,12 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
                 TaskSet ts = progressable as TaskSet;
 
                 ProgressionHandlerComposite progComp = new(ts);
-
+                
                 foreach (var t in ts.Tasks)
                 {
                     progComp.Children.Add(MakeProgressionHandler(t));
                 }
-
+                
                 return progComp;
             }
 
