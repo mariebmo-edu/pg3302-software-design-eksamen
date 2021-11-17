@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Text;
 using PG332_SoftwareDesign_EksamenH21.Handlers;
 using PG332_SoftwareDesign_EksamenH21.Model;
@@ -19,8 +20,10 @@ namespace PG332_SoftwareDesign_EksamenH21
                 IProgressionHandler<IProgressable> ph =
                     ProgressionHandlerFactory.MakeProgressionHandler(oh.Progressable);
                 ProgressionWrapper pw = ph.GetProgression();
+                ConsoleColor defaultColor = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(ProgressionBarHandler.GenerateProgressBar(pw));
-
+                Console.ForegroundColor = defaultColor;
                 StringBuilder menuOptionsString = new();
 
                 if (oh.IsFinishable)
