@@ -120,9 +120,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
                 }
 
                 Console.WriteLine("På gjensyn!");
-                Console.WriteLine("Trykk en tast for å avslutte");
+                //Console.WriteLine("Trykk en tast for å avslutte");
                 Logger.Instance.Write("EXITING APPLICATION");
-                Console.ReadKey();
+                //Console.ReadKey();
 
                 Environment.Exit(0);
 
