@@ -2,11 +2,11 @@
 {
     public enum SemesterEnum
     {
-        FIRST,
-        SECOND,
-        THIRD,
-        FOURTH,
-        FIFTH,
-        SIXTH
+        Første,
+        Andre,
+        Tredje,
+        Fjerde,
+        Femte,
+        Sjette
     }
 }
