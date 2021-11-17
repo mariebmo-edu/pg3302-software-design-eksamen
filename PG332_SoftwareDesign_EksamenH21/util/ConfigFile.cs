@@ -11,9 +11,12 @@ namespace PG332_SoftwareDesign_EksamenH21
         public static string programFilesDir =
             $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}{Path.DirectorySeparatorChar}";
 
-        public void AddDummyData()
+        public static void AddDummyData()
         {
-            
+            //USER
+            UserDao userDao = new UserDao();
+            User user = new();
+
             clearDataFromDb();
 
 
@@ -180,10 +183,6 @@ namespace PG332_SoftwareDesign_EksamenH21
             pj6100.ExamDate = new DateTime( 2023, 4, 2 );
             pj6100.SemesterEnum = SemesterEnum.Sjette;
 
-            //USER
-            UserDao userDao = new UserDao();
-            User user = new();
-
             Address address = new();
 
             address.City = "Oslo";
@@ -279,7 +278,7 @@ namespace PG332_SoftwareDesign_EksamenH21
             userDao.Save(user);
         }
 
-        private void clearDataFromDb()
+        private static void clearDataFromDb()
         {
             using TrackerContext trackerContext = new();
             trackerContext.Courses.RemoveRange(trackerContext.Courses);
@@ -293,7 +292,7 @@ namespace PG332_SoftwareDesign_EksamenH21
         }
 
 
-        void AddCourseData(Semester[] semesters) {
+        private static void AddCourseData(Semester[] semesters) {
             foreach(Semester s in semesters){
                 foreach(Course c in s.Courses) {
 
@@ -320,14 +319,14 @@ namespace PG332_SoftwareDesign_EksamenH21
             }
         }
 
-        private bool randomBool()
+        private static bool randomBool()
         {
             Random nextInt = new Random();
 
             return nextInt.Next(2) == 1;
         }
 
-        string RandomTitle() {
+        private static string RandomTitle() {
             string[] titles = { "Fantastic Beasts and where to find them", "Hvor mye veier en hvalross", "Hvor mye tjente egentlig Monica i Friends?" };
 
             Random random = new();
@@ -335,7 +334,7 @@ namespace PG332_SoftwareDesign_EksamenH21
             return titles[random.Next( titles.Length )];
         }
 
-        string RandomDescription() {
+        private static string RandomDescription() {
             string[] descriptions = {"Skriv åtte sider om hvor mye du liker ost", "Hvis en appelsin bodde på månen, og Bush var president, hvor lang ville en linjal på 32 cm vært i juni?"};
             Random random = new();
 
