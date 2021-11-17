@@ -14,6 +14,5 @@ namespace Test
             Logger logger2 = Logger.Instance;
             Assert.True(ReferenceEquals(logger1,logger2));
         }
-        
     }
 }
