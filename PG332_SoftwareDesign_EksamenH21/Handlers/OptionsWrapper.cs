@@ -5,7 +5,7 @@ using PG332_SoftwareDesign_EksamenH21.util;
 
 namespace PG332_SoftwareDesign_EksamenH21.Handlers
 {
-    public class OptionsHandler : IPrintable<IProgressable>
+    public class OptionsWrapper : IPrintable
     {
         #region Documentation
 
@@ -31,14 +31,14 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         public IProgressable Progressable { get; set; }
         public List<IProgressable> Options { get; set; } = new();
-        public OptionsHandler SuperOption { get; set; }
+        public IPrintable SuperOption { get; set; }
         public bool IsFinishable { get; private set; }
 
         #endregion
 
         #region Constructor
 
-        public OptionsHandler(IProgressable progressable, OptionsHandler superOption, bool isFinishable)
+        public OptionsWrapper(IProgressable progressable, OptionsWrapper superOption, bool isFinishable)
         {
             Progressable = progressable;
             SuperOption = superOption;
@@ -49,7 +49,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         #region Public methods
 
-        public IPrintable<IProgressable> ChooseOption(string input)
+        public IPrintable ChooseOption(string input)
         {
             if (input.ToLower().Equals("e"))
             {
@@ -65,7 +65,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
             if (!Int32.TryParse(input, out convertedInput))
             {
-                return GetErrorMessage();
+                Logger.Instance.Write($"TRYPARSE FAILED AT {Progressable.Title}");
+                return new ErrorMessageWrapper("Velg et gyldig menyalternativ", this);
             }
 
             if (convertedInput >= 0 && convertedInput <= Options.Count)
@@ -75,7 +76,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
             if (convertedInput > Options.Count)
             {
-                return GetErrorMessage();
+                Logger.Instance.Write($"INDEX OUT OF RANGE AT {Progressable.Title}");
+                return new ErrorMessageWrapper("Velg et gyldig menyalternativ", this);
             }
 
             return this;
@@ -85,7 +87,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         #region Private methods
 
-        private OptionsHandler GetOption(int convertedInput)
+        private IPrintable GetOption(int convertedInput)
         {
             if (convertedInput == 0 && SuperOption != null)
             {
@@ -102,44 +104,22 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
                 return OptionsHandlerFactory.MakeOptionsHandler(Options[convertedInput - 1], this);
             }
 
-            Console.WriteLine("Dette menyvalget er ikke publisert");
-            Console.WriteLine("Trykk en tast for å gå videre");
-            Logger.Instance.Write("UNPUBLISHED OPTION");
-            Console.ReadKey();
-
-            return this;
+            Logger.Instance.Write($"UNPUBLISHED OPTION {Options[convertedInput-1].Title} CHOSEN");
+            return new ErrorMessageWrapper("Dette menyvalget er ikke publisert", this);
         }
 
-        private OptionsHandler Quit()
+        private IPrintable Quit()
         {
-            Console.WriteLine("Vil du avslutte? [J/N]");
-            string quitInput = Console.ReadLine()?.ToLower();
-
-            if (quitInput != null && !quitInput.Equals("j"))
-            {
-                return this;
-            }
-            return null;
+            return new QuitQuestionWrapper(this);
         }
 
-        private OptionsHandler GetErrorMessage()
-        {
-            Console.WriteLine("Velg et gyldig menyalternativ.");
-            Console.WriteLine("Trykk en tast for å gå videre");
-            Logger.Instance.Write("PEBKAC");
-            Console.ReadKey(); // Kommenter ut for tester
-
-            return this;
-        }
-
-        private OptionsHandler SetFinished()
+        private IPrintable SetFinished()
         {
             IFinishable f = Progressable as IFinishable;
             f.Finished = !f.Finished;
             Progressable = f;
-
-
-            Logger.Instance.Write(f.Title + " FINISHED BOOL TOGGLED");
+            
+            Logger.Instance.Write($"{f.Title} SET AS {f.Finished}");
             return this;
         }
 
@@ -147,18 +127,18 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         #region Overridden methods
 
-        protected bool Equals(OptionsHandler other)
+        protected bool Equals(OptionsWrapper other)
         {
             return Equals(Progressable, other.Progressable) && Equals(Options, other.Options) &&
                    Equals(SuperOption, other.SuperOption) && IsFinishable == other.IsFinishable;
         }
 
-        public static bool operator ==(OptionsHandler left, OptionsHandler right)
+        public static bool operator ==(OptionsWrapper left, OptionsWrapper right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(OptionsHandler left, OptionsHandler right)
+        public static bool operator !=(OptionsWrapper left, OptionsWrapper right)
         {
             return !Equals(left, right);
         }
@@ -168,7 +148,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((OptionsHandler) obj);
+            return Equals((OptionsWrapper) obj);
         }
 
         public override int GetHashCode()
