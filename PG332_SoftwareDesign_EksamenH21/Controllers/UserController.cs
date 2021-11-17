@@ -42,19 +42,5 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
         {
             return $"{User.FirstName} {User.LastName}";
         }
-
-        public Semester GetCurrentSemester()
-        {
-            SemesterDao dao = new SemesterDao();
-            return dao.RetrieveOneByField(s => s.SemesterEnum == User.CurrentSemester);
-        }
-
-        public List<Course> GetCourses()
-        {
-            CourseDao dao = new CourseDao();
-            SemesterDao semesterDao = new SemesterDao();
-            long semesterId = semesterDao.GetSemesterIdByUserIdAndSemesterEnum(User.UserId, User.CurrentSemester);
-            return dao.RetrieveCoursesBySemesterId(semesterId);
-        }
     }
 }
