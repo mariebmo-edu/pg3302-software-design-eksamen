@@ -31,7 +31,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
         #region Properties
 
             public IProgressable Progressable { get; set; }
-            public List<IProgressable> Options { get; set; }
+            public List<IProgressable> Options { get; set; } = new();
             public OptionsHandler SuperOption { get; set; }
             public bool IsFinishable { get; private set; }
 

@@ -8,7 +8,8 @@ namespace PG332_SoftwareDesign_EksamenH21
 {
     class ConfigFile
     {
-
+        public static string programFilesDir =
+            $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}{System.IO.Path.DirectorySeparatorChar}";
         public void AddDummyData()
         {
             clearDataFromDb();

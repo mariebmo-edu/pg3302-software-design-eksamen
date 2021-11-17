@@ -56,62 +56,25 @@ namespace PG332_SoftwareDesign_EksamenH21
             UserController.Authenticate();
             // Email = "gMail@email.no", password = HashPassword("password123")};
             
-            //TODO: #2 Get current semester
-            Semester currentSemester = UserController.GetCurrentSemester();
             User = UserController.User;
             // User needs to have currentSemester :D
             User.CurrentSemester = SemesterEnum.FIRST;
-            //TODO: #3 Use semester as parameter, -- check
-            //TODO: #4 Check out UserController. 
+            User.Semesters.Sort((a,b) => a.SemesterEnum.CompareTo(b.SemesterEnum));
             
-            //TODO: Get courses by semester ID
-            ICourseDao courseDao = new CourseDao();
+            _optionsHandler = OptionsHandlerFactory.MakeOptionsHandler(User);
+           // MenuPrinter.ShowMenu(_optionsHandler);
+            
+            
 
-            List<Course> courses = courseDao.RetrieveCoursesBySemesterId(User.Semesters[0].Id);
+            string fullName = UserController.GetFullName(); 
             
-            currentSemester.Courses = courseDao.RetrieveCoursesBySemesterId(currentSemester.Id);
-            
-            _optionsHandler = OptionsHandlerFactory.MakeOptionsHandler(User,null);
-            // OptionsHandler optionsHandler = OptionsHandlerFactory.MakeOptionsHandler();
-
-            OptionsHandler _optionsHandler2 = OptionsHandlerFactory.MakeOptionsHandler(User, _optionsHandler);
-            _optionsHandler2.Options.ForEach(o => Console.WriteLine(o));
-
-            Console.ReadKey();
-            
-            
-            string fullName = UserController.GetFullName();
+            User.Semesters.ForEach(s => s.Published = true);
+            MenuPrinter.ShowMenu(_optionsHandler);
             while (true)
             {
-                // MenuPrinter.ShowMenu(OptionsHandlerFactory.MakeOptionsHandler(User, null));
-                
-                ShowMainMenu(fullName);
-                switch (ConsoleRead())
-                {
-                    case "1":
-                        ShowCourseMenu(1);
-                        break;
-                    case "2":
-                        ShowCourseMenu(2);
-                        break;
-                    case "3":
-                        ShowCourseMenu(3);
-                        break;
-                    case "4":
-                        ShowCourseMenu(4);
-                        break;
-                    case "0":
-                        PrintMessage("gå til spesialiseringsmeny");
-                        break;
-                    case "E":
-                        PrintMessage("Du har valgt avslutt");
-                        ShowSelectSpecializationMenu();
-                        break;
-                    default:
-                        PrintMessage("Ugyldig valg");
-                        break;
-                }
-                
+                _optionsHandler = _optionsHandler.ChooseOption(Console.ReadLine()) as OptionsHandler;
+                Console.Clear();
+                MenuPrinter.ShowMenu(_optionsHandler);
             }
         }
 

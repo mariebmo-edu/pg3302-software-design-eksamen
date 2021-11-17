@@ -8,8 +8,8 @@ namespace PG332_SoftwareDesign_EksamenH21
     {
         public static String GenerateProgressBar(ProgressionWrapper progressionWrapper)
         {
-            int finishedLength = Convert.ToInt32(100 * progressionWrapper.FinishedPercent);
-            int publishedLength = Convert.ToInt32(100 * progressionWrapper.PublishedPercent) - finishedLength;
+            long finishedLength = (long)Math.Round(100 * progressionWrapper.FinishedPercent);
+            long publishedLength =(long)Math.Round(100 * progressionWrapper.PublishedPercent) - finishedLength;
 
             StringBuilder buffer = new();
             buffer.Append("|");
@@ -21,7 +21,7 @@ namespace PG332_SoftwareDesign_EksamenH21
             return buffer.ToString();
         }
 
-        private static void BarGenerator(char c, int amount, StringBuilder buffer)
+        private static void BarGenerator(char c, long amount, StringBuilder buffer)
         {
             for (int i = 0; i < amount; i++)
             {

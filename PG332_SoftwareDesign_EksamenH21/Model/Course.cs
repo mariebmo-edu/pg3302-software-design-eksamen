@@ -17,7 +17,7 @@ namespace PG332_SoftwareDesign_EksamenH21
         public DateTime ExamDate { get; set; }
         public ExamType ExamType { get; set; }
         public float CoursePoints { get; set; }
-        [NotMapped] public bool Published { get; set; } = false;
+        [NotMapped] public bool Published { get; set; } = true;
 
         [NotMapped]
         public string Title => CourseCode;

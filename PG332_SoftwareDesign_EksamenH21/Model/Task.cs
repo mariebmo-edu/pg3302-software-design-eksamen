@@ -12,8 +12,8 @@ namespace PG332_SoftwareDesign_EksamenH21
         public int TaskSetId { get; set; }
         public TaskSet TaskSet { get; set; }
         public string Description { get; set; }
-        [NotMapped] public bool Published { get; set; } = false;
-        public bool Finished { get; set; } = false;
+        [NotMapped] public bool Published { get; set; } = true;
+        public bool Finished { get; set; } 
 
         #region Overridden methods
             protected bool Equals(Task other)

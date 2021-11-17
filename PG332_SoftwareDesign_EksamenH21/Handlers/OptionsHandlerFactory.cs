@@ -4,6 +4,10 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 {
     public class OptionsHandlerFactory
     {
+        public static OptionsHandler MakeOptionsHandler(IProgressable progressable)
+        {
+            return MakeOptionsHandler(progressable, null);
+        }
         public static OptionsHandler MakeOptionsHandler(IProgressable progressable, OptionsHandler superOption)
         {
             if (progressable is User)

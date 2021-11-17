@@ -17,7 +17,7 @@ namespace PG332_SoftwareDesign_EksamenH21.util
 
         public async void Write(string message)
         {
-            String fileName = $"{Environment.CurrentDirectory}/log.txt";
+            String fileName = $"{ConfigFile.programFilesDir}log.txt";
             DateTime dateTime = DateTime.Now;
             await using StreamWriter file = new(fileName, true);
             await file.WriteAsync($"{dateTime} : {message}{Environment.NewLine}");
