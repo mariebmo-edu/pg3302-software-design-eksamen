@@ -1,12 +1,7 @@
-﻿using System;
-
-namespace PG332_SoftwareDesign_EksamenH21
+﻿namespace PG332_SoftwareDesign_EksamenH21
 {
-    public class IReader
+    public interface IReader
     {
-        public string ReadLine()
-        {
-            return Console.ReadLine();
-        }
+        public string ReadLine();
     }
 }

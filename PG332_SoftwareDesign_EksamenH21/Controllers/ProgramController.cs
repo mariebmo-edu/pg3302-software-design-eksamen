@@ -23,13 +23,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
         public void Start()
         {
             _printable = new EmailQuestionWrapper();
-            do
+            while (_printable != null)
             {
                 MenuPrinter.ShowMenu(_printable);
                 _printable = _printable.ChooseOption(Reader.ReadLine());
                 Console.Clear();
                 if (_printable is OptionsWrapper) SaveUpdates();
-            } while (_printable != null);
+            }
         }
 
         private void SaveUpdates()
