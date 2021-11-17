@@ -2,6 +2,7 @@
 using System.Text;
 using PG332_SoftwareDesign_EksamenH21.Handlers;
 using PG332_SoftwareDesign_EksamenH21.Model;
+using PG332_SoftwareDesign_EksamenH21.util;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {
@@ -52,6 +53,32 @@ namespace PG332_SoftwareDesign_EksamenH21
             // else if (printable is LoginMenu)
             {
             }
+        }
+
+        
+        public string AskForEmail()
+        {
+            Console.WriteLine("Vennligst skriv inn din e-post:");
+            return Console.ReadLine();
+        }
+
+        public string AskForPassword()
+        {
+            Console.WriteLine("Vennligst skriv inn ditt passord:");
+            return Console.ReadLine();
+        }
+
+        public void ErrorWithAuthentication()
+        {
+            Console.Clear();
+            Logger.Instance.Write("Error with authentication");
+            Console.WriteLine("Feil e-post eller passord. Prøv igjen.");
+        }
+
+        public void WelcomeMessage(string fullName)
+        {
+            Console.Clear();
+            Console.WriteLine($"Velkommen {fullName}. Her er dine menyvalg:");
         }
     }
 }

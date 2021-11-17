@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using PG332_SoftwareDesign_EksamenH21.Handlers;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
 
@@ -7,15 +9,34 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
     public class UserController
     {
         public User User { get; set; }
-
-        public void Authenticate()
+        private OptionsHandler _optionsHandler;
+        private MenuPrinter<IProgressable> MenuPrinter { get; set; } = new();
+        private UserAuthenticator _userAuthenticator = new();
+        
+        public void Start()
         {
-            UserAuthenticator auth = new UserAuthenticator(this); 
-            string email = "kim@bruun.no";
-            string password = "daarligpassord";
-            auth.UserValid(email, password);
-            auth.User = User;
+            User = _userAuthenticator.Authenticate();
+            MenuPrinter.WelcomeMessage(GetFullName());
+            
+            
+            Menu();
         }
+
+        private void Menu()
+        {
+            _optionsHandler = OptionsHandlerFactory.MakeOptionsHandler(User);
+
+            MenuPrinter.ShowMenu(_optionsHandler);
+            while (true)
+            {
+                _optionsHandler = _optionsHandler.ChooseOption(Console.ReadLine()) as OptionsHandler;
+                Console.Clear();
+                MenuPrinter.ShowMenu(_optionsHandler);
+                UserDao dao = new UserDao();
+                dao.Update(User);
+            }
+        }
+
 
         public string GetFullName()
         {
@@ -34,11 +55,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
             SemesterDao semesterDao = new SemesterDao();
             long semesterId = semesterDao.GetSemesterIdByUserIdAndSemesterEnum(User.UserId, User.CurrentSemester);
             return dao.RetrieveCoursesBySemesterId(semesterId);
-        }
-
-        public void SetUser(User user)
-        {
-            User = user;
         }
     }
 }

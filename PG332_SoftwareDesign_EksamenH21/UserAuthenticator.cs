@@ -9,60 +9,35 @@ namespace PG332_SoftwareDesign_EksamenH21
     public class UserAuthenticator
     {
         private readonly UserController _userController;
-
-        public UserAuthenticator(UserController userController)
-        {
-            _userController = userController;
-        }
-
+        private MenuPrinter<IProgressable> MenuPrinter = new();
         public User User { get; set; }
+        
 
-
-        /*
-        private void LoginUser(string email, string password)
+        public User Authenticate()
         {
-            while (!UserValid(email, password))
+            string email = MenuPrinter.AskForEmail();
+            string password = MenuPrinter.AskForPassword();
+            while ((User = UserValid(email, password)) == null)
             {
-                credentials = UI.GetLoginCredentials(); // Så lenge bruker ikke er gyldig ber vi dem prøve igjen.
-                email = credentials[0];
-                password = credentials[1];
+                MenuPrinter.ErrorWithAuthentication();
+                email = MenuPrinter.AskForEmail();
+                password = MenuPrinter.AskForPassword();
             }
+            return User;
         }
-        */
-
-        public bool UserValid(string email, string password)
+        
+        private User UserValid(string email, string password)
         {
             UserDao dao = new UserDao();
             User retrieveByEmail = dao.RetrieveByEmail(email);
-            if (retrieveByEmail is null) return false;
+            if (retrieveByEmail is null) return null;
 
             if (Verify(password, retrieveByEmail.Password))
             {
-                _userController.SetUser(retrieveByEmail);
-                
-                return true;
+                return retrieveByEmail;
             }
 
-            return false;
+            return null;
         }
-
-
-/*
-        private void ExecuteUserChoice()
-        {
-            UI.ShowMenuOptions();
-            UserChoice userChoice = UI.GetUserChoice();
-
-            switch (userChoice)
-            {
-                case UserChoice.GetSemesterProgression:
-                {
-                    if (User.SpecializationId != null)
-                        new SpecializationDao().RetrieveById((long) User.SpecializationId);
-                    break;
-                }
-            }
-        }
-        */
     }
 }
