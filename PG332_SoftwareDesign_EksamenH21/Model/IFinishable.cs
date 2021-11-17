@@ -3,6 +3,5 @@
     public interface IFinishable : IProgressable
     {
         public bool Finished { get; set; }
-        public string Title { get; set; }
     }
 }

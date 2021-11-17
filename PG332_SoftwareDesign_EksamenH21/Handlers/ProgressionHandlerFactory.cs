@@ -25,7 +25,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
                 Semester s = progressable as Semester;
 
                 ProgressionHandlerComposite progComp = new(s);
-
+                
                 foreach (var c in s.Courses)
                 {
                     progComp.Children.Add(MakeProgressionHandler(c));
@@ -38,19 +38,19 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             {
                 Course c = progressable as Course;
 
+                ProgressionHandlerComposite progComp = new(c);
+                progComp.Children.Add(new ProgressionHandlerLeaf(c));
+                
                 if (c.Lectures.Count > 0)
                 {
-                    ProgressionHandlerComposite progComp = new(c);
-
                     foreach (var l in c.Lectures)
                     {
                         progComp.Children.Add(MakeProgressionHandler(l));
                     }
                     
-                    return progComp;
                 }
 
-                return new ProgressionHandlerLeaf(c);
+                return progComp;
             }
 
             if (progressable is Lecture)
