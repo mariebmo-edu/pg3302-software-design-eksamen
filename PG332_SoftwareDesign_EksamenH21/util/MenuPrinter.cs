@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Text;
+using System.Text.RegularExpressions;
 using PG332_SoftwareDesign_EksamenH21.Handlers;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.util;
@@ -16,18 +17,21 @@ namespace PG332_SoftwareDesign_EksamenH21
                 OptionsHandler oh = printable as OptionsHandler;
 
                 Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine("--------------------");
+                Console.WriteLine(WriteLine());
                 Console.WriteLine(CenteredHeader(oh));
-                Console.WriteLine("--------------------");
+                Console.WriteLine(WriteLine());
                 Console.ForegroundColor = ConsoleColor.Gray;
+                WriteColourInProgressString("#:fullført, =:publisert, -:ikke publisert");                
+                Console.WriteLine(WriteLine());
 
-                IProgressionHandler<IProgressable> ph =
-                    ProgressionHandlerFactory.MakeProgressionHandler(oh.Progressable);
+
+                IProgressionHandler<IProgressable> ph = ProgressionHandlerFactory.MakeProgressionHandler(oh.Progressable);
                 ProgressionWrapper pw = ph.GetProgression();
                 ConsoleColor defaultColor = Console.ForegroundColor;
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine(ProgressionBarHandler.GenerateProgressBar(pw));
-                Console.ForegroundColor = defaultColor;
+                //Console.ForegroundColor = ConsoleColor.Green;
+                //Console.WriteLine(ProgressionBarHandler.GenerateProgressBar(pw));
+                //Console.ForegroundColor = defaultColor;
+                WriteColourInProgressString(ProgressionBarHandler.GenerateProgressBar(pw));
                 StringBuilder menuOptionsString = new();
 
                 if (oh.IsFinishable)
@@ -87,17 +91,47 @@ namespace PG332_SoftwareDesign_EksamenH21
             Console.WriteLine($"Velkommen {fullName}. Her er dine menyvalg:");
         }
 
+        public string WriteLine()
+        {
+            return "------------------------------------------";
+        }
+
         private string CenteredHeader(OptionsHandler oh)
         {
 
             StringBuilder sb = new();
 
-            for (int i = 0; i < (20 - oh.Progressable.Title.Length) / 2; i++)
+            for (int i = 0; i < (WriteLine().Length - oh.Progressable.Title.Length) / 2; i++)
             {
                 sb.Append(' ');
             }
 
             return sb.ToString() + oh.Progressable.Title;
+        }
+
+        private void WriteColourInProgressString(string message)
+        {
+            string[] sections = Regex.Split(message, "(#*)(=*)(-*)");
+
+            for (int i = 0; i < sections.Length; i++)
+            {
+                if (sections[i].Contains("#"))
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    
+                }
+                else if (sections[i].Contains("="))
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                }
+                Console.Write(sections[i]);
+                Console.ResetColor();
+            }
+            Console.WriteLine();
         }
     }
 }
