@@ -19,7 +19,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
                 .Include(user => user.Address)
                 .Include(user => user.Semesters)
                 .ThenInclude(semester => semester.Courses.OrderBy(s => s.SemesterEnum))
-                .ThenInclude(course => course.Lectures.OrderBy(l => l.Title.Split()))
+                .ThenInclude(course => course.Lectures)
                 .ThenInclude(lecture => lecture.TaskSet)
                 .ThenInclude(taskSet => taskSet.Tasks.OrderBy(t => t.Title))
                 .FirstOrDefault(u => u.Email.Equals(email));
