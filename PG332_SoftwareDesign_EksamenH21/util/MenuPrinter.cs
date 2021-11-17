@@ -8,100 +8,133 @@ using PG332_SoftwareDesign_EksamenH21.util;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {
-    public class MenuPrinter<T>
+    public class MenuPrinter
     {
-        public void ShowMenu(IPrintable<T> printable)
+        public void ShowMenu(IPrintable printable)
         {
-            if (printable is OptionsHandler)
+            if (printable is OptionsWrapper)
             {
-                OptionsHandler oh = printable as OptionsHandler;
+                ShowProgressableMenu(printable);
+            } 
+            else if (printable is ErrorMessageWrapper)
+            {
+                ErrorMessageWrapper errorMessage = printable as ErrorMessageWrapper;
+                Console.WriteLine(errorMessage.ErrorMessage);
+                Console.WriteLine("Trykk enter for å fortsette");
+            }
+            else if (printable is EmailQuestionWrapper)
+            {
+                Console.WriteLine("Skriv inn epost:");
+            }
+            else if (printable is PasswordQuestionWrapper)
+            {
+                Console.WriteLine("Skriv inn passord:");
+            }
+            else if (printable is MessageWrapper)
+            {
+                MessageWrapper message = printable as MessageWrapper;
+                Console.WriteLine(message.Message);
+            }
+            else if (printable is QuitQuestionWrapper)
+            {
+                Console.WriteLine("Ønsker du å avslutte? [J/N]");
+            }
+            else if (printable is QuitMessageWrapper)
+            {
+                Console.WriteLine("På gjensyn!");
+                Console.WriteLine("Trykk enter for å avslutte");
+            }
+        }
 
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine(WriteLine());
-                Console.WriteLine(CenteredHeader(oh));
-                Console.WriteLine(WriteLine());
-                Console.ForegroundColor = ConsoleColor.Gray;
-                WriteColourInProgressString("#:fullført, =:publisert, -:ikke publisert");                
-                Console.WriteLine(WriteLine());
+        private void ShowProgressableMenu(IPrintable printable)
+        {
+            OptionsWrapper oh = printable as OptionsWrapper;
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(ReturnLine());
+            Console.WriteLine(CenteredHeader(oh));
+            Console.WriteLine(ReturnLine());
+            Console.ForegroundColor = ConsoleColor.Gray;
+            WriteColourInProgressString("#:fullført, =:publisert, -:ikke publisert");
+            Console.WriteLine(ReturnLine());
 
 
-                IProgressionHandler<IProgressable> ph = ProgressionHandlerFactory.MakeProgressionHandler(oh.Progressable);
-                ProgressionWrapper pw = ph.GetProgression();
-                ConsoleColor defaultColor = Console.ForegroundColor;
-                //Console.ForegroundColor = ConsoleColor.Green;
-                //Console.WriteLine(ProgressionBarHandler.GenerateProgressBar(pw));
-                //Console.ForegroundColor = defaultColor;
-                WriteColourInProgressString(ProgressionBarHandler.GenerateProgressBar(pw));
-                StringBuilder menuOptionsString = new();
+            IProgressionHandler<IProgressable> ph = ProgressionHandlerFactory.MakeProgressionHandler(oh.Progressable);
+            ProgressionWrapper pw = ph.GetProgression();
+            ConsoleColor defaultColor = Console.ForegroundColor;
+            //Console.ForegroundColor = ConsoleColor.Green;
+            //Console.WriteLine(ProgressionBarHandler.GenerateProgressBar(pw));
+            //Console.ForegroundColor = defaultColor;
+            WriteColourInProgressString(ProgressionBarHandler.GenerateProgressBar(pw));
+            StringBuilder menuOptionsString = new();
 
-                if (oh.IsFinishable)
+            if (oh.IsFinishable)
+            {
+                IFinishable f = oh.Progressable as IFinishable;
+                menuOptionsString.Append("[F] - Sett som ");
+                if (!f.Finished)
                 {
-                    IFinishable f = oh.Progressable as IFinishable;
-                    menuOptionsString.Append("[F] - Sett som ");
-                    if (!f.Finished)
-                    {
-                        menuOptionsString.Append("ferdig\n");
-                    }
-                    else
-                    {
-                        menuOptionsString.Append("uferdig\n");
-                    }
+                    menuOptionsString.Append("ferdig\n");
                 }
-
-                for (int i = 0; i < oh.Options.Count; i++)
+                else
                 {
-                    menuOptionsString.Append("[" + (i + 1) + "] - ");
-                    menuOptionsString.Append(oh.Options[i].Title + "\n");
+                    menuOptionsString.Append("uferdig\n");
                 }
-
-                if (oh.SuperOption != null)
-                {
-                    menuOptionsString.Append("\n[0] - Tilbake til " + oh.SuperOption.Progressable.Title);
-                }
-
-                Console.WriteLine(menuOptionsString.ToString());
             }
 
+            for (int i = 0; i < oh.Options.Count; i++)
+            {
+                menuOptionsString.Append("[" + (i + 1) + "] - ");
+                menuOptionsString.Append(oh.Options[i].Title + "\n");
+            }
+
+            if (oh.SuperOption != null)
+            {
+                OptionsWrapper super = oh.SuperOption as OptionsWrapper;
+                menuOptionsString.Append("\n[0] - Tilbake til " + super.Progressable.Title);
+            }
+
+            Console.WriteLine(menuOptionsString.ToString());
             Console.WriteLine("\n[E] - Avslutt");
         }
 
 
-        public string AskForEmail()
-        {
-            Console.WriteLine("Vennligst skriv inn din e-post:");
-            return Console.ReadLine();
-        }
+        // public string AskForEmail()
+        // {
+        //     Console.WriteLine("Vennligst skriv inn din e-post:");
+        //     return Console.ReadLine();
+        // }
+        //
+        // public string AskForPassword()
+        // {
+        //     Console.WriteLine("Vennligst skriv inn ditt passord:");
+        //     return Console.ReadLine();
+        // }
+        //
+        // public void ErrorWithAuthentication()
+        // {
+        //     Console.Clear();
+        //     Logger.Instance.Write("Error with authentication");
+        //     Console.WriteLine("Feil e-post eller passord. Prøv igjen.");
+        // }
+        //
+        // public void WelcomeMessage(string fullName)
+        // {
+        //     Console.Clear();
+        //     Console.WriteLine($"Velkommen {fullName}. Her er dine menyvalg:");
+        // }
 
-        public string AskForPassword()
-        {
-            Console.WriteLine("Vennligst skriv inn ditt passord:");
-            return Console.ReadLine();
-        }
-
-        public void ErrorWithAuthentication()
-        {
-            Console.Clear();
-            Logger.Instance.Write("Error with authentication");
-            Console.WriteLine("Feil e-post eller passord. Prøv igjen.");
-        }
-
-        public void WelcomeMessage(string fullName)
-        {
-            Console.Clear();
-            Console.WriteLine($"Velkommen {fullName}. Her er dine menyvalg:");
-        }
-
-        public string WriteLine()
+        private string ReturnLine()
         {
             return "------------------------------------------";
         }
 
-        private string CenteredHeader(OptionsHandler oh)
+        private string CenteredHeader(OptionsWrapper oh)
         {
 
             StringBuilder sb = new();
 
-            for (int i = 0; i < (WriteLine().Length - oh.Progressable.Title.Length) / 2; i++)
+            for (int i = 0; i < (ReturnLine().Length - oh.Progressable.Title.Length) / 2; i++)
             {
                 sb.Append(' ');
             }

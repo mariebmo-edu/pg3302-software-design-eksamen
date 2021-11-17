@@ -19,7 +19,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
         [NotMapped] public SemesterEnum CurrentSemester { get; set; }
         [NotMapped] public bool Published { get; set; } = true;
 
-        [NotMapped] public string Title => $"{FirstName} {LastName}";
+        [NotMapped] public string Title => "Velg semester";
 
         public override bool Equals(object? obj)
         {

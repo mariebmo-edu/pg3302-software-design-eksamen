@@ -14,9 +14,9 @@ namespace Test
             
             TaskSet taskSet = new();
             
-            OptionsHandler tsOh = new(taskSet, null, false);
+            OptionsWrapper tsOh = new(taskSet, null, false);
 
-            OptionsHandler actual = tsOh.ChooseOption("t") as OptionsHandler;
+            OptionsWrapper actual = tsOh.ChooseOption("t") as OptionsWrapper;
             
             Assert.AreEqual(tsOh, actual);
         }
@@ -31,11 +31,11 @@ namespace Test
             taskSet.Published = true;
             taskSet.Tasks.Add(task1);
 
-            OptionsHandler tsOh = MakeOptionsHandler(taskSet, null);
+            OptionsWrapper tsOh = MakeOptionsHandler(taskSet, null);
 
-            OptionsHandler expected = new(task1, tsOh, true);
+            OptionsWrapper expected = new(task1, tsOh, true);
 
-            OptionsHandler actual = tsOh.ChooseOption("1") as OptionsHandler;
+            OptionsWrapper actual = tsOh.ChooseOption("1") as OptionsWrapper;
 
             for (int i = 0; i < expected.Options.Count; i++)
             {
@@ -57,9 +57,11 @@ namespace Test
             taskSet.Published = true;
             taskSet.Tasks.Add(task1);
             
-            OptionsHandler tsOh = MakeOptionsHandler(taskSet, null);
+            OptionsWrapper tsOh = MakeOptionsHandler(taskSet, null);
 
-            OptionsHandler actual = tsOh.ChooseOption("1").ChooseOption("0") as OptionsHandler;
+            OptionsWrapper temp = tsOh.ChooseOption("1") as OptionsWrapper;
+            
+            OptionsWrapper actual = temp.ChooseOption("0") as OptionsWrapper;
             
             Assert.AreEqual(tsOh, actual);
         }
@@ -67,12 +69,10 @@ namespace Test
         [Test]
         public void ShouldSetFinished()
         {
-            // OBS! Linje 132 må kommenteres ut i OptionsHandler for at denne skal kjøre riktig!
-            
             Task task1 = new();
             task1.Published = true;
 
-            OptionsHandler tOh = MakeOptionsHandler(task1, null);
+            OptionsWrapper tOh = MakeOptionsHandler(task1, null);
 
             tOh.ChooseOption("F");
 
@@ -85,8 +85,8 @@ namespace Test
             Task task1 = new();
             task1.Published = true;
 
-            OptionsHandler tOh = new(task1, null, true);
-            OptionsHandler actual = tOh.ChooseOption("0") as OptionsHandler;
+            OptionsWrapper tOh = new(task1, null, true);
+            OptionsWrapper actual = tOh.ChooseOption("0") as OptionsWrapper;
             Assert.AreEqual(tOh, actual);
         }
     }

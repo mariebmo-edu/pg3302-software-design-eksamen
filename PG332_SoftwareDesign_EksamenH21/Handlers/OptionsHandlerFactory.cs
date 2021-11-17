@@ -4,16 +4,16 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 {
     public class OptionsHandlerFactory
     {
-        public static OptionsHandler MakeOptionsHandler(IProgressable progressable)
+        public static OptionsWrapper MakeOptionsHandler(IProgressable progressable)
         {
             return MakeOptionsHandler(progressable, null);
         }
-        public static OptionsHandler MakeOptionsHandler(IProgressable progressable, OptionsHandler superOption)
+        public static OptionsWrapper MakeOptionsHandler(IProgressable progressable, OptionsWrapper superOption)
         {
             if (progressable is User)
             {
                 User u = progressable as User;
-                OptionsHandler oh = new(u, null, false);
+                OptionsWrapper oh = new(u, null, false);
                 foreach (var s in u.Semesters)
                 {
                     oh.Options.Add(s);
@@ -24,7 +24,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             if (progressable is Semester)
             {
                 Semester s = progressable as Semester;
-                OptionsHandler oh = new(s, superOption, false);
+                OptionsWrapper oh = new(s, superOption, false);
                 foreach (var c in s.Courses)
                 {
                     oh.Options.Add(c);
@@ -35,7 +35,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             if (progressable is Course)
             {
                 Course c = progressable as Course;
-                OptionsHandler oh = new(c, superOption, false);
+                OptionsWrapper oh = new(c, superOption, false);
                 foreach (var l in c.Lectures)
                 {
                     oh.Options.Add(l);
@@ -46,7 +46,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             if (progressable is Lecture)
             {
                 Lecture l = progressable as Lecture;
-                OptionsHandler oh = new(l, superOption, true);
+                OptionsWrapper oh = new(l, superOption, true);
                 foreach (var t in l.TaskSet.Tasks)
                 {
                     oh.Options.Add(t);
@@ -57,7 +57,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             if (progressable is TaskSet)
             {
                 TaskSet ts = progressable as TaskSet;
-                OptionsHandler oh = new(ts, superOption, false);
+                OptionsWrapper oh = new(ts, superOption, false);
                 foreach (var t in ts.Tasks)
                 {
                     oh.Options.Add(t);
@@ -67,8 +67,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             }
             
             Task task = progressable as Task;
-            OptionsHandler optionsHandler = new(task, superOption, true);
-            return optionsHandler;
+            OptionsWrapper optionsWrapper = new(task, superOption, true);
+            return optionsWrapper;
         }
     }
 }

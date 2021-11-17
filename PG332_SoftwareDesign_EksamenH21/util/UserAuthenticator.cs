@@ -8,23 +8,21 @@ namespace PG332_SoftwareDesign_EksamenH21
     public class UserAuthenticator
     {
         private readonly UserController _userController;
-        private MenuPrinter<IProgressable> MenuPrinter = new();
+        private MenuPrinter MenuPrinter = new();
         public User User { get; set; }
         
-        public User Authenticate()
-        {
-            string email = MenuPrinter.AskForEmail();
-            string password = MenuPrinter.AskForPassword();
-            while ((User = UserValid(email, password)) == null)
-            {
-                MenuPrinter.ErrorWithAuthentication();
-                email = MenuPrinter.AskForEmail();
-                password = MenuPrinter.AskForPassword();
-            }
-            return User;
-        }
+        // public User Authenticate(string email, string password)
+        // {
+        //     while ((User = UserValid(email, password)) == null)
+        //     {
+        //         MenuPrinter.ErrorWithAuthentication();
+        //         email = MenuPrinter.AskForEmail();
+        //         password = MenuPrinter.AskForPassword();
+        //     }
+        //     return User;
+        // }
 
-        private User UserValid(string email, string password)
+        public User Authenticate(string email, string password)
         {
             UserDao dao = new UserDao();
             User retrieveByEmail = dao.RetrieveByEmail(email);
