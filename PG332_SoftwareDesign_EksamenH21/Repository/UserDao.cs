@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using PG332_SoftwareDesign_EksamenH21.Model;
 
@@ -14,7 +15,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
         public User RetrieveByEmail(string email)
         {
             using TrackerContext trackerContext = new();
-            return trackerContext.Users
+            User user = trackerContext.Users
                 .Include(user => user.Address)
                 .Include(user => user.Semesters)
                 .ThenInclude(semester => semester.Courses)
@@ -22,6 +23,14 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
                 .ThenInclude(lecture => lecture.TaskSet)
                 .ThenInclude(taskSet => taskSet.Tasks)
                 .FirstOrDefault(u => u.Email.Equals(email));
+
+            if (user != null)
+            {
+                user.Semesters.Sort((a, b) => a.SemesterEnum.CompareTo(b.SemesterEnum));
+                return user;
+            }
+
+            return null;
         }
 
         public User RetrieveByLastName(string lastName)
