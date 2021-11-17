@@ -15,8 +15,12 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
         {
             using TrackerContext trackerContext = new();
             return trackerContext.Users
-                .Include(user => user.Semesters)
                 .Include(user => user.Address)
+                .Include(user => user.Semesters)
+                .ThenInclude(semester => semester.Courses)
+                .ThenInclude(course => course.Lectures)
+                .ThenInclude(lecture => lecture.TaskSet)
+                .ThenInclude(taskSet => taskSet.Tasks)
                 .FirstOrDefault(u => u.Email.Equals(email));
         }
 
