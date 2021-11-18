@@ -100,6 +100,14 @@ namespace PG332_SoftwareDesign_EksamenH21.util
                 {
                     menuOptionsString.Append(" (ikke publisert)");
                 }
+                else
+                {
+                    pw = ProgressionHandlerFactory
+                        .MakeProgressionHandler(oh.Options[i])
+                        .GetProgression();
+                    
+                    menuOptionsString.Append($" ({Math.Round(pw.FinishedPercent*100, MidpointRounding.ToEven)}% ferdig)");
+                }
 
                 menuOptionsString.Append("\n");
             }
