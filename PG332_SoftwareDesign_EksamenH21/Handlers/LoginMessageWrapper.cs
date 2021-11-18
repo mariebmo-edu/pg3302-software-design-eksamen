@@ -6,7 +6,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
     {
         public IPrintable SuperOption { get; set; }
         public string Message { get; }
-        private User _user;
+        private readonly User _user;
         public IPrintable ChooseOption(string input)
         {
             return OptionsHandlerFactory.MakeOptionsHandler(_user);

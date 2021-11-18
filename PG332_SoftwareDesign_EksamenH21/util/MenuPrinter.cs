@@ -10,38 +10,36 @@ namespace PG332_SoftwareDesign_EksamenH21
     {
         public void ShowMenu(IPrintable printable)
         {
-            if (printable is OptionsWrapper)
+            switch (printable)
             {
-                ShowProgressableMenu(printable);
-            } 
-            else if (printable is ErrorMessageWrapper)
-            {
-                ErrorMessageWrapper errorMessage = printable as ErrorMessageWrapper;
-                Console.WriteLine(errorMessage.ErrorMessage);
-                Console.WriteLine("Trykk enter for å fortsette");
-            }
-            else if (printable is EmailQuestionWrapper)
-            {
-                Console.WriteLine("Skriv inn epost:");
-            }
-            else if (printable is PasswordQuestionWrapper)
-            {
-                Console.WriteLine("Skriv inn passord:");
-            }
-            else if (printable is LoginMessageWrapper)
-            {
-                LoginMessageWrapper loginMessage = printable as LoginMessageWrapper;
-                Console.WriteLine(loginMessage.Message);
-                Console.WriteLine("Trykk enter for å fortsette");
-            }
-            else if (printable is QuitQuestionWrapper)
-            {
-                Console.WriteLine("Ønsker du å avslutte? [J/N]");
-            }
-            else if (printable is QuitMessageWrapper)
-            {
-                Console.WriteLine("På gjensyn!");
-                Console.WriteLine("Trykk enter for å avslutte");
+                case OptionsWrapper:
+                    ShowProgressableMenu(printable);
+                    break;
+                case ErrorMessageWrapper errorMessage:
+                {
+                    Console.WriteLine(errorMessage.ErrorMessage);
+                    Console.WriteLine("Trykk enter for å fortsette");
+                    break;
+                }
+                case EmailQuestionWrapper:
+                    Console.WriteLine("Skriv inn epost:");
+                    break;
+                case PasswordQuestionWrapper:
+                    Console.WriteLine("Skriv inn passord:");
+                    break;
+                case LoginMessageWrapper loginMessage:
+                {
+                    Console.WriteLine(loginMessage.Message);
+                    Console.WriteLine("Trykk enter for å fortsette");
+                    break;
+                }
+                case QuitQuestionWrapper:
+                    Console.WriteLine("Ønsker du å avslutte? [J/N]");
+                    break;
+                case QuitMessageWrapper:
+                    Console.WriteLine("På gjensyn!");
+                    Console.WriteLine("Trykk enter for å avslutte");
+                    break;
             }
         }
 
@@ -60,50 +58,39 @@ namespace PG332_SoftwareDesign_EksamenH21
 
             IProgressionHandler<IProgressable> ph = ProgressionHandlerFactory.MakeProgressionHandler(oh.Progressable);
             ProgressionWrapper pw = ph.GetProgression();
-            ConsoleColor defaultColor = Console.ForegroundColor;
-            //Console.ForegroundColor = ConsoleColor.Green;
-            //Console.WriteLine(ProgressionBarHandler.GenerateProgressBar(pw));
-            //Console.ForegroundColor = defaultColor;
             WriteColourInProgressString(ProgressionBarHandler.GenerateProgressBar(pw));
             StringBuilder menuOptionsString = new();
 
             if (oh.IsFinishable)
             {
-                IFinishable f = oh.Progressable as IFinishable;
+                var f = oh.Progressable as IFinishable;
                 
-                string finishType = "THIS";
-                string finishedString = "FINISHED";
+                var finishType = "THIS";
+                var finishedString = "FINISHED";
 
-                if (f is Course)
+                switch (f)
                 {
-                    finishType = "eksamen";
-                    finishedString = "bestått";
-                }
-                else if (f is Lecture)
-                {
-                    finishType = "forelesning";
-                    finishedString = "sett";
-                }
-                else if (f is Task)
-                {
-                    finishType = "oppgave";
-                    finishedString = "gjort";
+                    case Course:
+                        finishType = "eksamen";
+                        finishedString = "bestått";
+                        break;
+                    case Lecture:
+                        finishType = "forelesning";
+                        finishedString = "sett";
+                        break;
+                    case Task:
+                        finishType = "oppgave";
+                        finishedString = "gjort";
+                        break;
                 }
                 
                 menuOptionsString.Append($"\n[F] - Sett {finishType} som ");
-                if (!f.Finished)
-                {
-                    menuOptionsString.Append($"{finishedString}\n");
-                }
-                else
-                {
-                    menuOptionsString.Append($"ikke {finishedString}\n");
-                }
+                menuOptionsString.Append(!f.Finished ? $"{finishedString}\n" : $"ikke {finishedString}\n");
             }
 
-            menuOptionsString.Append("\n");
+            menuOptionsString.Append('\n');
             
-            for (int i = 0; i < oh.Options.Count; i++)
+            for (var i = 0; i < oh.Options.Count; i++)
             {
                 menuOptionsString.Append("[" + (i + 1) + "] - ");
                 menuOptionsString.Append(oh.Options[i].Title + "\n");
@@ -111,7 +98,7 @@ namespace PG332_SoftwareDesign_EksamenH21
 
             if (oh.SuperOption != null)
             {
-                OptionsWrapper super = oh.SuperOption as OptionsWrapper;
+                var super = oh.SuperOption as OptionsWrapper;
                 menuOptionsString.Append("\n[0] - Tilbake til " + super.Progressable.Title);
             }
 
@@ -119,36 +106,36 @@ namespace PG332_SoftwareDesign_EksamenH21
             Console.WriteLine("\n[E] - Avslutt");
         }
 
-        private string ReturnLine()
+        private static string ReturnLine()
         {
             return "------------------------------------------";
         }
 
-        private string CenteredHeader(OptionsWrapper oh)
+        private static string CenteredHeader(OptionsWrapper oh)
         {
 
             StringBuilder sb = new();
 
-            for (int i = 0; i < (ReturnLine().Length - oh.Progressable.Title.Length) / 2; i++)
+            for (var i = 0; i < (ReturnLine().Length - oh.Progressable.Title.Length) / 2; i++)
             {
                 sb.Append(' ');
             }
 
-            return sb.ToString() + oh.Progressable.Title;
+            return sb + oh.Progressable.Title;
         }
 
         private void WriteColourInProgressString(string message)
         {
-            string[] sections = Regex.Split(message, "(#*)(=*)(-*)");
+            var sections = Regex.Split(message, "(#*)(=*)(-*)");
 
-            for (int i = 0; i < sections.Length; i++)
+            foreach (var section in sections)
             {
-                if (sections[i].Contains("#"))
+                if (section.Contains("#"))
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                     
                 }
-                else if (sections[i].Contains("="))
+                else if (section.Contains("="))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                 }
@@ -156,7 +143,7 @@ namespace PG332_SoftwareDesign_EksamenH21
                 {
                     Console.ForegroundColor = ConsoleColor.Gray;
                 }
-                Console.Write(sections[i]);
+                Console.Write(section);
                 Console.ResetColor();
             }
             Console.WriteLine();

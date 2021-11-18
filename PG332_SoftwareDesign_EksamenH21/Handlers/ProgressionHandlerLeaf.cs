@@ -4,7 +4,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 {
     public class ProgressionHandlerLeaf : IProgressionHandler<IProgressable>
     {
-        public IProgressable Progressable { get; }
+        private IProgressable Progressable { get; }
         public ProgressionWrapper ProgressionWrapper { get; set; }
 
         public ProgressionHandlerLeaf(IProgressable progressable)
@@ -12,37 +12,22 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             Progressable = progressable;
         }
 
-        public double GetPublishedPercent()
+        private double GetPublishedPercent()
         {
-            var forDebug = Progressable;
-            if (Progressable.Published)
-            {
-                return 1.00;
-            }
-
-            return 0.00;
+            return Progressable.Published ? 1.00 : 0.00;
         }
 
-        public double GetFinishedPercent()
+        private double GetFinishedPercent()
         {
-            IFinishable f = Progressable as IFinishable;
+            IFinishable finishable = Progressable as IFinishable;
 
-            if (f.Published && f.Finished)
-            {
-                return 1.00;
-            }
-
-            return 0.00;
+            return finishable is {Published: true, Finished: true} ? 1.00 : 0.00;
         }
 
         public ProgressionWrapper GetProgression()
         {
-            if (ProgressionWrapper == null)
-            {
-                ProgressionWrapper = new(GetPublishedPercent(), GetFinishedPercent());
-                return ProgressionWrapper;
-            }
-
+            if (ProgressionWrapper != null) return ProgressionWrapper;
+            ProgressionWrapper = new ProgressionWrapper(GetPublishedPercent(), GetFinishedPercent());
             return ProgressionWrapper;
         }
     }

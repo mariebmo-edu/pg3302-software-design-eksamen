@@ -68,17 +68,12 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<bool>("Published")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("TaskSetId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
-
-                    b.HasIndex("TaskSetId");
 
                     b.ToTable("Lectures");
                 });
@@ -196,10 +191,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("LectureId")
+                    b.Property<int>("LectureId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LectureId")
+                        .IsUnique();
 
                     b.ToTable("TaskSets");
                 });
@@ -223,13 +221,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PG332_SoftwareDesign_EksamenH21.TaskSet", "TaskSet")
-                        .WithMany()
-                        .HasForeignKey("TaskSetId");
-
                     b.Navigation("Course");
-
-                    b.Navigation("TaskSet");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.Address", b =>
@@ -265,9 +257,25 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Navigation("TaskSet");
                 });
 
+            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.TaskSet", b =>
+                {
+                    b.HasOne("PG332_SoftwareDesign_EksamenH21.Lecture", "Lecture")
+                        .WithOne("TaskSet")
+                        .HasForeignKey("PG332_SoftwareDesign_EksamenH21.TaskSet", "LectureId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lecture");
+                });
+
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Course", b =>
                 {
                     b.Navigation("Lectures");
+                });
+
+            modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Lecture", b =>
+                {
+                    b.Navigation("TaskSet");
                 });
 
             modelBuilder.Entity("PG332_SoftwareDesign_EksamenH21.Model.User", b =>

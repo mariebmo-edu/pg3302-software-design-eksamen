@@ -21,7 +21,7 @@ namespace Test
             UserDao userDao = new UserDao();
             userDao.Save(user);
 
-            User userFromServer = userDao.RetrieveById(user.UserId);
+            User userFromServer = userDao.RetrieveByEmail(user.Email);
             Assert.AreEqual(user, userFromServer);
 
             user.Email = "persson@test.no";

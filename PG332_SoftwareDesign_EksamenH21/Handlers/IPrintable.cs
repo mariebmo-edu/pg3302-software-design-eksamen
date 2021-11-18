@@ -2,7 +2,6 @@
 {
     public interface IPrintable
     {
-        public IPrintable SuperOption { get; set; }
         public IPrintable ChooseOption(string input);
     }
 }

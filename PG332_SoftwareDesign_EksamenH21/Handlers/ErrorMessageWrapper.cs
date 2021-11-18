@@ -2,8 +2,8 @@
 {
     public class ErrorMessageWrapper : IPrintable
     {
-        public IPrintable SuperOption { get; set; }
-        public string ErrorMessage { get; set; }
+        private IPrintable SuperOption { get; }
+        public string ErrorMessage { get; }
         
         public ErrorMessageWrapper(string errorMessage, IPrintable superOption)
         {

@@ -4,20 +4,20 @@ using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
 using static BCrypt.Net.BCrypt;
 
-namespace PG332_SoftwareDesign_EksamenH21
+namespace PG332_SoftwareDesign_EksamenH21.util
 {
-    class ConfigFile
+    static class ConfigFile
     {
-        public static string programFilesDir =
+        public static readonly string programFilesDir =
             $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}{Path.DirectorySeparatorChar}";
 
         public static void AddDummyData()
         {
             //USER
-            UserDao userDao = new UserDao();
+            UserDao userDao = new();
             User user = new();
 
-            clearDataFromDb();
+            ClearDataFromDb();
 
 
             //first semester
@@ -273,12 +273,12 @@ namespace PG332_SoftwareDesign_EksamenH21
                 firstSemester, secondSemester, thirdSemester, fourthSemester, fifthSemester, sixthSemester
             };
 
-            AddCourseData( new Semester[] { firstSemester, secondSemester, thirdSemester } );
+            AddCourseData( new [] { firstSemester, secondSemester, thirdSemester } );
             
             userDao.Save(user);
         }
 
-        private static void clearDataFromDb()
+        private static void ClearDataFromDb()
         {
             using TrackerContext trackerContext = new();
             trackerContext.Courses.RemoveRange(trackerContext.Courses);
@@ -302,7 +302,7 @@ namespace PG332_SoftwareDesign_EksamenH21
                     for(int i = 0; i < lectureAmount; i++) {
                         Lecture lecture = new();
                         lecture.Title = "Forelesning " + (i + 1);
-                        lecture.Finished = randomBool();
+                        lecture.Finished = RandomBool();
                         c.Lectures.Add( lecture );
                         int taskAmount = random.Next( 5 );
                         c.Lectures[i].TaskSet = new();
@@ -310,7 +310,7 @@ namespace PG332_SoftwareDesign_EksamenH21
                         for(int j=0; j<taskAmount; j++) {
                             Task task = new();
                             task.Title = "Mission " + (j + 1);
-                            task.Finished = randomBool();
+                            task.Finished = RandomBool();
                             task.Description = RandomDescription();
                             c.Lectures[i].TaskSet.Tasks.Add( task );
                         }
@@ -319,19 +319,11 @@ namespace PG332_SoftwareDesign_EksamenH21
             }
         }
 
-        private static bool randomBool()
+        private static bool RandomBool()
         {
             Random nextInt = new Random();
 
             return nextInt.Next(2) == 1;
-        }
-
-        private static string RandomTitle() {
-            string[] titles = { "Fantastic Beasts and where to find them", "Hvor mye veier en hvalross", "Hvor mye tjente egentlig Monica i Friends?" };
-
-            Random random = new();
-
-            return titles[random.Next( titles.Length )];
         }
 
         private static string RandomDescription() {

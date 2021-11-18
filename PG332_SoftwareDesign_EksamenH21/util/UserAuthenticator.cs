@@ -1,23 +1,18 @@
-﻿using PG332_SoftwareDesign_EksamenH21.Controllers;
-using PG332_SoftwareDesign_EksamenH21.Model;
+﻿using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Repository;
 using static BCrypt.Net.BCrypt;
 
-namespace PG332_SoftwareDesign_EksamenH21
+namespace PG332_SoftwareDesign_EksamenH21.util
 {
-    public class UserAuthenticator
+    public static class UserAuthenticator
     {
         public static User Authenticate(string email, string password)
         {
-            UserDao dao = new UserDao();
-            User retrieveByEmail = dao.RetrieveByEmail(email);
+            UserDao dao = new ();
+            var retrieveByEmail = dao.RetrieveByEmail(email);
             if (retrieveByEmail is null) return null;
 
-            if (Verify(password, retrieveByEmail.Password))
-            {
-                return retrieveByEmail;
-            }
-            return null;
+            return Verify(password, retrieveByEmail.Password) ? retrieveByEmail : null;
         }
     }
 }

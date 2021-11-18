@@ -2,7 +2,6 @@
 {
     public class QuitMessageWrapper : IPrintable
     {
-        public IPrintable SuperOption { get; set; } = null;
         public IPrintable ChooseOption(string input)
         {
             return null;

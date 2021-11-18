@@ -9,7 +9,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
     {
         public void Update(TModel m)
         {
-            using TrackerContext trackerContext = new TrackerContext();
+            using TrackerContext trackerContext = new();
             trackerContext.Update(m);
             trackerContext.SaveChanges();
         }

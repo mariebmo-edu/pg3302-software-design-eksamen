@@ -2,21 +2,16 @@
 {
     public class QuitQuestionWrapper : IPrintable
     {
-        public IPrintable SuperOption { get; set; }
+        private IPrintable SuperOption { get; }
 
-        public QuitQuestionWrapper(OptionsWrapper superOption)
+        public QuitQuestionWrapper(IPrintable superOption)
         {
             SuperOption = superOption;
         }
         
         public IPrintable ChooseOption(string input)
         {
-            if (input.ToLower() == "j")
-            {
-                return new QuitMessageWrapper();
-            }
-
-            return SuperOption;
+            return input.ToLower() == "j" ? new QuitMessageWrapper() : SuperOption;
         }
     }
 }

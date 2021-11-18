@@ -65,7 +65,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
             if (!Int32.TryParse(input, out convertedInput))
             {
-                Logger.Instance.Write($"TRYPARSE FAILED AT {Progressable.Title}");
+                Logger.Write($"TRYPARSE FAILED AT {Progressable.Title}");
                 return new ErrorMessageWrapper("Velg et gyldig menyalternativ", this);
             }
 
@@ -76,7 +76,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
             if (convertedInput > Options.Count)
             {
-                Logger.Instance.Write($"INDEX OUT OF RANGE AT {Progressable.Title}");
+                Logger.Write($"INDEX OUT OF RANGE AT {Progressable.Title}");
                 return new ErrorMessageWrapper("Velg et gyldig menyalternativ", this);
             }
 
@@ -89,14 +89,12 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         private IPrintable GetOption(int convertedInput)
         {
-            if (convertedInput == 0 && SuperOption != null)
+            switch (convertedInput)
             {
-                return SuperOption;
-            }
-
-            if (convertedInput == 0 && SuperOption == null)
-            {
-                return this;
+                case 0 when SuperOption != null:
+                    return SuperOption;
+                case 0 when SuperOption == null:
+                    return this;
             }
 
             if (Options[convertedInput - 1].Published)
@@ -104,7 +102,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
                 return OptionsHandlerFactory.MakeOptionsHandler(Options[convertedInput - 1], this);
             }
 
-            Logger.Instance.Write($"UNPUBLISHED OPTION {Options[convertedInput-1].Title} CHOSEN");
+            Logger.Write($"UNPUBLISHED OPTION {Options[convertedInput-1].Title} CHOSEN");
             return new ErrorMessageWrapper("Dette menyvalget er ikke publisert", this);
         }
 
@@ -115,11 +113,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         private IPrintable SetFinished()
         {
-            IFinishable f = Progressable as IFinishable;
+            var f = Progressable as IFinishable;
             f.Finished = !f.Finished;
             Progressable = f;
             
-            Logger.Instance.Write($"{f.Title} SET AS {f.Finished}");
+            Logger.Write($"{f.Title} SET AS {f.Finished}");
             return this;
         }
 
@@ -127,7 +125,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         #region Overridden methods
 
-        protected bool Equals(OptionsWrapper other)
+        private bool Equals(OptionsWrapper other)
         {
             return Equals(Progressable, other.Progressable) && Equals(Options, other.Options) &&
                    Equals(SuperOption, other.SuperOption) && IsFinishable == other.IsFinishable;
@@ -147,8 +145,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((OptionsWrapper) obj);
+            return obj.GetType() == GetType() && Equals((OptionsWrapper) obj);
         }
 
         public override int GetHashCode()

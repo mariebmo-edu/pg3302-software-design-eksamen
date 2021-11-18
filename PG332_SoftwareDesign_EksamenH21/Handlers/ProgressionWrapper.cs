@@ -34,7 +34,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             return q;
         }
 
-        protected bool Equals(ProgressionWrapper other)
+        private bool Equals(ProgressionWrapper other)
         {
             return PublishedPercent.Equals(other.PublishedPercent) && FinishedPercent.Equals(other.FinishedPercent);
         }
@@ -43,8 +43,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
-            return Equals((ProgressionWrapper)obj);
+            return obj.GetType() == GetType() && Equals((ProgressionWrapper)obj);
         }
 
         public override int GetHashCode()
