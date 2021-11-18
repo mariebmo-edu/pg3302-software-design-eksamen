@@ -1,6 +1,10 @@
 ﻿using NUnit.Framework;
 using PG332_SoftwareDesign_EksamenH21;
 using PG332_SoftwareDesign_EksamenH21.Handlers;
+using PG332_SoftwareDesign_EksamenH21.Handlers.Progression;
+using PG332_SoftwareDesign_EksamenH21.Model;
+using PG332_SoftwareDesign_EksamenH21.Model;
+using PG332_SoftwareDesign_EksamenH21.Handlers.Progression;
 using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace Test
@@ -14,18 +18,18 @@ namespace Test
             Task task = new();
 
             Assert.AreEqual(
-                new ProgressionWrapper(0.00,0.00),
+                new ProgressionWrapper(1.00,0.00),
                 ProgressionHandlerFactory.MakeProgressionHandler(task).GetProgression());
         }
 
         [Test]
-        public void NodeNotPublishedAndFinished()
+        public void NodeFinished()
         {
             Task task = new();
             task.Finished = true;
 
             Assert.AreEqual(
-                new ProgressionWrapper(0.00, 0.00),
+                new ProgressionWrapper(1.00, 1.00),
                 ProgressionHandlerFactory.MakeProgressionHandler(task).GetProgression());
         }
 
@@ -41,19 +45,7 @@ namespace Test
         }
 
         [Test]
-        public void NodePublishedAndFinished()
-        {
-            Task task = new();
-            task.Published = true;
-            task.Finished = true;
-
-            Assert.AreEqual(
-                new ProgressionWrapper(1.00, 1.00),
-                ProgressionHandlerFactory.MakeProgressionHandler(task).GetProgression());
-        }
-        
-        [Test]
-        public void NotPublishedCompositeWithPublishedLeafChildren()
+        public void CompositeWithLeafChildren()
         {
             Task task1 = new();
             task1.Published = true;
@@ -67,37 +59,10 @@ namespace Test
             taskSet.Tasks.Add(task2);
 
             Assert.AreEqual(
-                new ProgressionWrapper(0.00, 0.00),
+                new ProgressionWrapper(1.00, 0.50),
                 ProgressionHandlerFactory.MakeProgressionHandler(taskSet).GetProgression());
         }
 
-        [Test]
-        public void PublishedCompositeWithAnyLeafChildren()
-        {
-            Task task1 = new();
-
-            Task task2 = new();
-            task2.Published = true;
-            task2.Finished = true;
-
-            Task task3 = new();
-            task3.Published = true;
-
-            Task task4 = new();
-            task4.Finished = true;
-
-            TaskSet taskSet = new();
-            taskSet.Published = true;
-            taskSet.Tasks.Add(task1);
-            taskSet.Tasks.Add(task2);
-            taskSet.Tasks.Add(task3);
-            taskSet.Tasks.Add(task4);
-
-            Assert.AreEqual(
-                new ProgressionWrapper(0.50, 0.25),
-                ProgressionHandlerFactory.MakeProgressionHandler(taskSet).GetProgression());
-        }
-        
         [Test]
         public void CompositeWithLeafAndCompositeChildren()
         {
@@ -151,7 +116,7 @@ namespace Test
             course.Lectures.Add(lecture3);
 
             Assert.AreEqual(
-                new ProgressionWrapper(0.66, 0.25),
+                new ProgressionWrapper(1.00, 0.18),
                 ProgressionHandlerFactory.MakeProgressionHandler(course).GetProgression()
             );
         }

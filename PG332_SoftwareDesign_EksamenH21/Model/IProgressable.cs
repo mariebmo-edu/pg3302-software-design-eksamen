@@ -2,7 +2,6 @@
 {
     public interface IProgressable
     {
-        public bool Published { get; set; }
         public string Title { get; }
     }
 }

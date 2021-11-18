@@ -3,23 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PG332_SoftwareDesign_EksamenH21.Migrations
 {
-    public partial class latest_stable : Migration
+    public partial class V10 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "TaskSets",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    LectureId = table.Column<long>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TaskSets", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -35,28 +22,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Tasks",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Title = table.Column<string>(type: "TEXT", nullable: true),
-                    TaskSetId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    Finished = table.Column<bool>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Tasks", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Tasks_TaskSets_TaskSetId",
-                        column: x => x.TaskSetId,
-                        principalTable: "TaskSets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -91,7 +56,8 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<int>(type: "INTEGER", nullable: false),
                     SemesterEnum = table.Column<int>(type: "INTEGER", nullable: false),
-                    Finished = table.Column<bool>(type: "INTEGER", nullable: false)
+                    Finished = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Published = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -137,7 +103,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     CourseId = table.Column<int>(type: "INTEGER", nullable: false),
                     Title = table.Column<string>(type: "TEXT", nullable: true),
-                    TaskSetId = table.Column<int>(type: "INTEGER", nullable: true),
                     LectureDateTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Published = table.Column<bool>(type: "INTEGER", nullable: false),
                     Finished = table.Column<bool>(type: "INTEGER", nullable: false)
@@ -151,12 +116,47 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TaskSets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    LectureId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TaskSets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Lectures_TaskSets_TaskSetId",
+                        name: "FK_TaskSets_Lectures_LectureId",
+                        column: x => x.LectureId,
+                        principalTable: "Lectures",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tasks",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(type: "TEXT", nullable: true),
+                    TaskSetId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    Finished = table.Column<bool>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tasks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tasks_TaskSets_TaskSetId",
                         column: x => x.TaskSetId,
                         principalTable: "TaskSets",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -176,11 +176,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lectures_TaskSetId",
-                table: "Lectures",
-                column: "TaskSetId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Semesters_UserId",
                 table: "Semesters",
                 column: "UserId");
@@ -189,6 +184,12 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                 name: "IX_Tasks_TaskSetId",
                 table: "Tasks",
                 column: "TaskSetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TaskSets_LectureId",
+                table: "TaskSets",
+                column: "LectureId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -197,16 +198,16 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                 name: "Addresses");
 
             migrationBuilder.DropTable(
-                name: "Lectures");
-
-            migrationBuilder.DropTable(
                 name: "Tasks");
 
             migrationBuilder.DropTable(
-                name: "Courses");
+                name: "TaskSets");
 
             migrationBuilder.DropTable(
-                name: "TaskSets");
+                name: "Lectures");
+
+            migrationBuilder.DropTable(
+                name: "Courses");
 
             migrationBuilder.DropTable(
                 name: "Semesters");

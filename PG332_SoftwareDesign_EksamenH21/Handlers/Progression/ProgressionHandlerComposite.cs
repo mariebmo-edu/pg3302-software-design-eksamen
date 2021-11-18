@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using PG332_SoftwareDesign_EksamenH21.Model;
 
-namespace PG332_SoftwareDesign_EksamenH21.Handlers
+namespace PG332_SoftwareDesign_EksamenH21.Handlers.Progression
 {
     public class ProgressionHandlerComposite : IProgressionHandler<IProgressable>
     {
         private IProgressable Progressable { get; }
 
-        public readonly List<IProgressionHandler<IProgressable>> Children = new();
+        public List<IProgressionHandler<IProgressable>> Children = new();
         public ProgressionWrapper ProgressionWrapper { get; set; }
 
         public ProgressionHandlerComposite(IProgressable progressable)
@@ -17,11 +17,15 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         public ProgressionWrapper GetProgression()
         {
-            if (!Progressable.Published)
+            if (Progressable is IPublishable)
             {
-                return new ProgressionWrapper(0.00, 0.00);
+                IPublishable publishable = Progressable as IPublishable;
+                if (!publishable.Published)
+                {
+                    return new ProgressionWrapper(0.00, 0.00);
+                }
             }
-
+            
             if (ProgressionWrapper != null) return ProgressionWrapper / Children.Count;
             ProgressionWrapper = new ProgressionWrapper(0.00, 0.00);
 

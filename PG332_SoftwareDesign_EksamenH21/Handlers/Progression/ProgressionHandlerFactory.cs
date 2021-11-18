@@ -1,6 +1,6 @@
 ﻿using PG332_SoftwareDesign_EksamenH21.Model;
 
-namespace PG332_SoftwareDesign_EksamenH21.Handlers
+namespace PG332_SoftwareDesign_EksamenH21.Handlers.Progression
 {
     public class ProgressionHandlerFactory
     {

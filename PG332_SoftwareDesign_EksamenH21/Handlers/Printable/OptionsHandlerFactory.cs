@@ -1,6 +1,6 @@
 ﻿using PG332_SoftwareDesign_EksamenH21.Model;
 
-namespace PG332_SoftwareDesign_EksamenH21.Handlers
+namespace PG332_SoftwareDesign_EksamenH21.Handlers.Printable
 {
     public static class OptionsHandlerFactory
     {

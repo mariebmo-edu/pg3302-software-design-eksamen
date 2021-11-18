@@ -26,6 +26,19 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\TrackerContextModelSnapshot.cs" />
+    <Compile Remove="Handlers\LoginMessageWrapper.cs" />
+    <Compile Remove="Handlers\OptionsHandlerFactory.cs" />
+    <Compile Remove="Handlers\OptionsWrapper.cs" />
+    <Compile Remove="Handlers\PasswordQuestionWrapper.cs" />
+    <Compile Remove="Handlers\QuitMessageWrapper.cs" />
+    <Compile Remove="Handlers\QuitQuestionWrapper.cs" />
+    <Compile Remove="Handlers\IProgressionHandler.cs" />
+    <Compile Remove="Handlers\ProgressionBarHandler.cs" />
+    <Compile Remove="Handlers\ProgressionHandlerComposite.cs" />
+    <Compile Remove="Handlers\ProgressionHandlerFactory.cs" />
+    <Compile Remove="Handlers\ProgressionHandlerLeaf.cs" />
+    <Compile Remove="Handlers\ProgressionWrapper.cs" />
+    <Compile Remove="Handlers\ErrorMessageWrapper.cs" />
   </ItemGroup>
 
 </Project>
