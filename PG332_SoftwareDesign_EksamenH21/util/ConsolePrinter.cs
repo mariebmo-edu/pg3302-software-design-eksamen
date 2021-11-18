@@ -98,7 +98,7 @@ namespace PG332_SoftwareDesign_EksamenH21.util
                 menuOptionsString.Append(oh.Options[i].Title);
                 if (!oh.Options[i].Published)
                 {
-                    menuOptionsString.Append(" (ikke publisert)");
+                    menuOptionsString.Append(" &(ikke publisert)&");
                 }
                 else
                 {
@@ -106,7 +106,7 @@ namespace PG332_SoftwareDesign_EksamenH21.util
                         .MakeProgressionHandler(oh.Options[i])
                         .GetProgression();
                     
-                    menuOptionsString.Append($" ({Math.Round(pw.FinishedPercent*100, MidpointRounding.ToEven)}% ferdig)");
+                    menuOptionsString.Append($" &({Math.Round(pw.FinishedPercent*100, MidpointRounding.ToEven)}% ferdig)&");
                 }
 
                 menuOptionsString.Append("\n");
@@ -118,7 +118,7 @@ namespace PG332_SoftwareDesign_EksamenH21.util
                 menuOptionsString.Append("\n[0] - Tilbake til " + super.Publishable.Title);
             }
 
-            Console.WriteLine(menuOptionsString.ToString());
+            WriteColorInString(menuOptionsString.ToString(), ConsoleColor.DarkGray, @"(\&.*\&)", '&');
             Console.WriteLine("\n[E] - Avslutt");
         }
 
@@ -140,6 +140,26 @@ namespace PG332_SoftwareDesign_EksamenH21.util
             return sb + oh.Publishable.Title;
         }
 
+        private void WriteColorInString(string message, ConsoleColor color, string regex, char splitchar)
+        {
+            var sections = Regex.Split(message, regex);
+
+            foreach (string section in sections)
+            {
+                if (section.StartsWith(splitchar) && section.EndsWith(splitchar))
+                {
+                    Console.ForegroundColor = color;
+                    Console.Write(section.Substring(1, section.Length-2));
+                    Console.ResetColor();
+
+                }
+                else
+                {
+                    Console.Write(section);
+                }
+            }
+        }
+
         private void WriteColourInProgressString(string message)
         {
             var sections = Regex.Split(message, "(#*)(=*)(-*)");
@@ -154,6 +174,10 @@ namespace PG332_SoftwareDesign_EksamenH21.util
                 else if (section.Contains("="))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
+                }
+                else if (section.Contains("-"))
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
                 }
                 else
                 {
