@@ -22,9 +22,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers.Printable
 
         // IsFinishable property brukes for å generere menyvalg for å sette en Lecture/Task som Finished
 
-        // OBS! Vi må generere meny på User-nivå FØR vi viser semestermenyen brukeren skal starte på!
-        // Ellers vil det ikke genereres SuperOption automatisk på Semester!
-
         #endregion
 
         #region Properties
