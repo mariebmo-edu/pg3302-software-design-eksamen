@@ -118,7 +118,7 @@ namespace PG332_SoftwareDesign_EksamenH21.util
                 menuOptionsString.Append("\n[0] - Tilbake til " + super.Publishable.Title);
             }
 
-            WriteColorInString(menuOptionsString.ToString(), ConsoleColor.DarkGray, @"(\&.*\&)", '&');
+            WriteColorInString(menuOptionsString.ToString(), ConsoleColor.DarkGray, '&');
             Console.WriteLine("\n[E] - Avslutt");
         }
 
@@ -140,8 +140,10 @@ namespace PG332_SoftwareDesign_EksamenH21.util
             return sb + oh.Publishable.Title;
         }
 
-        private void WriteColorInString(string message, ConsoleColor color, string regex, char splitchar)
+        //tar inn en string, en farge, 
+        private void WriteColorInString(string message, ConsoleColor color, char splitchar)
         {
+            String regex = @"(\" + splitchar + ".*\\" + splitchar + ")";
             var sections = Regex.Split(message, regex);
 
             foreach (string section in sections)
@@ -151,7 +153,6 @@ namespace PG332_SoftwareDesign_EksamenH21.util
                     Console.ForegroundColor = color;
                     Console.Write(section.Substring(1, section.Length-2));
                     Console.ResetColor();
-
                 }
                 else
                 {
