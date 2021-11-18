@@ -137,7 +137,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers.Printable
         {
             return !Equals(left, right);
         }
-
+        
         public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;

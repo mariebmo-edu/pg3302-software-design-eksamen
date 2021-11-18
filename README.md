@@ -12,9 +12,11 @@
 ## Oppgave
 
 ### Brukerveiledning
+* Logg inn med brukeren `kim@bruun.no`
+* Benytt passordet `daarligpassord`
 
 #### For å migrere EFCore må disse kommandoene kjøres fra terminalen
-`dotnet tool install --global dotnet-ef`
+`dotnet tool install --global dotnet-ef`\
 `dotnet ef database update`
 - Hvordan kjøre programmet
 #### NB: en fil "tracker.db" blir lagret i `C:/Users/<BRUKER>/AppData/Local/tracker.db`

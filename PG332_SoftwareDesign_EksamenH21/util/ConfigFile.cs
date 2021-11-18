@@ -9,8 +9,8 @@ namespace PG332_SoftwareDesign_EksamenH21.util
     static class ConfigFile
     {
         public static readonly string programFilesDir =
-            $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}{Path.DirectorySeparatorChar}";
-
+            //$"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}{Path.DirectorySeparatorChar}";
+            "";
         public static void AddDummyData()
         {
             //USER
