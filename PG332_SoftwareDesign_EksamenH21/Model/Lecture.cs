@@ -11,9 +11,9 @@ namespace PG332_SoftwareDesign_EksamenH21
         public Course Course { get; set; }
         public string Title { get; set; }
         public TaskSet TaskSet { get; set; }
-        public DateTime LectureDateTime { get; set; }
-        [NotMapped] public bool Published { get; set; } = true;
+        public DateTime LectureDateTime { get; set; } 
+        public bool Published { get; set; } = true;
 
-        [NotMapped] public bool Finished { get; set; }
+        public bool Finished { get; set; }
     }
 }
