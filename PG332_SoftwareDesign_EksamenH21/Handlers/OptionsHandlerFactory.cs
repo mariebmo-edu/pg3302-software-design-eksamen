@@ -35,7 +35,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
             if (progressable is Course)
             {
                 Course c = progressable as Course;
-                OptionsWrapper oh = new(c, superOption, false);
+                OptionsWrapper oh = new(c, superOption, true);
                 foreach (var l in c.Lectures)
                 {
                     oh.Options.Add(l);
