@@ -1,4 +1,5 @@
 ﻿@startuml
+skinparam SequenceGroupBodyBackgroundColor #FFFFFF00
 title Diagram etter planlegging
 
 actor User
@@ -7,24 +8,25 @@ box presentation layer #lightblue
     participant IPrinter
 end box
 box business logic layer #lightgreen
-participant ProgramController
-participant UserAuthenticator
+    participant ProgramController
+    participant UserAuthenticator
 end box
 
 box persistence layer #pink 
-participant IUserDao
+    participant IUserDao
 end box
+
 database Database
 
 group Login
 
 	User->ProgramController
-	IPrinter<-ProgramController:Send email question wrapper 
-	User<-IPrinter:Ask for email
+	IPrinter<--ProgramController:Send email question wrapper 
+	User<--IPrinter:Ask for email
     User->IReader:Type email
     IReader->ProgramController:Email string
-	ProgramController->IPrinter:Password question wrapper
-	IPrinter->User:Ask for password
+	ProgramController-->IPrinter:Password question wrapper
+	IPrinter-->User:Ask for password
 	User->IReader:Type password
 	IReader->ProgramController:Password string
 	ProgramController->UserAuthenticator: Verify user
@@ -33,26 +35,26 @@ group Login
 	
 	
 	alt User exists and password correct
-	    Database->IUserDao:Deliver user data
-	    IUserDao->UserAuthenticator: Deliver user model
-	    UserAuthenticator->ProgramController:Deliver user model
-	    ProgramController->IPrinter: Welcome message wrapper
-	    IPrinter->User: Show welcome message
+	    Database-->IUserDao:Deliver user data
+	    IUserDao-->UserAuthenticator: Deliver user model
+	    UserAuthenticator-->ProgramController:Deliver user model
+	    ProgramController-->IPrinter: Welcome message wrapper
+	    IPrinter-->User: Show welcome message
 	    User->IReader: Push enter
 	    IReader->ProgramController: Register key press
-	    ProgramController->IPrinter:Options wrapper(User level)
-	    IPrinter->User: Show options menu
+	    ProgramController-->IPrinter:Options wrapper(User level)
+	    IPrinter-->User: Show options menu
     else 
         alt user doesn't exists
-	        Database->IUserDao: null response
-	        IUserDao->UserAuthenticator: null respons
+	        Database-->IUserDao: null response
+	        IUserDao-->UserAuthenticator: null respons
         else User exists but password is wrong
-            Database->IUserDao: Deliver user data
-            IUserDao->UserAuthenticator: Verify user data
+            Database-->IUserDao: Deliver user data
+            IUserDao-->UserAuthenticator: Verify user data
         end
-        UserAuthenticator->ProgramController: Deliver null response
-        ProgramController->IPrinter: Error message wrapper
-        IPrinter->User: Show error message
+        UserAuthenticator-->ProgramController: Deliver null response
+        ProgramController-->IPrinter: Error message wrapper
+        IPrinter-->User: Show error message
         User->User:Go to start
 	end
 end
@@ -60,23 +62,23 @@ end
 group Get task
     User->IReader: Select menu option(semester)
     IReader->ProgramController: Register selected option
-    ProgramController->IPrinter: Option wrapper [Semester level] 
-    IPrinter->User: Show sub menu
+    ProgramController-->IPrinter: Option wrapper [Semester level] 
+    IPrinter-->User: Show sub menu
     
     User->IReader: Select menu option(course)
     IReader->ProgramController: Register selected option
-    ProgramController->IPrinter: Option wrapper [Course level] 
-    IPrinter->User: Show sub menu
+    ProgramController-->IPrinter: Option wrapper [Course level] 
+    IPrinter-->User: Show sub menu
     
     User->IReader: Select menu option(lecture)
     IReader->ProgramController: Register selected option
-    ProgramController->IPrinter: Option wrapper  [Lecture level]
-    IPrinter->User: Show sub menu
+    ProgramController-->IPrinter: Option wrapper  [Lecture level]
+    IPrinter-->User: Show sub menu
     User->IReader: Types "F"
     IReader->ProgramController: Register input 
     ProgramController->ProgramController:set lecture as finished/not finished
-    ProgramController->IPrinter: Option wrapper  [Lecture level]
-    IPrinter->User: Show menu
+    ProgramController-->IPrinter: Option wrapper  [Lecture level]
+    IPrinter-->User: Show menu
     ProgramController->IUserDao:Update user
     IUserDao->Database:Save changes
         
