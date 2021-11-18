@@ -2,9 +2,9 @@
 
 namespace PG332_SoftwareDesign_EksamenH21.Handlers.Printable
 {
-    public static class OptionsHandlerFactory
+    public static class OptionsWrapperFactory
     {
-        public static OptionsWrapper MakeOptionsHandler(IProgressable progressable, OptionsWrapper superOption = null)
+        public static OptionsWrapper MakeOptionsWrapper(IProgressable progressable, OptionsWrapper superOption = null)
         {
             switch (progressable)
             {

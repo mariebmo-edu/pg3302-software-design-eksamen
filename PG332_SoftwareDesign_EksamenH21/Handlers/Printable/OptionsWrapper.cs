@@ -99,7 +99,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers.Printable
 
             if (Options[convertedInput - 1].Published)
             {
-                return OptionsHandlerFactory.MakeOptionsHandler(Options[convertedInput - 1], this);
+                return OptionsWrapperFactory.MakeOptionsWrapper(Options[convertedInput - 1], this);
             }
 
             Logger.Write($"UNPUBLISHED OPTION {Options[convertedInput-1].Title} CHOSEN");

@@ -8,7 +8,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers.Printable
         private readonly User _user;
         public IPrintable ChooseOption(string input)
         {
-            return OptionsHandlerFactory.MakeOptionsHandler(_user);
+            return OptionsWrapperFactory.MakeOptionsWrapper(_user);
         }
 
         public LoginMessageWrapper(string message, User user)
