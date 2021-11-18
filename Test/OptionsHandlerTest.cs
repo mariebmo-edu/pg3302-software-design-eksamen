@@ -4,7 +4,7 @@ using PG332_SoftwareDesign_EksamenH21.Handlers;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.Handlers.Printable;
 using PG332_SoftwareDesign_EksamenH21.Model;
-using static PG332_SoftwareDesign_EksamenH21.Handlers.Printable.OptionsHandlerFactory;
+using static PG332_SoftwareDesign_EksamenH21.Handlers.Printable.OptionsWrapperFactory;
 
 namespace Test
 {
@@ -34,7 +34,7 @@ namespace Test
             taskSet.Published = true;
             taskSet.Tasks.Add(task1);
 
-            OptionsWrapper tsOh = MakeOptionsHandler(taskSet, null);
+            OptionsWrapper tsOh = MakeOptionsWrapper(taskSet, null);
 
             OptionsWrapper expected = new(task1, tsOh, true);
 
@@ -60,7 +60,7 @@ namespace Test
             taskSet.Published = true;
             taskSet.Tasks.Add(task1);
             
-            OptionsWrapper expected = MakeOptionsHandler(taskSet);
+            OptionsWrapper expected = MakeOptionsWrapper(taskSet);
 
             OptionsWrapper temp = expected.ChooseOption("1") as OptionsWrapper;
             
@@ -77,7 +77,7 @@ namespace Test
             Task task1 = new();
             task1.Published = true;
 
-            OptionsWrapper tOh = MakeOptionsHandler(task1, null);
+            OptionsWrapper tOh = MakeOptionsWrapper(task1, null);
 
             tOh.ChooseOption("F");
 
