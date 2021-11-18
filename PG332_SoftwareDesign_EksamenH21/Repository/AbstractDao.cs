@@ -21,7 +21,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
             trackerContext.SaveChanges();
         }
 
-        public TModel RetrieveById(long id)
+        public TModel RetrieveById(int id)
         {
             using TrackerContext trackerContext = new();
             return RetrieveDbSet(trackerContext).Find(id);
