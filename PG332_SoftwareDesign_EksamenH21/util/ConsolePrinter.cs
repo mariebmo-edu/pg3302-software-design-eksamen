@@ -121,15 +121,17 @@ namespace PG332_SoftwareDesign_EksamenH21.util
                 menuOptionsString.Append("\n[0] - Tilbake til " + super.Publishable.Title);
             }
 
-            WriteColorInString(menuOptionsString.ToString(), ConsoleColor.DarkGray, @"(\&.*\&)", '&');
+            WriteColorInString(menuOptionsString.ToString(), ConsoleColor.DarkGray, '&');
             Console.WriteLine("\n[E] - Avslutt");
         }
 
+        //returnerer en linje
         private static string ReturnLine()
         {
             return "------------------------------------------";
         }
 
+        //sentrerer en tittel basert på lengden til returnLine
         private static string CenteredHeader(OptionsWrapper oh)
         {
 
@@ -143,8 +145,10 @@ namespace PG332_SoftwareDesign_EksamenH21.util
             return sb + oh.Publishable.Title;
         }
 
-        private void WriteColorInString(string message, ConsoleColor color, string regex, char splitchar)
+        //tar inn en string, en farge, og en character den kommer til å splitte på. det som er mellom karakteren vil få fargen. f.eks &hei&
+        private void WriteColorInString(string message, ConsoleColor color, char splitchar)
         {
+            String regex = @"(\" + splitchar + ".*\\" + splitchar + ")";
             var sections = Regex.Split(message, regex);
 
             foreach (string section in sections)
@@ -154,7 +158,6 @@ namespace PG332_SoftwareDesign_EksamenH21.util
                     Console.ForegroundColor = color;
                     Console.Write(section.Substring(1, section.Length-2));
                     Console.ResetColor();
-
                 }
                 else
                 {
@@ -163,6 +166,7 @@ namespace PG332_SoftwareDesign_EksamenH21.util
             }
         }
 
+        //tar inn en string som bruker tegnene til progress-baren, og gir riktig farge basert på tegn.
         private void WriteColourInProgressString(string message)
         {
             var sections = Regex.Split(message, "(#*)(=*)(-*)");
