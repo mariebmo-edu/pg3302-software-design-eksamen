@@ -36,7 +36,7 @@ group Login
 	    ProgramController<-UserAuthenticator:Success
 	    ProgramController->LoginMessageWrapper
 	    ProgramController<-LoginMessageWrapper:Get menu
-	    User->ProgramController:Show Menu
+	    User<-ProgramController:Show Menu
     else Password's Wrong
     User<-ProgramController:Ask for password	    
 	end
