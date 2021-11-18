@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PG332_SoftwareDesign_EksamenH21.Migrations
 {
-    public partial class latests : Migration
+    public partial class latest_stable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

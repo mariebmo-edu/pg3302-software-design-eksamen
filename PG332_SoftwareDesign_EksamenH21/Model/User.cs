@@ -28,5 +28,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
             return (user.Email == Email && user.UserId == UserId && user.FirstName == FirstName &&
                     user.LastName == LastName);
         }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
     }
 }
