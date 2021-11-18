@@ -39,21 +39,6 @@
     <Compile Remove="Handlers\ProgressionHandlerLeaf.cs" />
     <Compile Remove="Handlers\ProgressionWrapper.cs" />
     <Compile Remove="Handlers\ErrorMessageWrapper.cs" />
-    <Compile Remove="Handlers\Printable\EmailQuestionWrapper.cs" />
-    <Compile Remove="Handlers\Printable\ErrorMessageWrapper.cs" />
-    <Compile Remove="Handlers\Printable\IPrintable.cs" />
-    <Compile Remove="Handlers\Printable\LoginMessageWrapper.cs" />
-    <Compile Remove="Handlers\Printable\OptionsHandlerFactory.cs" />
-    <Compile Remove="Handlers\Printable\OptionsWrapper.cs" />
-    <Compile Remove="Handlers\Printable\PasswordQuestionWrapper.cs" />
-    <Compile Remove="Handlers\Printable\QuitMessageWrapper.cs" />
-    <Compile Remove="Handlers\Printable\QuitQuestionWrapper.cs" />
-    <Compile Remove="Handlers\Progression\IProgressionHandler.cs" />
-    <Compile Remove="Handlers\Progression\ProgressionBarHandler.cs" />
-    <Compile Remove="Handlers\Progression\ProgressionHandlerComposite.cs" />
-    <Compile Remove="Handlers\Progression\ProgressionHandlerFactory.cs" />
-    <Compile Remove="Handlers\Progression\ProgressionHandlerLeaf.cs" />
-    <Compile Remove="Handlers\Progression\ProgressionWrapper.cs" />
   </ItemGroup>
 
 </Project>

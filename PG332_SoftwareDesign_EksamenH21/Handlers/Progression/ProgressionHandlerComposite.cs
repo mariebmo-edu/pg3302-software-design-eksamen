@@ -3,11 +3,11 @@ using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21.Handlers.Progression
 {
-    public class ProgressionHandlerComposite : IProgressionHandler<IPublishable>
+    public class ProgressionHandlerComposite : IProgressionHandler<IProgressable>
     {
         private IProgressable Progressable { get; }
 
-        public List<IProgressionHandler<IPublishable>> Children = new();
+        public List<IProgressionHandler<IProgressable>> Children = new();
         public ProgressionWrapper ProgressionWrapper { get; set; }
 
         public ProgressionHandlerComposite(IPublishable progressable)

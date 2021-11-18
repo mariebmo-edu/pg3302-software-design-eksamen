@@ -2,21 +2,19 @@
 
 namespace PG332_SoftwareDesign_EksamenH21.Handlers.Progression
 {
-    public class ProgressionHandlerLeaf : IProgressionHandler<IPublishable>
+    public class ProgressionHandlerLeaf : IProgressionHandler<IProgressable>
     {
-        private IProgressable Progressable { get; }
+        private IPublishable Progressable { get; }
         public ProgressionWrapper ProgressionWrapper { get; set; }
 
-        public ProgressionHandlerLeaf(IFinishable progressable)
+        public ProgressionHandlerLeaf(IPublishable progressable)
         {
             Progressable = progressable;
         }
 
         private double GetPublishedPercent()
         {
-            IPublishable publishable = Progressable as IPublishable;
-            
-            return publishable.Published ? 1.00 : 0.00;
+            return Progressable.Published ? 1.00 : 0.00;
         }
 
         private double GetFinishedPercent()

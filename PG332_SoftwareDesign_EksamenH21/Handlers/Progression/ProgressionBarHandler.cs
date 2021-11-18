@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Text;
-using PG332_SoftwareDesign_EksamenH21.Handlers.Progression;
 
-namespace PG332_SoftwareDesign_EksamenH21.Handlers
+namespace PG332_SoftwareDesign_EksamenH21.Handlers.Progression
 {
     public class ProgressionBarHandler
     {
