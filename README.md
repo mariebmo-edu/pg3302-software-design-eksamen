@@ -36,6 +36,8 @@ Filene `tracker.db` og `progression-tracker-log.txt` blir lagret i `C:/Users/<BR
 ![Sekvensdiagram fullført leveranse](documentation/SequenceDiagram_Final-Diagram_etter_planlegging.png)
 #### Klassediagram planlegging
 ![ER-diagram](documentation/klassediagram-planlegging.png)
+#### Etter alt var kodet ferdig:
+[UML-diagrams.pdf](https://github.com/chgr007/PG332_SoftwareDesign_EksamenH21/files/7566074/UML-diagrams.pdf)
 #### Domene-modelldiagram planlegging
 ![ER-diagram](documentation/domene-modell.png)
 #### Generert ER-Diagram fra Rider IDE
