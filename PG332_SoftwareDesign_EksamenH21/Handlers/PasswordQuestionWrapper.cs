@@ -6,7 +6,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
     {
         public IPrintable SuperOption { get; set; }
         public string Email { get; }
-        private UserAuthenticator _authenticator = new();
         public IPrintable ChooseOption(string input)
         {
             User user = Authenticate(input);
@@ -26,7 +25,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         private User Authenticate(string password)
         {
-            return _authenticator.Authenticate(Email, password);
+            return UserAuthenticator.Authenticate(Email, password);
         }
     }
 }
