@@ -125,11 +125,13 @@ namespace PG332_SoftwareDesign_EksamenH21.util
             Console.WriteLine("\n[E] - Avslutt");
         }
 
+        //returnerer en linje
         private static string ReturnLine()
         {
             return "------------------------------------------";
         }
 
+        //sentrerer en tittel basert på lengden til returnLine
         private static string CenteredHeader(OptionsWrapper oh)
         {
 
@@ -143,7 +145,7 @@ namespace PG332_SoftwareDesign_EksamenH21.util
             return sb + oh.Publishable.Title;
         }
 
-        //tar inn en string, en farge, 
+        //tar inn en string, en farge, og en character den kommer til å splitte på. det som er mellom karakteren vil få fargen. f.eks &hei&
         private void WriteColorInString(string message, ConsoleColor color, char splitchar)
         {
             String regex = @"(\" + splitchar + ".*\\" + splitchar + ")";
@@ -164,6 +166,7 @@ namespace PG332_SoftwareDesign_EksamenH21.util
             }
         }
 
+        //tar inn en string som bruker tegnene til progress-baren, og gir riktig farge basert på tegn.
         private void WriteColourInProgressString(string message)
         {
             var sections = Regex.Split(message, "(#*)(=*)(-*)");
