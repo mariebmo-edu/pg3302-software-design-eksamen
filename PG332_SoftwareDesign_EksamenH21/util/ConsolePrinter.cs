@@ -60,6 +60,9 @@ namespace PG332_SoftwareDesign_EksamenH21.util
 
             IProgressionHandler<IProgressable> ph = ProgressionHandlerFactory.MakeProgressionHandler(oh.Publishable);
             ProgressionWrapper pw = ph.GetProgression();
+            
+            // SPLITT HER
+            
             WriteColourInProgressString(ProgressionBarHandler.GenerateProgressBar(pw));
             StringBuilder menuOptionsString = new();
 
