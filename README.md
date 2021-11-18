@@ -14,8 +14,8 @@
 ### Brukerveiledning
 
 #### For å migrere EFCore må disse kommandoene kjøres fra terminalen
-`dotnet tool install --global dotnet-ef
-dotnet ef database update`
+`dotnet tool install --global dotnet-ef`
+`dotnet ef database update`
 - Hvordan kjøre programmet
 
 ### Oppgavebeskrivelse

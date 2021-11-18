@@ -9,7 +9,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Repository
 
         void Save(TModel m);
 
-        TModel RetrieveById(long id);
+        TModel RetrieveById(int id);
         List<TModel> ListAll();
         void Delete(long id);
         TModel RetrieveOneByField(Func<TModel, bool> predicate);
