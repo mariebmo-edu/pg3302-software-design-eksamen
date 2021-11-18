@@ -35,10 +35,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
         private void SaveUpdates()
         {
             IUserDao dao = new UserDao();
-            OptionsWrapper printable = _printable as OptionsWrapper;
-            if (printable.Progressable is User)
+            if (_printable is OptionsWrapper {Progressable: User user})
             {
-                User = printable.Progressable as User;
+                User = user;
             }
             dao.Update(User);
         }
