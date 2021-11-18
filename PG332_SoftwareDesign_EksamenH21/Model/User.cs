@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PG332_SoftwareDesign_EksamenH21.Model
 {
-    public class User : IPublishable
+    public class User : IProgressable
     {
         public int UserId { get; set; }
         public string FirstName { get; set; }
@@ -17,7 +17,6 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
 #nullable enable
         public List<Semester> Semesters { get; set; } = new();
         [NotMapped] public SemesterEnum CurrentSemester { get; set; }
-        [NotMapped] public bool Published { get; set; } = true;
 
         [NotMapped] public string Title => "Velg semester";
 

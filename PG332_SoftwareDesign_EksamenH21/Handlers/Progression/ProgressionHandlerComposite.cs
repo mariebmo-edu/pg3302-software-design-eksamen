@@ -10,7 +10,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers.Progression
         public List<IProgressionHandler<IProgressable>> Children = new();
         public ProgressionWrapper ProgressionWrapper { get; set; }
 
-        public ProgressionHandlerComposite(IPublishable progressable)
+        public ProgressionHandlerComposite(IProgressable progressable)
         {
             Progressable = progressable;
         }
