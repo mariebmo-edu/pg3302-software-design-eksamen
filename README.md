@@ -12,6 +12,8 @@
 ## Oppgave
 
 ### Brukerveiledning
+* Logg inn med brukeren `kim@bruun.no`
+* Benytt passordet `daarligpassord`
 
 #### For å migrere EFCore må disse kommandoene kjøres fra terminalen
 `dotnet tool install --global dotnet-ef`
