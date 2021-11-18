@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PG332_SoftwareDesign_EksamenH21.Model
 {
-    public class User : IProgressable
+    public class User : IPublishable
     {
         public int UserId { get; set; }
         public string FirstName { get; set; }

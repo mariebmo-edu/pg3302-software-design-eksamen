@@ -2,7 +2,7 @@
 
 namespace PG332_SoftwareDesign_EksamenH21.Handlers.Progression
 {
-    public class ProgressionHandlerLeaf : IProgressionHandler<IProgressable>
+    public class ProgressionHandlerLeaf : IProgressionHandler<IPublishable>
     {
         private IProgressable Progressable { get; }
         public ProgressionWrapper ProgressionWrapper { get; set; }

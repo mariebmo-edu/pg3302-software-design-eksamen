@@ -3,14 +3,14 @@ using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace PG332_SoftwareDesign_EksamenH21.Handlers.Progression
 {
-    public class ProgressionHandlerComposite : IProgressionHandler<IProgressable>
+    public class ProgressionHandlerComposite : IProgressionHandler<IPublishable>
     {
         private IProgressable Progressable { get; }
 
-        public List<IProgressionHandler<IProgressable>> Children = new();
+        public List<IProgressionHandler<IPublishable>> Children = new();
         public ProgressionWrapper ProgressionWrapper { get; set; }
 
-        public ProgressionHandlerComposite(IProgressable progressable)
+        public ProgressionHandlerComposite(IPublishable progressable)
         {
             Progressable = progressable;
         }

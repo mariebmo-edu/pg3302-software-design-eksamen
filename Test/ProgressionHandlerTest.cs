@@ -3,9 +3,6 @@ using PG332_SoftwareDesign_EksamenH21;
 using PG332_SoftwareDesign_EksamenH21.Handlers;
 using PG332_SoftwareDesign_EksamenH21.Handlers.Progression;
 using PG332_SoftwareDesign_EksamenH21.Model;
-using PG332_SoftwareDesign_EksamenH21.Model;
-using PG332_SoftwareDesign_EksamenH21.Handlers.Progression;
-using PG332_SoftwareDesign_EksamenH21.Model;
 
 namespace Test
 {
