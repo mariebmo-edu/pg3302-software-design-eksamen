@@ -11,8 +11,6 @@ namespace Test
         [Test]
         public void ShouldReturnSame()
         {
-            // OBS! Linje 108 må kommenteres ut i OptionsHandler for at denne skal kjøre riktig!
-            
             TaskSet taskSet = new();
             
             OptionsWrapper tsOh = new(taskSet, null, false);
@@ -27,16 +25,15 @@ namespace Test
         {
             Task  task1 = new();
             task1.Published = true;
-            
-            TaskSet taskSet = new();
-            taskSet.Published = true;
+
+            TaskSet taskSet = new() {Published = true};
             taskSet.Tasks.Add(task1);
 
-            OptionsWrapper tsOh = MakeOptionsHandler(taskSet, null);
+            var taskSetOptionsHandler = MakeOptionsHandler(taskSet);
 
-            OptionsWrapper expected = new(task1, tsOh, true);
+            OptionsWrapper expected = new(task1, taskSetOptionsHandler, true);
 
-            OptionsWrapper actual = tsOh.ChooseOption("1") as OptionsWrapper;
+            var actual = taskSetOptionsHandler.ChooseOption("1") as OptionsWrapper;
 
             for (int i = 0; i < expected.Options.Count; i++)
             {

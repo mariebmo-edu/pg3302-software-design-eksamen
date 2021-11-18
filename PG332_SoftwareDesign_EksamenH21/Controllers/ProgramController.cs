@@ -7,7 +7,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Controllers
 {
     public class ProgramController : IController
     {
-        private User User { get; set; }
+        private   User User { get; set; }
         private MenuPrinter MenuPrinter { get; } = new();
         private IPrintable _printable;
         private IReader Reader { get; }
