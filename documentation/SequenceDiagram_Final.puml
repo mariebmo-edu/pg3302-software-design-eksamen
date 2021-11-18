@@ -6,12 +6,8 @@ participant ProgramController
 participant EmailQuestionWrapper
 participant PasswordQuestionWrapper
 participant UserAuthenticator
-participant OptionsHandler
 participant LoginMessageWrapper
-participant Semester
-participant Course
-participant Lecture
-participant Task
+participant OptionsWrapper
 
 participant UserDao
 database Database
@@ -46,7 +42,28 @@ group Login
 end
 
 group Get task
-
+    User<-ProgramController: Show semester menu
+    User->ProgramController: Select semester
+    ProgramController->OptionsWrapper:Get course menu
+    ProgramController<-OptionsWrapper:Deliver course menu
+    User<-ProgramController:Show course menu
+    User->ProgramController:Select course 
+    ProgramController->OptionsWrapper:Get lecture menu
+    ProgramController<-OptionsWrapper: Deliver lecture menu
+    User<-ProgramController:Show lecture menu
+    User->ProgramController:Select lecture
+    ProgramController->OptionsWrapper:Get task menu
+    ProgramController<-OptionsWrapper:Deliver task menu
+    User<-ProgramController: Show task menu
+    User->ProgramController: Select task
+    ProgramController->OptionsWrapper:Get task
+    ProgramController<-OptionsWrapper:Deliver task
+    User<-ProgramController:Show task
+    User->ProgramController:Select finished
+    ProgramController->OptionsWrapper:Set finished
+    User<-ProgramController:Show task finished
+    OptionsWrapper->UserDao:Update user
+    UserDao->Database:Save changes
 end
 
 
