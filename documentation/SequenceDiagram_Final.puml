@@ -1,0 +1,53 @@
+﻿@startuml
+title Diagram etter planlegging
+
+actor User
+participant ProgramController
+participant EmailQuestionWrapper
+participant PasswordQuestionWrapper
+participant UserAuthenticator
+participant OptionsHandler
+participant LoginMessageWrapper
+participant Semester
+participant Course
+participant Lecture
+participant Task
+
+participant UserDao
+database Database
+
+group Login
+	User->ProgramController
+	ProgramController->EmailQuestionWrapper
+	User<-EmailQuestionWrapper:Ask for email
+	User->ProgramController:Enter email
+	ProgramController->UserDao:Get user
+	UserDao->Database:Get user
+	
+	alt user exists 
+	UserDao<-Database:User data
+	ProgramController<-UserDao:UserObject
+	ProgramController->PasswordQuestionWrapper
+	User<-PasswordQuestionWrapper:Ask for password
+	User->ProgramController:Enter password
+	ProgramController->PasswordQuestionWrapper
+	PasswordQuestionWrapper->UserAuthenticator:Check credentials
+	alt Credentials matching
+	    ProgramController<-UserAuthenticator:Success
+	    ProgramController->LoginMessageWrapper
+	    ProgramController<-LoginMessageWrapper:Get menu
+	    User->ProgramController:Show Menu
+    else Password's Wrong
+    User<-ProgramController:Ask for password	    
+	end
+	else user doesn't exist 
+	    User<-ProgramController:Ask for email
+	end
+end
+
+group Get task
+
+end
+
+
+@enduml

@@ -1,0 +1,61 @@
+﻿@startuml
+title Diagram under planlegging
+
+actor User
+participant UserInterface
+participant BusinessLogic
+participant Dao
+database Database
+
+group Login
+	User->UserInterface:Login with password
+	UserInterface->BusinessLogic:Authorize
+	BusinessLogic->Dao:GetUserCredentials
+	Dao->Database:RetrieveUserCred
+    alt case Database Connection Success
+		Database-->Dao:UserCred
+		Dao-->BusinessLogic:UserCredObject
+      alt case success
+          BusinessLogic->Dao:GetUserData
+          Dao->Database:RetrieverUserData
+          Database-->Dao:UserData
+          Dao-->BusinessLogic:UserObject
+          BusinessLogic-->UserInterface:AutSuccessMessage
+          UserInterface-->User:MenuOptions
+      else case fail
+          BusinessLogic-->UserInterface:AuthFailed
+          UserInterface-->User:AuthFailMessage
+          end
+    else case Database Connection Fail
+    	Dao-->BusinessLogic:ConnectionFailed
+        BusinessLogic-->UserInterface:ConnectionFailed
+        UserInterface-->User:ConnectionFailedMessage
+	end
+end
+
+group Update Progression
+	User->UserInterface:MenuOpt UpdateProgression
+    UserInterface->BusinessLogic:SetProgression
+    BusinessLogic->Dao:ProgressionObject
+    Dao->Database:ProgressionData
+    BusinessLogic-->UserInterface:UpdateSuccessMessage
+    BusinessLogic-->UserInterface:UpdatedProgression
+    UserInterface-->User:UpdateSuccessMessage
+    UserInterface-->User:UpdatedProgressionView
+end
+
+group View Progression
+	User->UserInterface:MenuOpt ViewProgression
+    UserInterface->BusinessLogic:GetProgression
+    BusinessLogic-->UserInterface:Progression
+    UserInterface-->User:ProgressionView
+end
+
+group See SubCategory
+	User->UserInterface:MenuOpt See SubCat
+    UserInterface->BusinessLogic:GetSubCat
+    BusinessLogic->UserInterface:SubCat
+    UserInterface->User:SubCatView
+end
+
+@enduml
