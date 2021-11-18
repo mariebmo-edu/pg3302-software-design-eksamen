@@ -17,6 +17,7 @@
 `dotnet tool install --global dotnet-ef`
 `dotnet ef database update`
 - Hvordan kjøre programmet
+#### NB: en fil "tracker.db" blir lagret i `C:/Users/<BRUKER>/AppData/Local/tracker.db`
 
 ### Oppgavebeskrivelse
 

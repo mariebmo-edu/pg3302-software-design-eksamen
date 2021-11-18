@@ -1,15 +1,14 @@
 ﻿using PG332_SoftwareDesign_EksamenH21.Model;
-using PG332_SoftwareDesign_EksamenH21.util;
 
-namespace PG332_SoftwareDesign_EksamenH21.Handlers.Printable
+namespace PG332_SoftwareDesign_EksamenH21.Handlers
 {
-    public class PasswordQuestionWrapper : IPrintableWithSuper
+    public class PasswordQuestionWrapper : IPrintable
     {
         public IPrintable SuperOption { get; set; }
-        private string Email { get; }
+        public string Email { get; }
         public IPrintable ChooseOption(string input)
         {
-            var user = Authenticate(input);
+            User user = Authenticate(input);
             if (user != null)
             {
                 return new LoginMessageWrapper("Velkommen!", user);
