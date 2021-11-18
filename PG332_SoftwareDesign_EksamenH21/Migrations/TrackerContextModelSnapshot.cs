@@ -59,8 +59,14 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("Finished")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("LectureDateTime")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("Published")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("TaskSetId")
                         .HasColumnType("INTEGER");

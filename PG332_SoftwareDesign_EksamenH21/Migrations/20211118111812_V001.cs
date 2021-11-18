@@ -138,7 +138,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     CourseId = table.Column<int>(type: "INTEGER", nullable: false),
                     Title = table.Column<string>(type: "TEXT", nullable: true),
                     TaskSetId = table.Column<int>(type: "INTEGER", nullable: true),
-                    LectureDateTime = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    LectureDateTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Published = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Finished = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

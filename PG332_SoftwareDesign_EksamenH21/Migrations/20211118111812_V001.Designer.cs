@@ -9,7 +9,7 @@ using PG332_SoftwareDesign_EksamenH21.Repository;
 namespace PG332_SoftwareDesign_EksamenH21.Migrations
 {
     [DbContext(typeof(TrackerContext))]
-    [Migration("20211117204624_V001")]
+    [Migration("20211118111812_V001")]
     partial class V001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,8 +61,14 @@ namespace PG332_SoftwareDesign_EksamenH21.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("Finished")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("LectureDateTime")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("Published")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("TaskSetId")
                         .HasColumnType("INTEGER");
