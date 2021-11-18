@@ -27,3 +27,9 @@ Filene `tracker.db` og `progression-tracker-log.txt` blir lagret i `C:/Users/<BR
 ### Oppgavebeskrivelse
 
 - Hva oppgaven er og kort hvordan vi løste den
+
+### Diagram
+
+![Sekvensdiagram før start](documentation/SequenceDiagram_under_planlegging.png)
+![Sekvensdiagram fullført leveranse](documentation/SequenceDiagram_Final-Diagram_etter_planlegging.png)
+![Sekvensdiagram fullført leveranse](documentation/SequenceDiagram_Final-Diagram_etter_planlegging.png)
