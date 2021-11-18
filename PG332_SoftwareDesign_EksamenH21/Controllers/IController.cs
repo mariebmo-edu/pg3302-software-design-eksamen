@@ -1,7 +1,7 @@
 ﻿namespace PG332_SoftwareDesign_EksamenH21.Controllers
 {
-    public interface IConsoleControllers
+    public interface IController
     {
-        void Handle(long id);
+        void Start();
     }
 }
