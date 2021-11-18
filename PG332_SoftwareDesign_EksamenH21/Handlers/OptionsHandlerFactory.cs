@@ -54,11 +54,10 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
                     return oh;
                 }
+                default:
+                    var task = progressable as Task;
+                    return new OptionsWrapper(task, superOption, true);
             }
-
-            var task = progressable as Task;
-            OptionsWrapper optionsWrapper = new(task, superOption, true);
-            return optionsWrapper;
         }
     }
 }
