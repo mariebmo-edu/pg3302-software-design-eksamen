@@ -1,8 +1,7 @@
-using PG332_SoftwareDesign_EksamenH21.Model;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PG332_SoftwareDesign_EksamenH21
+namespace PG332_SoftwareDesign_EksamenH21.Model
 {
     public class Task : IFinishable
     {

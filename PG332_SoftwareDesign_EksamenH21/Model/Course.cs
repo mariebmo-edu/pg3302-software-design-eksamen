@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using PG332_SoftwareDesign_EksamenH21.Model;
 
-namespace PG332_SoftwareDesign_EksamenH21
+namespace PG332_SoftwareDesign_EksamenH21.Model
 {
     public class Course : IFinishable
     {
