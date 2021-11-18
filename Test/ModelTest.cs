@@ -8,9 +8,9 @@ namespace Test
     class ModelTest
     {
         [Test]
-        public void UpdateUserInDb()
+        public void UpdateUserInDB()
         {
-            User user = new()
+            User user = new User()
             {
                 FirstName = "Test",
                 LastName = "Persson",
@@ -18,10 +18,10 @@ namespace Test
                 Password = HashPassword("password123")
             };
 
-            UserDao userDao = new();
+            UserDao userDao = new UserDao();
             userDao.Save(user);
 
-            var userFromServer = userDao.RetrieveByEmail(user.Email);
+            User userFromServer = userDao.RetrieveByEmail(user.Email);
             Assert.AreEqual(user, userFromServer);
 
             user.Email = "persson@test.no";

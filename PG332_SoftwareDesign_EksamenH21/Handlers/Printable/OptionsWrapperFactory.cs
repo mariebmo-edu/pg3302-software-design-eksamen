@@ -1,10 +1,10 @@
 ﻿using PG332_SoftwareDesign_EksamenH21.Model;
 
-namespace PG332_SoftwareDesign_EksamenH21.Handlers
+namespace PG332_SoftwareDesign_EksamenH21.Handlers.Printable
 {
-    public static class OptionsHandlerFactory
+    public static class OptionsWrapperFactory
     {
-        public static OptionsWrapper MakeOptionsHandler(IProgressable progressable, OptionsWrapper superOption = null)
+        public static OptionsWrapper MakeOptionsWrapper(IProgressable progressable, OptionsWrapper superOption = null)
         {
             switch (progressable)
             {
@@ -54,10 +54,11 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
                     return oh;
                 }
-                default:
-                    var task = progressable as Task;
-                    return new OptionsWrapper(task, superOption, true);
             }
+
+            var task = progressable as Task;
+            OptionsWrapper optionsWrapper = new(task, superOption, true);
+            return optionsWrapper;
         }
     }
 }

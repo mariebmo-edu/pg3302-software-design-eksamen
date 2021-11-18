@@ -1,6 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
+using PG332_SoftwareDesign_EksamenH21;
 using PG332_SoftwareDesign_EksamenH21.Handlers;
+using PG332_SoftwareDesign_EksamenH21.Handlers.Progression;
 
 namespace Test
 {

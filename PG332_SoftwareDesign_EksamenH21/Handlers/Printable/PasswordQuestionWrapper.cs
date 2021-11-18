@@ -1,11 +1,11 @@
 ﻿using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.util;
 
-namespace PG332_SoftwareDesign_EksamenH21.Handlers
+namespace PG332_SoftwareDesign_EksamenH21.Handlers.Printable
 {
-    public class PasswordQuestionWrapper : IPrintable
+    public class PasswordQuestionWrapper : IPrintableWithSuper
     {
-        private IPrintable SuperOption { get; }
+        public IPrintable SuperOption { get; set; }
         private string Email { get; }
         public IPrintable ChooseOption(string input)
         {

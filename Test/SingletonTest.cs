@@ -9,8 +9,8 @@ namespace Test
         [Test]
         public void SingletonHasSameReference()
         {
-            var logger1 = Logger.Instance;
-            var logger2 = Logger.Instance;
+            Logger logger1 = Logger.Instance;
+            Logger logger2 = Logger.Instance;
             Assert.True(ReferenceEquals(logger1,logger2));
         }
     }

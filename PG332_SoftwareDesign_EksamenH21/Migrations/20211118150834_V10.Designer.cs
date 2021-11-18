@@ -9,8 +9,8 @@ using PG332_SoftwareDesign_EksamenH21.Repository;
 namespace PG332_SoftwareDesign_EksamenH21.Migrations
 {
     [DbContext(typeof(TrackerContext))]
-    [Migration("20211118142318_latest_stable")]
-    partial class latest_stable
+    [Migration("20211118150834_V10")]
+    partial class V10
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

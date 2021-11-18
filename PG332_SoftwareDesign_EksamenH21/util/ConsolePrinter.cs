@@ -2,11 +2,13 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using PG332_SoftwareDesign_EksamenH21.Handlers;
+using PG332_SoftwareDesign_EksamenH21.Handlers.Printable;
+using PG332_SoftwareDesign_EksamenH21.Handlers.Progression;
 using PG332_SoftwareDesign_EksamenH21.Model;
 
-namespace PG332_SoftwareDesign_EksamenH21
+namespace PG332_SoftwareDesign_EksamenH21.util
 {
-    public class MenuPrinter
+    public class ConsolePrinter : IPrinter
     {
         public void ShowMenu(IPrintable printable)
         {
@@ -56,14 +58,17 @@ namespace PG332_SoftwareDesign_EksamenH21
             Console.WriteLine(ReturnLine());
 
 
-            IProgressionHandler<IProgressable> ph = ProgressionHandlerFactory.MakeProgressionHandler(oh.Progressable);
+            IProgressionHandler<IProgressable> ph = ProgressionHandlerFactory.MakeProgressionHandler(oh.Publishable);
             ProgressionWrapper pw = ph.GetProgression();
+            
+            // SPLITT HER
+            
             WriteColourInProgressString(ProgressionBarHandler.GenerateProgressBar(pw));
             StringBuilder menuOptionsString = new();
 
             if (oh.IsFinishable)
             {
-                var f = oh.Progressable as IFinishable;
+                var f = oh.Publishable as IFinishable;
                 
                 var finishType = "THIS";
                 var finishedString = "FINISHED";
@@ -93,16 +98,30 @@ namespace PG332_SoftwareDesign_EksamenH21
             for (var i = 0; i < oh.Options.Count; i++)
             {
                 menuOptionsString.Append("[" + (i + 1) + "] - ");
-                menuOptionsString.Append(oh.Options[i].Title + "\n");
+                menuOptionsString.Append(oh.Options[i].Title);
+                if (!oh.Options[i].Published)
+                {
+                    menuOptionsString.Append(" &(ikke publisert)&");
+                }
+                else
+                {
+                    pw = ProgressionHandlerFactory
+                        .MakeProgressionHandler(oh.Options[i])
+                        .GetProgression();
+                    
+                    menuOptionsString.Append($" &({Math.Round(pw.FinishedPercent*100, MidpointRounding.ToEven)}% ferdig)&");
+                }
+
+                menuOptionsString.Append("\n");
             }
 
             if (oh.SuperOption != null)
             {
                 var super = oh.SuperOption as OptionsWrapper;
-                menuOptionsString.Append("\n[0] - Tilbake til " + super.Progressable.Title);
+                menuOptionsString.Append("\n[0] - Tilbake til " + super.Publishable.Title);
             }
 
-            Console.WriteLine(menuOptionsString.ToString());
+            WriteColorInString(menuOptionsString.ToString(), ConsoleColor.DarkGray, @"(\&.*\&)", '&');
             Console.WriteLine("\n[E] - Avslutt");
         }
 
@@ -116,12 +135,32 @@ namespace PG332_SoftwareDesign_EksamenH21
 
             StringBuilder sb = new();
 
-            for (var i = 0; i < (ReturnLine().Length - oh.Progressable.Title.Length) / 2; i++)
+            for (var i = 0; i < (ReturnLine().Length - oh.Publishable.Title.Length) / 2; i++)
             {
                 sb.Append(' ');
             }
 
-            return sb + oh.Progressable.Title;
+            return sb + oh.Publishable.Title;
+        }
+
+        private void WriteColorInString(string message, ConsoleColor color, string regex, char splitchar)
+        {
+            var sections = Regex.Split(message, regex);
+
+            foreach (string section in sections)
+            {
+                if (section.StartsWith(splitchar) && section.EndsWith(splitchar))
+                {
+                    Console.ForegroundColor = color;
+                    Console.Write(section.Substring(1, section.Length-2));
+                    Console.ResetColor();
+
+                }
+                else
+                {
+                    Console.Write(section);
+                }
+            }
         }
 
         private void WriteColourInProgressString(string message)
@@ -138,6 +177,10 @@ namespace PG332_SoftwareDesign_EksamenH21
                 else if (section.Contains("="))
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
+                }
+                else if (section.Contains("-"))
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
                 }
                 else
                 {

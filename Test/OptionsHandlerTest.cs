@@ -2,22 +2,26 @@
 using PG332_SoftwareDesign_EksamenH21;
 using PG332_SoftwareDesign_EksamenH21.Handlers;
 using PG332_SoftwareDesign_EksamenH21.Model;
-using static PG332_SoftwareDesign_EksamenH21.Handlers.OptionsHandlerFactory;
+using PG332_SoftwareDesign_EksamenH21.Handlers.Printable;
+using PG332_SoftwareDesign_EksamenH21.Model;
+using static PG332_SoftwareDesign_EksamenH21.Handlers.Printable.OptionsWrapperFactory;
 
 namespace Test
 {
     public class OptionsHandlerTest
     {
         [Test]
-        public void ShouldReturnSame()
+        public void ShouldReturnErrorMessage()
         {
             TaskSet taskSet = new();
             
             OptionsWrapper tsOh = new(taskSet, null, false);
 
-            OptionsWrapper actual = tsOh.ChooseOption("t") as OptionsWrapper;
+            ErrorMessageWrapper expected = new("Velg et gyldig menyalternativ", tsOh);
             
-            Assert.AreEqual(tsOh, actual);
+            ErrorMessageWrapper actual = tsOh.ChooseOption("t") as ErrorMessageWrapper;
+            
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -25,16 +29,17 @@ namespace Test
         {
             Task  task1 = new();
             task1.Published = true;
-
-            TaskSet taskSet = new() {Published = true};
+            
+            TaskSet taskSet = new();
+            taskSet.Published = true;
             taskSet.Tasks.Add(task1);
 
-            var taskSetOptionsHandler = MakeOptionsHandler(taskSet);
+            OptionsWrapper tsOh = MakeOptionsWrapper(taskSet, null);
 
-            OptionsWrapper expected = new(task1, taskSetOptionsHandler, true);
+            OptionsWrapper expected = new(task1, tsOh, true);
 
-            var actual = taskSetOptionsHandler.ChooseOption("1") as OptionsWrapper;
-
+            OptionsWrapper actual = tsOh.ChooseOption("1") as OptionsWrapper;
+            
             for (int i = 0; i < expected.Options.Count; i++)
             {
                 Assert.AreEqual(expected.Options[i], actual.Options[i]);
@@ -42,7 +47,7 @@ namespace Test
             
             Assert.AreEqual(expected.SuperOption, actual.SuperOption);
             Assert.AreEqual(expected.IsFinishable, actual.IsFinishable);
-            Assert.AreEqual(expected.Progressable, actual.Progressable);
+            Assert.AreEqual(expected.Publishable, actual.Publishable);
         }
 
         [Test]
@@ -55,13 +60,15 @@ namespace Test
             taskSet.Published = true;
             taskSet.Tasks.Add(task1);
             
-            OptionsWrapper tsOh = MakeOptionsHandler(taskSet, null);
+            OptionsWrapper expected = MakeOptionsWrapper(taskSet);
 
-            OptionsWrapper temp = tsOh.ChooseOption("1") as OptionsWrapper;
+            OptionsWrapper temp = expected.ChooseOption("1") as OptionsWrapper;
             
             OptionsWrapper actual = temp.ChooseOption("0") as OptionsWrapper;
             
-            Assert.AreEqual(tsOh, actual);
+            //ErrorMessageWrapper actual = tsOh.ChooseOption("t") as ErrorMessageWrapper;
+            
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -70,7 +77,7 @@ namespace Test
             Task task1 = new();
             task1.Published = true;
 
-            OptionsWrapper tOh = MakeOptionsHandler(task1, null);
+            OptionsWrapper tOh = MakeOptionsWrapper(task1, null);
 
             tOh.ChooseOption("F");
 

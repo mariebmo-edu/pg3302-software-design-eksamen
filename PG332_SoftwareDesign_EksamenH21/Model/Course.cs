@@ -11,7 +11,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Model
         public Semester Semester { get; set; }
         public SemesterEnum SemesterEnum { get; set; }
         public string CourseCode { get; set; }
-        public List<Lecture> Lectures { get; set; }
+        public List<Lecture> Lectures { get; set; } = new();
         public DateTime ExamDate { get; set; }
         public ExamType ExamType { get; set; }
         public float CoursePoints { get; set; }

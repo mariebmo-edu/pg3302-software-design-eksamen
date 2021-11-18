@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using PG332_SoftwareDesign_EksamenH21.Model;
 using PG332_SoftwareDesign_EksamenH21.util;
 
-namespace PG332_SoftwareDesign_EksamenH21.Handlers
+namespace PG332_SoftwareDesign_EksamenH21.Handlers.Printable
 {
-    public class OptionsWrapper : IPrintable
+    public class OptionsWrapper : IPrintableWithSuper
     {
         #region Documentation
 
@@ -22,15 +22,12 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         // IsFinishable property brukes for å generere menyvalg for å sette en Lecture/Task som Finished
 
-        // OBS! Vi må generere meny på User-nivå FØR vi viser semestermenyen brukeren skal starte på!
-        // Ellers vil det ikke genereres SuperOption automatisk på Semester!
-
         #endregion
 
         #region Properties
 
-        public IProgressable Progressable { get; set; }
-        public List<IProgressable> Options { get; set; } = new();
+        public IProgressable Publishable { get; set; }
+        public List<IPublishable> Options { get; set; } = new();
         public IPrintable SuperOption { get; set; }
         public bool IsFinishable { get; private set; }
 
@@ -38,9 +35,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         #region Constructor
 
-        public OptionsWrapper(IProgressable progressable, OptionsWrapper superOption, bool isFinishable)
+        public OptionsWrapper(IProgressable publishable, OptionsWrapper superOption, bool isFinishable)
         {
-            Progressable = progressable;
+            Publishable = publishable;
             SuperOption = superOption;
             IsFinishable = isFinishable;
         }
@@ -65,7 +62,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
             if (!Int32.TryParse(input, out convertedInput))
             {
-                Logger.Write($"TRYPARSE FAILED AT {Progressable.Title}");
+                Logger.Write($"TRYPARSE FAILED AT {Publishable.Title}");
                 return new ErrorMessageWrapper("Velg et gyldig menyalternativ", this);
             }
 
@@ -76,7 +73,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
             if (convertedInput > Options.Count)
             {
-                Logger.Write($"INDEX OUT OF RANGE AT {Progressable.Title}");
+                Logger.Write($"INDEX OUT OF RANGE AT {Publishable.Title}");
                 return new ErrorMessageWrapper("Velg et gyldig menyalternativ", this);
             }
 
@@ -99,7 +96,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
             if (Options[convertedInput - 1].Published)
             {
-                return OptionsHandlerFactory.MakeOptionsHandler(Options[convertedInput - 1], this);
+                return OptionsWrapperFactory.MakeOptionsWrapper(Options[convertedInput - 1], this);
             }
 
             Logger.Write($"UNPUBLISHED OPTION {Options[convertedInput-1].Title} CHOSEN");
@@ -113,9 +110,9 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         private IPrintable SetFinished()
         {
-            var f = Progressable as IFinishable;
+            var f = Publishable as IFinishable;
             f.Finished = !f.Finished;
-            Progressable = f;
+            Publishable = f;
             
             Logger.Write($"{f.Title} SET AS {f.Finished}");
             return this;
@@ -127,7 +124,7 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         private bool Equals(OptionsWrapper other)
         {
-            return Equals(Progressable, other.Progressable) && Equals(Options, other.Options) &&
+            return Equals(Publishable, other.Publishable) && Equals(Options, other.Options) &&
                    Equals(SuperOption, other.SuperOption) && IsFinishable == other.IsFinishable;
         }
 
@@ -150,13 +147,13 @@ namespace PG332_SoftwareDesign_EksamenH21.Handlers
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Progressable, Options, SuperOption, IsFinishable);
+            return HashCode.Combine(Publishable, Options, SuperOption, IsFinishable);
         }
 
         public override string ToString()
         {
             string returnedString = GetType() + "\n" +
-                                    Progressable.GetType() + Progressable.GetHashCode() + "\n" +
+                                    Publishable.GetType() + Publishable.GetHashCode() + "\n" +
                                     Options.GetType() + Options.GetHashCode() + "\n" +
                                     SuperOption.GetType() + SuperOption.GetHashCode() + "\n" +
                                     IsFinishable.GetType() + IsFinishable.GetHashCode();

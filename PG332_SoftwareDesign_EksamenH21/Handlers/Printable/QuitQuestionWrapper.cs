@@ -1,8 +1,8 @@
-﻿namespace PG332_SoftwareDesign_EksamenH21.Handlers
+﻿namespace PG332_SoftwareDesign_EksamenH21.Handlers.Printable
 {
-    public class QuitQuestionWrapper : IPrintable
+    public class QuitQuestionWrapper : IPrintableWithSuper
     {
-        private IPrintable SuperOption { get; }
+        public IPrintable SuperOption { get; set; }
 
         public QuitQuestionWrapper(IPrintable superOption)
         {
