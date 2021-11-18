@@ -30,6 +30,9 @@ Filene `tracker.db` og `progression-tracker-log.txt` blir lagret i `C:/Users/<BR
 
 ### Diagram
 
+#### Før vi begynte å kode:
 ![Sekvensdiagram før start](documentation/SequenceDiagram_under_planlegging.png)
+#### Etter alt var kodet ferdig:
 ![Sekvensdiagram fullført leveranse](documentation/SequenceDiagram_Final-Diagram_etter_planlegging.png)
-![Sekvensdiagram fullført leveranse](documentation/SequenceDiagram_Final-Diagram_etter_planlegging.png)
+#### Generert ER-Diagram fra Rider IDE
+![ER-diagram](documentation/ER-Diagram.png)
