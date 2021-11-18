@@ -2,69 +2,108 @@
 title Diagram etter planlegging
 
 actor User
+box presentation layer #lightblue
+    participant IReader
+    participant IPrinter
+end box
+box business logic layer #lightgreen
 participant ProgramController
-participant EmailQuestionWrapper
-participant PasswordQuestionWrapper
 participant UserAuthenticator
-participant LoginMessageWrapper
-participant OptionsWrapper
+end box
 
-participant UserDao
+box persistence layer #pink 
+participant IUserDao
+end box
 database Database
 
 group Login
+
 	User->ProgramController
-	ProgramController->EmailQuestionWrapper
-	User<-EmailQuestionWrapper:Ask for email
-	User->ProgramController:Enter email
-	ProgramController->UserDao:Get user
-	UserDao->Database:Get user
+	IPrinter<-ProgramController:Send email question wrapper 
+	User<-IPrinter:Ask for email
+    User->IReader:Type email
+    IReader->ProgramController:Email string
+	ProgramController->IPrinter:Password question wrapper
+	IPrinter->User:Ask for password
+	User->IReader:Type password
+	IReader->ProgramController:Password string
+	ProgramController->UserAuthenticator: Verify user
+	UserAuthenticator->IUserDao: Get user
+	IUserDao->Database:Get user data
 	
-	alt user exists 
-	UserDao<-Database:User data
-	ProgramController<-UserDao:UserObject
-	ProgramController->PasswordQuestionWrapper
-	User<-PasswordQuestionWrapper:Ask for password
-	User->ProgramController:Enter password
-	ProgramController->PasswordQuestionWrapper
-	PasswordQuestionWrapper->UserAuthenticator:Check credentials
-	alt Credentials matching
-	    ProgramController<-UserAuthenticator:Success
-	    ProgramController->LoginMessageWrapper
-	    ProgramController<-LoginMessageWrapper:Get menu
-	    User<-ProgramController:Show Menu
-    else Password's Wrong
-    User<-ProgramController:Ask for password	    
-	end
-	else user doesn't exist 
-	    User<-ProgramController:Ask for email
+	
+	alt User exists and password correct
+	    Database->IUserDao:Deliver user data
+	    IUserDao->UserAuthenticator: Deliver user model
+	    UserAuthenticator->ProgramController:Deliver user model
+	    ProgramController->IPrinter: Welcome message wrapper
+	    IPrinter->User: Show welcome message
+	    User->IReader: Push enter
+	    IReader->ProgramController: Register key press
+	    ProgramController->IPrinter:Options wrapper(User level)
+	    IPrinter->User: Show options menu
+    else 
+        alt user doesn't exists
+	        Database->IUserDao: null response
+	        IUserDao->UserAuthenticator: null respons
+        else User exists but password is wrong
+            Database->IUserDao: Deliver user data
+            IUserDao->UserAuthenticator: Verify user data
+        end
+        UserAuthenticator->ProgramController: Deliver null response
+        ProgramController->IPrinter: Error message wrapper
+        IPrinter->User: Show error message
+        User->User:Go to start
 	end
 end
 
 group Get task
-    User<-ProgramController: Show semester menu
-    User->ProgramController: Select semester
-    ProgramController->OptionsWrapper:Get course menu
-    ProgramController<-OptionsWrapper:Deliver course menu
-    User<-ProgramController:Show course menu
-    User->ProgramController:Select course 
-    ProgramController->OptionsWrapper:Get lecture menu
-    ProgramController<-OptionsWrapper: Deliver lecture menu
-    User<-ProgramController:Show lecture menu
-    User->ProgramController:Select lecture
-    ProgramController->OptionsWrapper:Get task menu
-    ProgramController<-OptionsWrapper:Deliver task menu
-    User<-ProgramController: Show task menu
-    User->ProgramController: Select task
-    ProgramController->OptionsWrapper:Get task
-    ProgramController<-OptionsWrapper:Deliver task
-    User<-ProgramController:Show task
-    User->ProgramController:Select finished
-    ProgramController->OptionsWrapper:Set finished
-    User<-ProgramController:Show task finished
-    OptionsWrapper->UserDao:Update user
-    UserDao->Database:Save changes
+    User->IReader: Select menu option(semester)
+    IReader->ProgramController: Register selected option
+    ProgramController->IPrinter: Option wrapper [Semester level] 
+    IPrinter->User: Show sub menu
+    
+    User->IReader: Select menu option(course)
+    IReader->ProgramController: Register selected option
+    ProgramController->IPrinter: Option wrapper [Course level] 
+    IPrinter->User: Show sub menu
+    
+    User->IReader: Select menu option(lecture)
+    IReader->ProgramController: Register selected option
+    ProgramController->IPrinter: Option wrapper  [Lecture level]
+    IPrinter->User: Show sub menu
+    User->IReader: Types "F"
+    IReader->ProgramController: Register input 
+    ProgramController->ProgramController:set lecture as finished/not finished
+    ProgramController->IPrinter: Option wrapper  [Lecture level]
+    IPrinter->User: Show menu
+    ProgramController->IUserDao:Update user
+    IUserDao->Database:Save changes
+        
 end
 
 
 @enduml
+
+    User<-ProgramController: Show semester menu
+    User->ProgramController: Select semester
+    ProgramController->IPrintable:Get course menu
+    ProgramController<-IPrintable:Deliver course menu
+    User<-ProgramController:Show course menu
+    User->ProgramController:Select course 
+    ProgramController->IPrintable:Get lecture menu
+    ProgramController<-IPrintable: Deliver lecture menu
+    User<-ProgramController:Show lecture menu
+    User->ProgramController:Select lecture
+    ProgramController->IPrintable:Get task menu
+    ProgramController<-IPrintable:Deliver task menu
+    User<-ProgramController: Show task menu
+    User->ProgramController: Select task
+    ProgramController->IPrintable:Get task
+    ProgramController<-IPrintable:Deliver task
+    User<-ProgramController:Show task
+    User->ProgramController:Select finished
+    ProgramController->IPrintable:Set finished
+    User<-ProgramController:Show task finished
+    IPrintable->IUserDao:Update user
+    IUserDao->Database:Save changes
