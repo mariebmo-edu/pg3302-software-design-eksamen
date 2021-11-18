@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Drawing;
 using System.Text;
 using System.Text.RegularExpressions;
 using PG332_SoftwareDesign_EksamenH21.Handlers;
 using PG332_SoftwareDesign_EksamenH21.Model;
-using PG332_SoftwareDesign_EksamenH21.util;
 
 namespace PG332_SoftwareDesign_EksamenH21
 {
@@ -72,17 +70,39 @@ namespace PG332_SoftwareDesign_EksamenH21
             if (oh.IsFinishable)
             {
                 IFinishable f = oh.Progressable as IFinishable;
-                menuOptionsString.Append("[F] - Sett som ");
+                
+                string finishType = "THIS";
+                string finishedString = "FINISHED";
+
+                if (f is Course)
+                {
+                    finishType = "eksamen";
+                    finishedString = "bestått";
+                }
+                else if (f is Lecture)
+                {
+                    finishType = "forelesning";
+                    finishedString = "sett";
+                }
+                else if (f is Task)
+                {
+                    finishType = "oppgave";
+                    finishedString = "gjort";
+                }
+                
+                menuOptionsString.Append($"\n[F] - Sett {finishType} som ");
                 if (!f.Finished)
                 {
-                    menuOptionsString.Append("ferdig\n");
+                    menuOptionsString.Append($"{finishedString}\n");
                 }
                 else
                 {
-                    menuOptionsString.Append("uferdig\n");
+                    menuOptionsString.Append($"ikke {finishedString}\n");
                 }
             }
 
+            menuOptionsString.Append("\n");
+            
             for (int i = 0; i < oh.Options.Count; i++)
             {
                 menuOptionsString.Append("[" + (i + 1) + "] - ");
